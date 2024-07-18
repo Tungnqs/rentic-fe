@@ -31,7 +31,7 @@ export interface IRegister {
 }
 
 export interface ILogin {
-  email: string;
+  account: string;
   password: string;
 }
 

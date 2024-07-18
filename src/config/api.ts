@@ -1,1 +1,8 @@
-export const API_BASE_URL = "http://159.89.206.44:3000";
+export const API_BASE_URL = "http://localhost:3000";
+
+export const API_PATH_URL = {
+    AUTH:{
+        LOGIN: "/api/auth/login",
+        REGISTER: "/api/auth/register",
+    }
+}

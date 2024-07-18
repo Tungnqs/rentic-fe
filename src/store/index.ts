@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import itemState from "./slices/item";
+import { authenticationState } from "./slices/login";
 
 const store = configureStore({
   reducer: {
-    [itemState.name]: itemState.reducer,
+    [authenticationState.name]: authenticationState.reducer,
   },
 });
 

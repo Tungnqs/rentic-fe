@@ -1,7 +1,8 @@
 import React from "react";
 import { IRoute } from "../interfaces";
 import Loader from "../components/Loader/Loader";
-import Login from "../pages/login/Login";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 export const layoutRoutes: IRoute[] = [
   {
@@ -11,5 +12,9 @@ export const layoutRoutes: IRoute[] = [
   {
     path: "/login",
     component: <Login />
+  },
+  {
+    path: "/register",
+    component: <Register />
   }
 ];
