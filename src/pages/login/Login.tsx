@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
-import { normalLogin } from "../../store/slices/login";
+import { normalLogin } from "../../store/slices/authentication.slice";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className="layout flex justify-center">
-      <div className="w-[26%]">
+      <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
         <div className="top-block">
           <div>
             <div className="text-[32px] font-semibold">Login</div>
