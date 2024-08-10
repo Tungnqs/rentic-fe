@@ -1,21 +1,23 @@
 import React from "react";
 
-export const MessageIcon = () => {
+export function MessageIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       aria-hidden="true"
       focusable="false"
+      className=""
+      {...props}
     >
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M16 6H8a4 4 0 00-4 4v8h12a4 4 0 004-4v-4a4 4 0 00-4-4zM8 4a6 6 0 00-6 6v10h14a6 6 0 006-6v-4a6 6 0 00-6-6H8zm0 5h8v2H8V9zm3 4H8v2h3v-2z"
         clipRule="evenodd"
       ></path>
     </svg>
   );
-};
+}
 
 export const QuestionIcon = () => {
   return (
@@ -98,6 +100,82 @@ export function HidePasswordIcon(props: React.HTMLAttributes<SVGElement>) {
         d="M3 5.414L4.414 4l14.85 14.85-1.415 1.413-1.936-1.935a9.695 9.695 0 01-3.913.806c-7 0-10-7-10-7s1.036-2.416 3.31-4.41L3 5.414zm9.538 9.538l1.824 1.824a7.789 7.789 0 01-2.362.358c-2.764 0-4.77-1.364-6.16-2.86a12.39 12.39 0 01-1.543-2.069l-.042-.07.042-.072c.337-.566.85-1.32 1.544-2.068.271-.293.567-.58.886-.853l2.321 2.32a3 3 0 003.49 3.49zm5.793-.868a12.455 12.455 0 001.372-1.879l.042-.07-.042-.072a12.39 12.39 0 00-1.544-2.068C16.77 8.5 14.764 7.135 12 7.135a8.97 8.97 0 00-.597.02L9.658 5.412A9.869 9.869 0 0112 5.134c7 0 10 7 10 7s-.712 1.662-2.253 3.367l-1.416-1.417zM3.836 12.927v.002-.002z"
         clipRule="evenodd"
       ></path>
+    </svg>
+  );
+}
+
+export function SearchIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path
+          d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+          stroke="#ffffff"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function ItemIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 512 512"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      fill="#000000"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <title>item-details</title>{" "}
+        <g
+          id="Page-1"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          {" "}
+          <g
+            id="icon"
+            fill="currentColor"
+            transform="translate(42.666667, 85.333333)"
+          >
+            {" "}
+            <path
+              d="M426.666667,1.42108547e-14 L426.666667,341.333333 L3.55271368e-14,341.333333 L3.55271368e-14,1.42108547e-14 L426.666667,1.42108547e-14 Z M384,42.6666667 L42.6666667,42.6666667 L42.6666667,298.666667 L384,298.666667 L384,42.6666667 Z M341.333333,213.333333 L341.333333,245.333333 L234.666667,245.333333 L234.666667,213.333333 L341.333333,213.333333 Z M341.333333,149.333333 L341.333333,181.333333 L234.666667,181.333333 L234.666667,149.333333 L341.333333,149.333333 Z M192,85.3333333 L192,170.666667 L85.3333333,170.666667 L85.3333333,85.3333333 L192,85.3333333 Z M341.333333,85.3333333 L341.333333,117.333333 L234.666667,117.333333 L234.666667,85.3333333 L341.333333,85.3333333 Z"
+              id="Combined-Shape"
+            >
+              {" "}
+            </path>{" "}
+          </g>{" "}
+        </g>{" "}
+      </g>
     </svg>
   );
 }

@@ -30,7 +30,7 @@ const Login = () => {
   }
 
   return (
-    <div className="layout flex justify-center">
+    <div className="layout flex justify-center flex-1">
       <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
         <div className="top-block">
           <div>

@@ -45,7 +45,7 @@ export const Logo = styled.img`
 `;
 
 export const LeftItem = styled.div`
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 600;
 `;
 

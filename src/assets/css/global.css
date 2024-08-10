@@ -41,6 +41,7 @@
   --gray-light-2: #d4d4d4;
   --gray-dark: #374151;
   --orange-brown: #ffd8bf;
+  --left-navbar-bg: #343a40;
   /* Font sizes -------------------- */
   --fs-xs: 0.75rem;
   --fs-sm: 0.875rem;
@@ -113,4 +114,8 @@
 
 .LightGrayBackGround:hover{
   background-color: #f1f1f1;
+}
+
+.default-text{
+  font-size: 16px;
 }

@@ -1,21 +1,18 @@
 import React from "react";
 import * as S from "./Navbar.styled";
-import Logo from "./../../assets/images/tk-logo.png";
+import Logo from "./../../assets/images/rentic-logo.png";
 
 const Navbar = () => {
   return (
     <S.Layout>
       <S.Container>
         <S.LeftNavbar>
-          <S.Brand>
-            <p>TK-<b>Tutor</b></p>
-            <S.Logo src={Logo} />
-          </S.Brand>
-          <S.LeftItem>Find tutors</S.LeftItem>
+          <S.Logo src={Logo} />
+          <S.LeftItem>Rentic</S.LeftItem>
         </S.LeftNavbar>
         <S.RightNavbar>
           <S.Balance>
-              <i className="bi bi-wallet2"></i>
+            <i className="bi bi-wallet2"></i>
             <p>Balance: 0 lessons</p>
           </S.Balance>
           <S.SubcribeBtn>Subcribe</S.SubcribeBtn>
@@ -31,6 +28,10 @@ const Navbar = () => {
           <S.RightIcon>
             <i className="bi bi-bell"></i>
           </S.RightIcon>
+          <div className="flex gap-5">
+            <div className="hover:underline cursor-pointer">Login</div>
+            <div className="hover:underline cursor-pointer">Sign up</div>
+          </div>
           <S.UserAvatar src="https://avatars.preply.com/i/logos/90ee146d-c421-4333-8247-d558d988330a.jpg" />
         </S.RightNavbar>
       </S.Container>

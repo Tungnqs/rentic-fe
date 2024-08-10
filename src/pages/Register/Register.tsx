@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {
   GoogleIcon,
   HidePasswordIcon,
@@ -17,12 +17,6 @@ const Register = () => {
   const [emailField, setEmailField] = useState("");
   const [phoneField, setPhoneField] = useState("");
 
-  // useEffect(()=>{
-  //   console.log("usernameField", usernameField);
-  //   console.log("pswField", pswField);
-  //   console.log("emailField", emailField);
-  //   console.log("phoneField", phoneField);
-  // }, [emailField, phoneField, pswField, usernameField])
 
   const handleRegister = (e: FormEvent) => {
     e.preventDefault();
