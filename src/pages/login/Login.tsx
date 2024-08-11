@@ -16,9 +16,6 @@ const Login = () => {
   const [inputPsw, setInputPsw] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
 
-  const userRole = useSelector(selectUserRole);
-  console.log("userRole", userRole);
-  
   const handleLogin = () => {
     const loginData: ILogin = {
       email: inputAccount,
