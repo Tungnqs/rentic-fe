@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Logo from "../../assets/images/rentic-logo.png";
 import UserAvatar from "../../assets/images/user-avt.png";
-import { ItemIcon, SearchIcon } from '../../assets/icon/icon';
+import { BackIcon, ItemIcon, SearchIcon } from '../../assets/icon/icon';
 
 const LeftNavBar = () => {
     const [isExpand, setIsExpand] = useState(true);
     return (
-        <div className={`h-screen bg-[color:var(--left-navbar-bg)] text-[color:var(--gray-light-2)] px-[14px] py-[8px] ${isExpand ? "w-[250px]" : "w-[65px]"}`}>
+        <div className={`relative h-screen bg-[color:var(--left-navbar-bg)] text-[color:var(--gray-light-2)] px-[14px] py-[8px] ${isExpand ? "w-[250px]" : "w-[65px]"}`}>
+            {isExpand && <BackIcon className='absolute w-[20px] top-[15px] right-[14px] cursor-pointer' onClick={()=> setIsExpand(!isExpand)} />}
             <div className='flex gap-3 items-center border-b border-gray-500 pb-3'>
                 <img className='ml-[5px] aspect-square w-[33px] cursor-pointer' src={Logo} alt="Logo" onClick={()=> setIsExpand(!isExpand)}/>
                 {isExpand && <div className='text-[20px] font-semibold'>Rentic Admin</div>}

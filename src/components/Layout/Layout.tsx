@@ -5,9 +5,9 @@ import LeftNavBar from "../LeftNavBar/LeftNavBar";
 
 export default function Layout() {
   return (
-    <div className="flex">
-      {/* <Navbar /> */}
-      <LeftNavBar />
+    <div className="block">
+      <Navbar />
+      {/* <LeftNavBar /> */}
       <Outlet />
     </div>
   );

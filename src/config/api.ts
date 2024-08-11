@@ -4,5 +4,6 @@ export const API_PATH_URL = {
     AUTH:{
         LOGIN: "/api/auth/login/",
         REGISTER: "/api/auth/register/",
+        GET_USER_PROFILE: "/api/user/getUserProfile/"
     }
 }

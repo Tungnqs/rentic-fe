@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { registerAccount } from "../../store/slices/authentication.slice";
+import { registerAccount } from "../../store/slices/auth.slice";
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
