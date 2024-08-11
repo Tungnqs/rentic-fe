@@ -5,10 +5,10 @@ import {
   ShowPasswordIcon,
 } from "../../assets/icon/icon";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
-import { normalLogin } from "../../store/slices/login";
+import { normalLogin, selectUserRole } from "../../store/slices/auth.slice";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleLogin = () => {
     const loginData: ILogin = {
-      account: inputAccount,
+      email: inputAccount,
       password: inputPsw,
     };
     dispatch(normalLogin(loginData));
@@ -30,8 +30,8 @@ const Login = () => {
   }
 
   return (
-    <div className="layout flex justify-center">
-      <div className="w-[26%]">
+    <div className="layout flex justify-center flex-1">
+      <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
         <div className="top-block">
           <div>
             <div className="text-[32px] font-semibold">Login</div>
@@ -89,9 +89,9 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <a href="#" className="hover:text-[color:var(--yellow)] underline">
+          <div className="hover:text-[color:var(--yellow)] underline select-none">
             <div className="my-4">Forgot your password?</div>
-          </a>
+          </div>
           <div className="flex gap-2">
             <input type="checkbox" className="w-[17px] bg-yellow-400" />
             <div>Remember me</div>

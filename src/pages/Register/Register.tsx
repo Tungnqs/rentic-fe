@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {
   GoogleIcon,
   HidePasswordIcon,
   ShowPasswordIcon,
 } from "../../assets/icon/icon";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { registerAccount } from "../../store/slices/auth.slice";
 
 const Register = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [usernameField, setUsernameField] = useState("");
+  const [pswField, setPswField] = useState("");
+  const [emailField, setEmailField] = useState("");
+  const [phoneField, setPhoneField] = useState("");
+
+
+  const handleRegister = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(
+      registerAccount({
+        email: emailField,
+        password: pswField,
+        phonenumber: phoneField,
+        username: usernameField,
+      })
+    );
+  };
+
   return (
     <div className="layout flex justify-center">
-      <div className="w-[26%]">
+      <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
         <div className="top-block">
           <div>
             <div className="text-[32px] font-semibold">Sign up to Rentic</div>
@@ -34,21 +56,35 @@ const Register = () => {
           <div className="font-medium">or</div>
           <div className="border-b border-2 border-[#dcdce5] flex-1"></div>
         </div>
-        <form className="bottom-block flex flex-col gap-[10px]">
+        <form
+          className="bottom-block flex flex-col gap-[10px]"
+          onSubmit={handleRegister}
+        >
           <div className="account field">
-            <div className="text-lightGray">Name</div>
+            <div className="text-lightGray">Username</div>
             <input
               type="text"
               className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
               placeholder="Enter your name"
+              onChange={(e) => setUsernameField(e.target.value)}
             />
           </div>
           <div className="account field">
-            <div className="text-lightGray">Email/Phone number</div>
+            <div className="text-lightGray">Email</div>
             <input
               type="text"
               className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
-              placeholder="Enter email or phone number"
+              placeholder="Enter email"
+              onChange={(e) => setEmailField(e.target.value)}
+            />
+          </div>
+          <div className="account field">
+            <div className="text-lightGray">Phone number</div>
+            <input
+              type="text"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+              placeholder="Enter phone number"
+              onChange={(e) => setPhoneField(e.target.value)}
             />
           </div>
           <div className="psw field">
@@ -58,12 +94,12 @@ const Register = () => {
                 className="flex-1"
                 type={isShowPassword ? "text" : "password"}
                 placeholder="Enter password"
+                onChange={(e) => setPswField(e.target.value)}
               />
-              <button
+              <div
                 className="cursor-pointer"
-                onClick={(e) => {
+                onClick={() => {
                   setIsShowPassword(!isShowPassword);
-                  e.preventDefault();
                 }}
               >
                 {isShowPassword ? (
@@ -71,14 +107,17 @@ const Register = () => {
                 ) : (
                   <HidePasswordIcon className="w-[24px]" />
                 )}
-              </button>
+              </div>
             </div>
           </div>
           <div className="flex gap-2">
             <input type="checkbox" className="w-[17px]" />
             <div>Remember me</div>
           </div>
-          <button className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]">
+          <button
+            type="submit"
+            className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"
+          >
             Sign up
           </button>
         </form>
