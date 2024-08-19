@@ -1,6 +1,7 @@
 import React from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -15,7 +16,7 @@ const Navbar = () => {
             <i className="bi bi-wallet2"></i>
             <p>Balance: 0 lessons</p>
           </S.Balance>
-          <S.SubcribeBtn>Subcribe</S.SubcribeBtn>
+          <S.SubscribeBtn>Subcribe</S.SubscribeBtn>
           <S.RightIcon>
             <i className="bi bi-chat-text-fill"></i>
           </S.RightIcon>
@@ -29,8 +30,8 @@ const Navbar = () => {
             <i className="bi bi-bell"></i>
           </S.RightIcon>
           <div className="flex gap-5">
-            <div className="hover:underline cursor-pointer">Login</div>
-            <div className="hover:underline cursor-pointer">Sign up</div>
+            <Link to={'/login'} className="hover:underline cursor-pointer">Login</Link>
+            <Link to={'/register'} className="hover:underline cursor-pointer">Sign up</Link>
           </div>
           <S.UserAvatar src="https://avatars.preply.com/i/logos/90ee146d-c421-4333-8247-d558d988330a.jpg" />
         </S.RightNavbar>

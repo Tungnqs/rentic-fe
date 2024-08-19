@@ -29,6 +29,7 @@ export interface IRegister {
   username: string;
   password: string;
   phonenumber: string;
+  role: string;
 }
 
 export interface ILogin {

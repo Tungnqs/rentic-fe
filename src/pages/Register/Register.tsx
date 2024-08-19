@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { registerAccount } from "../../store/slices/auth.slice";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,8 +17,9 @@ const Register = () => {
   const [pswField, setPswField] = useState("");
   const [emailField, setEmailField] = useState("");
   const [phoneField, setPhoneField] = useState("");
-
-
+  const [roleField, setRoleField] = useState("");
+  const roleDropDownValues = ["Renter", "Landlord"];
+  
   const handleRegister = (e: FormEvent) => {
     e.preventDefault();
     dispatch(
@@ -26,6 +28,7 @@ const Register = () => {
         password: pswField,
         phonenumber: phoneField,
         username: usernameField,
+        role: roleField,
       })
     );
   };
@@ -110,10 +113,12 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2">
-            <input type="checkbox" className="w-[17px]" />
-            <div>Remember me</div>
-          </div>
+          <Dropdown
+            dropdownValues={roleDropDownValues}
+            dropdownTitle="Choose role"
+            chooseValue={(value) => setRoleField(value.toLocaleUpperCase())}
+          />
+
           <button
             type="submit"
             className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"

@@ -201,3 +201,24 @@ export function BackIcon(props: React.HTMLAttributes<SVGElement>) {
     </svg>
   );
 }
+
+export function ArrowDownIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      className="w-2.5 h-2.5"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 10 6"
+      {...props}
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M1 1l4 4 4-4"
+      />
+    </svg>
+  );
+}

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
 import { normalLogin, selectUserRole } from "../../store/slices/auth.slice";
+import { getCookie } from "../../utils/cookies.utils";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);

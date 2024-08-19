@@ -67,7 +67,7 @@ export const Balance = styled.div`
   }
 `;
 
-export const SubcribeBtn = styled.div`
+export const SubscribeBtn = styled.div`
   padding: 8px 16px;
   border: 2px solid black;
   border-radius: 5px;
