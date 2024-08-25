@@ -29,6 +29,7 @@ export interface IRegister {
   username: string;
   password: string;
   phonenumber: string;
+  role: string;
 }
 
 export interface ILogin {
@@ -39,3 +40,5 @@ export interface ILogin {
 export interface IAuthState {
   authStatus: boolean;
 }
+
+export const loadingStatus = "loading" || "loaded";

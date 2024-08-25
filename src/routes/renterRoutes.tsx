@@ -3,18 +3,16 @@ import { IRoute } from "../interfaces";
 import Loader from "../components/Loader/Loader";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import { Navigate } from "react-router";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
-import Homepage from "../pages/Homepage/Homepage";
 
-export const standaloneRoutes: IRoute[] = [
-  {
-    path: "*",
-    component: <Loader />,
-  },
+export const renterRoutes: IRoute[] = [
   {
     path: "/",
-    component: <Homepage />
+    component: <PropertyList />,
+  },
+  {
+    path: "/test",
+    component: <Loader />,
   },
   {
     path: "/login",
@@ -23,5 +21,9 @@ export const standaloneRoutes: IRoute[] = [
   {
     path: "/register",
     component: <Register />
+  },
+  {
+    path: "/properties",
+    component: <PropertyList />,
   },
 ];

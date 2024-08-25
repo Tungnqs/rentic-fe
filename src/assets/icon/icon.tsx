@@ -28,7 +28,7 @@ export const QuestionIcon = () => {
       focusable="false"
     >
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M12 19a7 7 0 110-14 7 7 0 010 14zm-9-7a9 9 0 1118 0 9 9 0 01-18 0zm7.707-.584l.072 2.1h1.764l.024-1.02c.44-.064.824-.2 1.152-.408.328-.208.58-.472.756-.792.184-.328.276-.696.276-1.104 0-.536-.128-1.008-.384-1.416a2.657 2.657 0 00-1.044-.972c-.44-.232-.948-.348-1.524-.348-.688 0-1.268.168-1.74.504a2.44 2.44 0 00-.936 1.356l1.68.456a.976.976 0 01.372-.456c.176-.12.384-.18.624-.18.344 0 .624.1.84.3a.963.963 0 01.324.756c0 .368-.116.644-.348.828-.232.176-.536.28-.912.312l-.996.084zm.18 4.44c.216.216.472.324.768.324.304 0 .564-.108.78-.324.216-.216.324-.476.324-.78a1.05 1.05 0 00-.324-.768 1.063 1.063 0 00-.78-.324 1.05 1.05 0 00-.768.324 1.05 1.05 0 00-.324.768c0 .304.108.564.324.78z"
         clipRule="evenodd"
       ></path>
@@ -144,11 +144,11 @@ export function ItemIcon(props: React.HTMLAttributes<SVGElement>) {
       className=""
       {...props}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
@@ -156,9 +156,9 @@ export function ItemIcon(props: React.HTMLAttributes<SVGElement>) {
         <g
           id="Page-1"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           {" "}
           <g
@@ -198,6 +198,27 @@ export function BackIcon(props: React.HTMLAttributes<SVGElement>) {
       <g id="SVGRepo_iconCarrier">
         <path d="M222.927 580.115l301.354 328.512c24.354 28.708 20.825 71.724-7.883 96.078s-71.724 20.825-96.078-7.883L19.576 559.963a67.846 67.846 0 01-13.784-20.022 68.03 68.03 0 01-5.977-29.488l.001-.063a68.343 68.343 0 017.265-29.134 68.28 68.28 0 011.384-2.6 67.59 67.59 0 0110.102-13.687L429.966 21.113c25.592-27.611 68.721-29.247 96.331-3.656s29.247 68.721 3.656 96.331L224.088 443.784h730.46c37.647 0 68.166 30.519 68.166 68.166s-30.519 68.166-68.166 68.166H222.927z"></path>
       </g>
+    </svg>
+  );
+}
+
+export function ArrowDownIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      className="w-2.5 h-2.5"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 10 6"
+      {...props}
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M1 1l4 4 4-4"
+      />
     </svg>
   );
 }
