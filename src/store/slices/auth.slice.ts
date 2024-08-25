@@ -4,8 +4,31 @@ import { axiosInstance } from "../../lib/axios";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
+import { IUserProfile } from "../../interfaces/userProfile";
 
+interface IAuth {
+  userRole?: string;
+  isLogin: boolean;
+  userProfile: IUserProfile;
+}
 
+const initialState: IAuth = {
+  userRole: "",
+  isLogin: false,
+  userProfile: {
+    userProfile: {
+      avatar: "",
+      balance: undefined,
+      email: "",
+      id: "",
+      isBlocked: undefined,
+      isVerified: undefined,
+      phonenumber: "",
+      roles: [],
+      username: "",
+    },
+  },
+};
 
 export const registerAccount = createAsyncThunk(
   "auth/register",
@@ -31,19 +54,11 @@ export const getUserProfile = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (err) {
-      alert(err);
+      console.log(err);
       return rejectWithValue(err);
     }
   }
 );
-
-interface IAuth {
-  userRole?: string;
-}
-
-const initialState: IAuth = {
-  userRole: "",
-};
 
 export const normalLogin = createAsyncThunk(
   "auth/normalLogin",
@@ -55,6 +70,7 @@ export const normalLogin = createAsyncThunk(
       console.log(response.data);
       dispatch(setCurrentUserRole(response.data.roles[0]));
       dispatch(getUserProfile());
+      return true;
     } catch (err) {
       console.log(err);
       return rejectWithValue(err);
@@ -71,11 +87,35 @@ export const authSlice = createSlice({
     clearCurrentUserRole: (state) => {
       state.userRole = "";
     },
+    setIsLoggedIn: (state, action) => {
+      state.isLogin = action.payload;
+    },
+    clearUserProfile: (state) => {
+      state.userProfile = {
+        userProfile: {
+          avatar: "",
+          email: "",
+          id: "",
+          phonenumber: "",
+          roles: [],
+          username: "",
+          balance: undefined,
+          isBlocked: undefined,
+          isVerified: undefined,
+        },
+      };
+    },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(getUserProfile.fulfilled, (state, action) => {
+      state.userProfile = action.payload;
+    });
+  },
 });
 
 export const selectUserRole = (state: RootState) => state.authState.userRole;
-
-export const { setCurrentUserRole, clearCurrentUserRole } = authSlice.actions;
+export const selectIsLogin = (state: RootState) => state.authState.isLogin;
+export const selectUserProfile = (state: RootState) => state.authState.userProfile;
+export const { setCurrentUserRole, clearCurrentUserRole, setIsLoggedIn, clearUserProfile } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -14,7 +14,7 @@ export const Container = styled.div`
   padding: 16px 24px;
 `;
 
-export const LeftNavbar = styled.div`
+export const LogoGroup = styled.div`
   display: flex;
     align-items: center;
     gap: 15px;

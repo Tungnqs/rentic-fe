@@ -40,3 +40,5 @@ export interface ILogin {
 export interface IAuthState {
   authStatus: boolean;
 }
+
+export const loadingStatus = "loading" || "loaded";

@@ -3,11 +3,10 @@ import { Outlet } from "react-router";
 import Navbar from "../Navbar/Navbar";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
 
-export default function Layout() {
+export default function AdminLayout() {
   return (
-    <div className="block">
-      <div>Layout</div>
-      <Navbar />
+    <div className="flex">
+      <LeftNavBar />
       <Outlet />
     </div>
   );

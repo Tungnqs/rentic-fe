@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { registerAccount } from "../../store/slices/auth.slice";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,7 +35,9 @@ const Register = () => {
   };
 
   return (
-    <div className="layout flex justify-center">
+    <>
+      <Navbar />
+      <div className="layout flex justify-center">
       <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
         <div className="top-block">
           <div>
@@ -134,6 +137,7 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

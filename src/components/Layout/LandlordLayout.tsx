@@ -1,12 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router";
 import Navbar from "../Navbar/Navbar";
-import LeftNavBar from "../LeftNavBar/LeftNavBar";
 
-export default function Layout() {
+export default function LandlordLayout() {
   return (
     <div className="block">
-      <div>Layout</div>
+      <div>LandlordLayout</div>
+      <div>LandlordLayout</div>
+      <div>LandlordLayout</div>
+      <div>LandlordLayout</div>
       <Navbar />
       <Outlet />
     </div>
