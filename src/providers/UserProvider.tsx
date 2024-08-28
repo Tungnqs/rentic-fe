@@ -5,6 +5,7 @@ import Loader from "../components/Loader/Loader";
 import { getCookie } from "../utils/cookies.utils";
 import {
   getUserProfile,
+  selectIsLogin,
   selectUserProfile,
   setIsLoggedIn,
 } from "../store/slices/auth.slice";
@@ -16,16 +17,19 @@ interface IAppProvider {
 
 export default function UserProvider({ children }: IAppProvider) {
   const userRole = useSelector(selectUserProfile).userProfile.roles[0];
+  const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const token = getCookie("token");
   const navigate = useNavigate();
+
   useEffect(() => {
-    const refetchUserDate = async () => {
+    const refetchUserData = async () => {
       if (!token) {
         navigate("/login");
-      }
-      else if (token && !userRole) {
-        const isSetUserProfile = await dispatch(getUserProfile());
+      } else if (token && !userRole) {
+        const getProfileResult = await dispatch(getUserProfile());
+        const isSetUserProfile = getUserProfile.fulfilled.match(getProfileResult);
+        dispatch(setIsLoggedIn(true));
         if (isSetUserProfile) {
           navigate("/");
         } else {
@@ -33,7 +37,7 @@ export default function UserProvider({ children }: IAppProvider) {
         }
       }
     };
-    refetchUserDate();
+    refetchUserData();
   }, [userRole, token]);
 
   const [loading, setLoading] = useState(true);

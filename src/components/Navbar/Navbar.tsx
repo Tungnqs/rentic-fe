@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearUserProfile,
-  selectIsLogin,
-  setIsLoggedIn,
-} from "../../store/slices/auth.slice";
+import { authLogout, selectIsLogin } from "../../store/slices/auth.slice";
 import { AppDispatch } from "../../store";
 import { deleteCookie } from "../../utils/cookies.utils";
 
 export interface INavbarItems {
   title: string;
-  path: string;
+  path?: string;
+  popup?: React.JSX.Element;
 }
 
 interface INavbarItemsProps {
@@ -24,20 +21,18 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const handleLogout = () => {
-    deleteCookie("token");
-    dispatch(setIsLoggedIn(false));
-    dispatch(clearUserProfile());
+    dispatch(authLogout());
   };
-  // useEffect(()=>{
-
-  // })
-  console.log("navbarItems", navbarItems);
-  
+  const navigate = useNavigate();
   return (
     <S.Layout>
       <S.Container>
         <div className="flex items-center gap-3">
-          <S.LogoGroup>
+          <S.LogoGroup
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <S.Logo src={Logo} />
             <S.LeftItem>Rentic</S.LeftItem>
           </S.LogoGroup>
@@ -45,7 +40,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
             {navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
-                  to={navbarItem.path}
+                  to={navbarItem.path as string}
                   key={index}
                   className="hover:underline cursor-pointer"
                 >

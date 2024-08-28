@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ILogin, IRegister } from "../../interfaces";
 import { axiosInstance } from "../../lib/axios";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
-import { setCookie } from "../../utils/cookies.utils";
+import { deleteCookie, setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
 import { IUserProfile } from "../../interfaces/userProfile";
 
@@ -77,6 +77,20 @@ export const normalLogin = createAsyncThunk(
     }
   }
 );
+
+export const authLogout = createAsyncThunk(
+  "auth/authLogout",
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      deleteCookie("token");
+      dispatch(setIsLoggedIn(false));
+      dispatch(clearUserProfile());
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "authState",
   initialState,
@@ -115,7 +129,12 @@ export const authSlice = createSlice({
 
 export const selectUserRole = (state: RootState) => state.authState.userRole;
 export const selectIsLogin = (state: RootState) => state.authState.isLogin;
-export const selectUserProfile = (state: RootState) => state.authState.userProfile;
-export const { setCurrentUserRole, clearCurrentUserRole, setIsLoggedIn, clearUserProfile } =
-  authSlice.actions;
+export const selectUserProfile = (state: RootState) =>
+  state.authState.userProfile;
+export const {
+  setCurrentUserRole,
+  clearCurrentUserRole,
+  setIsLoggedIn,
+  clearUserProfile,
+} = authSlice.actions;
 export default authSlice.reducer;

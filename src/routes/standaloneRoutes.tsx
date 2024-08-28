@@ -6,11 +6,12 @@ import Register from "../pages/Register/Register";
 import { Navigate } from "react-router";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
 import Homepage from "../pages/Homepage/Homepage";
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
 
 export const standaloneRoutes: IRoute[] = [
   {
     path: "*",
-    component: <Loader />,
+    component: <PageNotFound />,
   },
   {
     path: "/",

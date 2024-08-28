@@ -13,10 +13,6 @@ import { llRoutes } from "./llRoutes";
 
 export default function AppRoutes() {
   const userRole = useSelector(selectUserProfile).userProfile.roles[0];
-  // const nav = useNavigate();
-  // useEffect(()=>{
-  //   nav("/");
-  // }, [userRole])
 
   return (
     <Routes>

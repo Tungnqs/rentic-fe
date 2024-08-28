@@ -16,21 +16,22 @@ export const Container = styled.div`
 
 export const LogoGroup = styled.div`
   display: flex;
-    align-items: center;
-    gap: 15px;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
 `;
 
 export const Brand = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  p{
+  p {
     margin: 0;
     font-size: 30px;
     font-weight: 600;
     font-family: "Playwrite ES", cursive;
     color: #c79237;
-    b{
+    b {
       font-family: "Playwrite ES", cursive;
       color: black;
       font-size: 30px;
@@ -45,24 +46,24 @@ export const Logo = styled.img`
 `;
 
 export const LeftItem = styled.div`
-    font-size: 25px;
-    font-weight: 600;
+  font-size: 25px;
+  font-weight: 600;
 `;
 
 export const RightNavbar = styled.div`
-    display: flex;
-    gap: 15px;
-    align-items: center;
+  display: flex;
+  gap: 15px;
+  align-items: center;
 `;
 
 export const Balance = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
   gap: 10px;
-  i{
+  i {
     font-size: 22px;
   }
-  p{
+  p {
     margin: 0;
   }
 `;
@@ -72,24 +73,24 @@ export const SubscribeBtn = styled.div`
   border: 2px solid black;
   border-radius: 5px;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: #e6e6e6;
   }
 `;
 
 export const RightIcon = styled.div`
   font-size: 22px;
-  i{
+  i {
     cursor: pointer;
-    &:hover{
+    &:hover {
       color: #d13d76;
     }
   }
 `;
 
 export const UserAvatar = styled.img`
-    aspect-ratio: 1/1;
-    width: 32px;
-    height: 32px;
-    border-radius: 5px;
+  aspect-ratio: 1/1;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
 `;

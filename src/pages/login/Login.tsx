@@ -8,7 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
-import { normalLogin, selectUserProfile, setIsLoggedIn } from "../../store/slices/auth.slice";
+import {
+  normalLogin,
+  selectUserProfile,
+  setIsLoggedIn,
+} from "../../store/slices/auth.slice";
 import Navbar from "../../components/Navbar/Navbar";
 
 const Login = () => {
@@ -19,26 +23,19 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     const loginData: ILogin = {
       email: inputAccount,
       password: inputPsw,
     };
-    const isLoginSuccessful = await dispatch(normalLogin(loginData));
-    if(isLoginSuccessful){
+
+    const result = await dispatch(normalLogin(loginData));
+    const isLoginSuccessful = normalLogin.fulfilled.match(result);
+    if (isLoginSuccessful) {
       dispatch(setIsLoggedIn(true));
       navigate("/");
-    } 
+    }
   };
-
-  // const userRole = useSelector(selectUserProfile).userProfile.roles[0];
-  
-  // useEffect(()=>{
-  // console.log("s");
-  //   if(userRole){
-  //     navigate("/");
-  //   }
-  // }, [navigate, userRole]);
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
@@ -47,7 +44,7 @@ const Login = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="layout flex justify-center flex-1">
         <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
           <div className="top-block">
