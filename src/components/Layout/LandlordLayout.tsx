@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { getAllMyPosts } from "../../store/slices/post.slice";
 
 export default function LandlordLayout() {
   const navbarItems:INavbarItems[] = [
@@ -13,6 +16,11 @@ export default function LandlordLayout() {
       title: "Your Profile"
     }
   ]
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getAllMyPosts());
+  }, []);
+
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems}/>

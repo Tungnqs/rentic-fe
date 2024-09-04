@@ -16,7 +16,7 @@ interface IAppProvider {
 }
 
 export default function UserProvider({ children }: IAppProvider) {
-  const userRole = useSelector(selectUserProfile).userProfile.roles[0];
+  const userRole = useSelector(selectUserProfile).user.roles[0];
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const token = getCookie("token");

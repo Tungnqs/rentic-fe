@@ -25,6 +25,8 @@ export interface INotificationState {
 }
 
 export interface IRegister {
+  firstName: string;
+  lastName: string;
   email: string;
   username: string;
   password: string;

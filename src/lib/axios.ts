@@ -17,7 +17,19 @@ export const axiosInstance = axios.create({
   },
 });
 
+export const axiosFormData = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
 axiosInstance.interceptors.request.use(
   (config) => updateHeaders(config),
-  (error) => Promise.reject(error),
+  (error) => Promise.reject(error)
+);
+
+axiosFormData.interceptors.request.use(
+  (config) => updateHeaders(config),
+  (error) => Promise.reject(error)
 );

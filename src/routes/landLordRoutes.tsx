@@ -4,7 +4,7 @@ import Loader from "../components/Loader/Loader";
 import Register from "../pages/Register/Register";
 import { Navigate } from "react-router";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
-import AddProperty from "../pages/LandLord/Property/AddProperty";
+import EditProfile from "../pages/EditProfile/EditProfile";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -17,10 +17,14 @@ export const landLordRoutes: IRoute[] = [
   },
   {
     path: "/register",
-    component: <Register />
+    component: <Register />,
   },
   {
     path: "/properties",
-    component: <PropertyList />
+    component: <PropertyList />,
+  },
+  {
+    path: "/profile",
+    component: <EditProfile />
   },
 ];

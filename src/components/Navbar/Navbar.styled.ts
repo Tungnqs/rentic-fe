@@ -90,7 +90,8 @@ export const RightIcon = styled.div`
 
 export const UserAvatar = styled.img`
   aspect-ratio: 1/1;
-  width: 32px;
-  height: 32px;
-  border-radius: 5px;
+  width: 50px;
+  border-radius: 999px;
+  border: 1px solid #000000;
+  object-fit: cover;
 `;

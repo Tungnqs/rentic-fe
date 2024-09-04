@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogout, selectIsLogin } from "../../store/slices/auth.slice";
+import {
+  authLogout,
+  selectIsLogin,
+  selectUserProfile,
+} from "../../store/slices/auth.slice";
 import { AppDispatch } from "../../store";
-import { deleteCookie } from "../../utils/cookies.utils";
+import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
 
 export interface INavbarItems {
   title: string;
@@ -24,6 +28,15 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
     dispatch(authLogout());
   };
   const navigate = useNavigate();
+  const userProfile = useSelector(selectUserProfile).user;
+
+  const avatar = useMemo(() => {
+    if (userProfile.avatar) {
+      return userProfile.avatar;
+    }
+    return AnonymousAvatar;
+  }, [userProfile.avatar]);
+
   return (
     <S.Layout>
       <S.Container>
@@ -61,7 +74,10 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           )}
           {isLogin ? (
             <div className="flex gap-3 items-center">
-              <S.UserAvatar src="https://avatars.preply.com/i/logos/90ee146d-c421-4333-8247-d558d988330a.jpg" />
+              <div className="flex items-center gap-3">
+                <div className="hover:underline">Hello, {userProfile.username}</div>
+                <S.UserAvatar src={avatar} />
+              </div>
               <div
                 onClick={handleLogout}
                 className="cursor-pointer hover:underline"

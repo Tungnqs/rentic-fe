@@ -4,7 +4,7 @@ import { axiosInstance } from "../../lib/axios";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { deleteCookie, setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
-import { IUserProfile } from "../../interfaces/userProfile";
+import { IUserProfile } from "../../interfaces/userProfile.iterface";
 
 interface IAuth {
   userRole?: string;
@@ -16,7 +16,9 @@ const initialState: IAuth = {
   userRole: "",
   isLogin: false,
   userProfile: {
-    userProfile: {
+    user: {
+      firstName: "",
+      lastName: "",
       avatar: "",
       balance: undefined,
       email: "",
@@ -49,12 +51,37 @@ export const getUserProfile = createAsyncThunk(
   "auth/getUserProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const url = API_BASE_URL + API_PATH_URL.AUTH.GET_USER_PROFILE;
+      const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.get(url);
       console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export interface IEditProfileReq {
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+}
+
+export const editUserProfile = createAsyncThunk(
+  "auth/editUserProfile",
+  async (data: IEditProfileReq, { dispatch, rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
+      const response = await axiosInstance.put(url, data);
+      console.log("response.data: ", response.data);
+      if (response.data) {
+        await dispatch(getUserProfile());
+      }
+      return response.data;
+    } catch (err) {
+      console.log("err: ", err);
       return rejectWithValue(err);
     }
   }
@@ -67,7 +94,6 @@ export const normalLogin = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.AUTH.LOGIN;
       const response = await axiosInstance.post(url, data);
       setCookie("token", response.data.token);
-      console.log(response.data);
       dispatch(setCurrentUserRole(response.data.roles[0]));
       dispatch(getUserProfile());
       return true;
@@ -106,7 +132,9 @@ export const authSlice = createSlice({
     },
     clearUserProfile: (state) => {
       state.userProfile = {
-        userProfile: {
+        user: {
+          firstName: "",
+          lastName: "",
           avatar: "",
           email: "",
           id: "",
