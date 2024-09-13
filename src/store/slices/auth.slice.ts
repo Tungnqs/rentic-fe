@@ -53,7 +53,6 @@ export const getUserProfile = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.get(url);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -94,9 +93,8 @@ export const normalLogin = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.AUTH.LOGIN;
       const response = await axiosInstance.post(url, data);
       setCookie("token", response.data.token);
-      dispatch(setCurrentUserRole(response.data.roles[0]));
       dispatch(getUserProfile());
-      return true;
+      return response.data;
     } catch (err) {
       console.log(err);
       return rejectWithValue(err);
@@ -151,6 +149,11 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUserProfile.fulfilled, (state, action) => {
       state.userProfile = action.payload;
+      state.isLogin = true;
+    });
+    builder.addCase(normalLogin.fulfilled, (state, action) => {
+      state.isLogin = true;
+      state.userRole = action.payload.roles[0]
     });
   },
 });
@@ -158,7 +161,7 @@ export const authSlice = createSlice({
 export const selectUserRole = (state: RootState) => state.authState.userRole;
 export const selectIsLogin = (state: RootState) => state.authState.isLogin;
 export const selectUserProfile = (state: RootState) =>
-  state.authState.userProfile;
+  state.authState.userProfile.user;
 export const {
   setCurrentUserRole,
   clearCurrentUserRole,

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -10,11 +10,14 @@ import {
 } from "../../store/slices/auth.slice";
 import { AppDispatch } from "../../store";
 import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
+import { MenuIcon } from "../../assets/icon/icon";
+import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
 
 export interface INavbarItems {
   title: string;
   path?: string;
   popup?: React.JSX.Element;
+  icon?: React.JSX.Element;
 }
 
 interface INavbarItemsProps {
@@ -24,11 +27,9 @@ interface INavbarItemsProps {
 const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
-  const handleLogout = () => {
-    dispatch(authLogout());
-  };
+  
   const navigate = useNavigate();
-  const userProfile = useSelector(selectUserProfile).user;
+  const userProfile = useSelector(selectUserProfile);
 
   const avatar = useMemo(() => {
     if (userProfile.avatar) {
@@ -37,19 +38,37 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
     return AnonymousAvatar;
   }, [userProfile.avatar]);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = async () => {
+    await dispatch(authLogout());
+    setIsSidebarOpen(false);
+    navigate("/login");
+  };
+
   return (
     <S.Layout>
+      <CollapseSidebar handleLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} menuItems={navbarItems}/>
       <S.Container>
         <div className="flex items-center gap-3">
-          <S.LogoGroup
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <S.Logo src={Logo} />
-            <S.LeftItem>Rentic</S.LeftItem>
-          </S.LogoGroup>
-          <div className="flex items-center gap-3">
+          <div className="flex max-md:gap-3">
+          {isLogin && <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
+              <MenuIcon onClick={toggleSidebar} className="max-md:w-[45px] max-md:block hidden" />
+            </div> }
+            <S.LogoGroup
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              <S.Logo src={Logo} />
+              <S.LeftItem>Rentic</S.LeftItem>
+            </S.LogoGroup>
+          </div>
+          <div className="flex items-center gap-3 max-md:hidden">
             {navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
@@ -66,18 +85,14 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
             <>
               <S.Balance>
-                <i className="bi bi-wallet2"></i>
-                <p>Balance: 0 VND</p>
+                <p className="w-fit">Balance: 0 VND</p>
               </S.Balance>
               <S.SubscribeBtn>Deposit</S.SubscribeBtn>
             </>
           )}
           {isLogin ? (
             <div className="flex gap-3 items-center">
-              <div className="flex items-center gap-3">
-                <div className="hover:underline">Hello, {userProfile.username}</div>
-                <S.UserAvatar src={avatar} />
-              </div>
+              <S.UserAvatar src={avatar} />
               <div
                 onClick={handleLogout}
                 className="cursor-pointer hover:underline"

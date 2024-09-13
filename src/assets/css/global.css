@@ -25,6 +25,7 @@
 :root {
   /* Colors ------------------------ */
   --yellow: rgb(255, 186, 0);
+  --yellow-2: #ce8236;
   --orange: #ea7c29;
   --red: #ef4444;
   --green: #10b981;
@@ -118,4 +119,20 @@
 
 .default-text{
   font-size: 16px;
+}
+
+.thinBoxShadow{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.smallBoxShadow{
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.mediumBoxShadow{
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.largeBoxShadow{
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

@@ -11,7 +11,7 @@ import LandlordLayout from "../components/Layout/LandlordLayout";
 import { landLordRoutes } from "./landLordRoutes";
 
 export default function AppRoutes() {
-  const userRole = useSelector(selectUserProfile).user.roles[0];
+  const userRole = useSelector(selectUserProfile).roles[0];
 
   return (
     <Routes>

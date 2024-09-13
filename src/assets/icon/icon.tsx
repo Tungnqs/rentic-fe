@@ -183,7 +183,7 @@ export function ItemIcon(props: React.HTMLAttributes<SVGElement>) {
 export function BackIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
     <svg
-      fill="#ffffff"
+      fill="currentColor"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
       className=""
@@ -395,6 +395,363 @@ export function TrashIcon(props: React.HTMLAttributes<SVGElement>) {
           strokeLinecap="round"
           strokeLinejoin="round"
         ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function CarouselLeftArrow(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      className="w-4 h-4 text-white rtl:rotate-180"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 6 10"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M5 1 1 5l4 4"
+      />
+    </svg>
+  );
+}
+
+export function CarouselRightArrow(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      className="w-4 h-4 text-white rtl:rotate-180"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 6 10"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="m1 9 4-4-4-4"
+      />
+    </svg>
+  );
+}
+
+export function BedIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 14 14"
+      role="img"
+      focusable="false"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="M 4.3,7 C 5.1270625,7 5.8,6.32706 5.8,5.5 5.8,4.67294 5.1270625,4 4.3,4 3.4729375,4 2.8,4.67294 2.8,5.5 2.8,6.32706 3.4729375,7 4.3,7 Z m 6.6,-2.4 -4.2,0 C 6.53425,4.6 6.4,4.73425 6.4,4.9 l 0,2.7 -4.2,0 0,-3.9 C 2.2,3.53425 2.06575,3.4 1.9,3.4 l -0.6,0 C 1.13425,3.4 1,3.53425 1,3.7 l 0,6.6 c 0,0.16575 0.13425,0.3 0.3,0.3 l 0.6,0 c 0.16575,0 0.3,-0.13425 0.3,-0.3 l 0,-0.9 9.6,0 0,0.9 c 0,0.16575 0.13425,0.3 0.3,0.3 l 0.6,0 c 0.16575,0 0.3,-0.13425 0.3,-0.3 L 13,6.7 C 13,5.54013 12.059875,4.6 10.9,4.6 Z"></path>
+      </g>
+    </svg>
+  );
+}
+
+export function BathIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="M32,384a95.4,95.4,0,0,0,32,71.09V496a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V480H384v16a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V455.09A95.4,95.4,0,0,0,480,384V336H32ZM496,256H80V69.25a21.26,21.26,0,0,1,36.28-15l19.27,19.26c-13.13,29.88-7.61,59.11,8.62,79.73l-.17.17A16,16,0,0,0,144,176l11.31,11.31a16,16,0,0,0,22.63,0L283.31,81.94a16,16,0,0,0,0-22.63L272,48a16,16,0,0,0-22.62,0l-.17.17c-20.62-16.23-49.83-21.75-79.73-8.62L150.22,20.28A69.25,69.25,0,0,0,32,69.25V256H16A16,16,0,0,0,0,272v16a16,16,0,0,0,16,16H496a16,16,0,0,0,16-16V272A16,16,0,0,0,496,256Z"></path>
+      </g>
+    </svg>
+  );
+}
+
+export function PaymentIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path d="M31,7H1A1,1,0,0,0,0,8V24a1,1,0,0,0,1,1H31a1,1,0,0,0,1-1V8A1,1,0,0,0,31,7ZM25.09,23H6.91A6,6,0,0,0,2,18.09V13.91A6,6,0,0,0,6.91,9H25.09A6,6,0,0,0,30,13.91v4.18A6,6,0,0,0,25.09,23ZM30,11.86A4,4,0,0,1,27.14,9H30ZM4.86,9A4,4,0,0,1,2,11.86V9ZM2,20.14A4,4,0,0,1,4.86,23H2ZM27.14,23A4,4,0,0,1,30,20.14V23Z"></path>{" "}
+        <path d="M7.51.71a1,1,0,0,0-.76-.1,1,1,0,0,0-.61.46l-2,3.43a1,1,0,0,0,1.74,1L7.38,2.94l5.07,2.93a1,1,0,0,0,1-1.74Z"></path>{" "}
+        <path d="M24.49,31.29a1,1,0,0,0,.5.14.78.78,0,0,0,.26,0,1,1,0,0,0,.61-.46l2-3.43a1,1,0,1,0-1.74-1l-1.48,2.56-5.07-2.93a1,1,0,0,0-1,1.74Z"></path>{" "}
+        <path d="M16,10a6,6,0,1,0,6,6A6,6,0,0,0,16,10Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,16,20Z"></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function PetIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 -1 26 26"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="m12.189 5.376v.031c0 .624-.109 1.223-.308 1.779l.012-.037c-.209.576-.546 1.063-.98 1.442l-.004.003c-.421.379-.981.61-1.595.61-.016 0-.032 0-.048 0h.002c-.843-.006-1.605-.348-2.16-.899-.624-.574-1.114-1.282-1.427-2.079l-.013-.038c-.287-.698-.458-1.507-.469-2.355v-.004c0-.009 0-.02 0-.031 0-.624.109-1.223.308-1.779l-.012.037c.209-.576.546-1.063.98-1.442l.004-.003c.421-.379.982-.611 1.596-.611.018 0 .036 0 .054.001h-.003c.843.005 1.606.347 2.16.899.617.573 1.104 1.279 1.416 2.071l.013.038c.289.7.46 1.513.469 2.364v.003zm-5.345 7.548c.001.025.001.054.001.084 0 .782-.246 1.506-.665 2.1l.008-.012c-.393.561-1.037.924-1.765.924-.033 0-.066-.001-.099-.002h.005c-.853-.011-1.628-.338-2.214-.87l.003.003c-1.264-1.089-2.073-2.677-2.117-4.454v-.008c-.001-.024-.001-.053-.001-.082 0-.785.246-1.513.665-2.11l-.008.012c.391-.566 1.036-.932 1.767-.932.032 0 .065.001.097.002h-.005c.853.011 1.628.338 2.214.87l-.003-.003c1.266 1.095 2.074 2.689 2.117 4.473v.007zm6.161-.422c1.521.087 2.896.646 3.998 1.531l-.014-.011c1.419 1.013 2.608 2.242 3.547 3.652l.032.051c.824 1.103 1.351 2.471 1.439 3.957l.001.02c.001.026.002.057.002.087 0 .404-.099.786-.274 1.121l.006-.013c-.172.311-.432.554-.748.699l-.01.004c-.291.139-.63.248-.984.309l-.024.003c-.336.055-.722.086-1.116.086-.025 0-.05 0-.075 0h.004c-1.074-.074-2.071-.326-2.988-.726l.058.023c-.835-.37-1.804-.621-2.82-.701l-.031-.002c-1.103.082-2.125.33-3.075.719l.067-.024c-.921.377-1.989.626-3.105.694l-.028.001q-2.866.002-2.866-2.279c.048-1.109.367-2.134.892-3.022l-.017.03c.617-1.149 1.341-2.138 2.184-3.012l-.004.004c.845-.881 1.808-1.639 2.868-2.249l.062-.033c.859-.54 1.893-.877 3.003-.921h.012zm3.735-3.297c-.014 0-.03 0-.046 0-.614 0-1.174-.232-1.597-.612l.002.002c-.438-.383-.776-.869-.976-1.422l-.008-.024c-.188-.519-.297-1.118-.297-1.742 0-.011 0-.022 0-.033v.002c.009-.855.18-1.667.485-2.411l-.016.044c.326-.831.812-1.536 1.426-2.106l.004-.003c.554-.551 1.317-.893 2.159-.898h.001.046c.614 0 1.174.232 1.597.612l-.002-.002c.438.383.776.869.976 1.422l.008.024c.191.522.301 1.125.301 1.753v.02-.001c-.01.852-.182 1.662-.485 2.403l.016-.044c-.326.835-.816 1.543-1.436 2.113l-.004.004c-.555.549-1.317.891-2.159.896h-.001zm6.75-1.624c.028-.001.06-.002.092-.002.731 0 1.376.366 1.762.925l.005.007c.411.586.657 1.313.657 2.099 0 .029 0 .057-.001.086v-.004c-.044 1.785-.853 3.373-2.109 4.454l-.008.007c-.583.529-1.358.856-2.209.867h-.002c-.028.001-.061.002-.094.002-.728 0-1.372-.362-1.76-.917l-.005-.007c-.411-.582-.657-1.307-.657-2.088 0-.029 0-.059.001-.088v.004c.043-1.791.851-3.385 2.109-4.474l.008-.007c.583-.527 1.356-.854 2.205-.865h.002z"></path>
+      </g>
+    </svg>
+  );
+}
+
+export function ResizeIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 32 32"
+      enableBackground="new 0 0 32 32"
+      xmlSpace="preserve"
+      fill="currentColor"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          x1="6"
+          y1="26"
+          x2="26"
+          y2="6"
+        ></line>{" "}
+        <polyline
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          points="13,27 5,27 5,19 "
+        ></polyline>{" "}
+        <polyline
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          points="19,5 27,5 27,13 "
+        ></polyline>{" "}
+        <line
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          x1="6"
+          y1="6"
+          x2="26"
+          y2="26"
+        ></line>{" "}
+        <polyline
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          points="5,13 5,5 13,5 "
+        ></polyline>{" "}
+        <polyline
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          points="27,19 27,27 19,27 "
+        ></polyline>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function MenuIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="-2.5 0 19 19"
+      xmlns="http://www.w3.org/2000/svg"
+      className="cf-icon-svg"
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="M.789 4.836a1.03 1.03 0 0 1 1.03-1.029h10.363a1.03 1.03 0 1 1 0 2.059H1.818A1.03 1.03 0 0 1 .79 4.836zm12.422 4.347a1.03 1.03 0 0 1-1.03 1.029H1.819a1.03 1.03 0 0 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03zm0 4.345a1.03 1.03 0 0 1-1.03 1.03H1.819a1.03 1.03 0 1 1 0-2.059h10.364a1.03 1.03 0 0 1 1.029 1.03z"></path>
+      </g>
+    </svg>
+  );
+}
+
+export function PropertyIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M8 0L0 6V8H1V15H4V10H7V15H15V8H16V6L14 4.5V1H11V2.25L8 0ZM9 10H12V13H9V10Z"
+          fill="currentColor"
+        ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function ProfileIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path
+          d="M22 12C22 6.49 17.51 2 12 2C6.49 2 2 6.49 2 12C2 14.9 3.25 17.51 5.23 19.34C5.23 19.35 5.23 19.35 5.22 19.36C5.32 19.46 5.44 19.54 5.54 19.63C5.6 19.68 5.65 19.73 5.71 19.77C5.89 19.92 6.09 20.06 6.28 20.2C6.35 20.25 6.41 20.29 6.48 20.34C6.67 20.47 6.87 20.59 7.08 20.7C7.15 20.74 7.23 20.79 7.3 20.83C7.5 20.94 7.71 21.04 7.93 21.13C8.01 21.17 8.09 21.21 8.17 21.24C8.39 21.33 8.61 21.41 8.83 21.48C8.91 21.51 8.99 21.54 9.07 21.56C9.31 21.63 9.55 21.69 9.79 21.75C9.86 21.77 9.93 21.79 10.01 21.8C10.29 21.86 10.57 21.9 10.86 21.93C10.9 21.93 10.94 21.94 10.98 21.95C11.32 21.98 11.66 22 12 22C12.34 22 12.68 21.98 13.01 21.95C13.05 21.95 13.09 21.94 13.13 21.93C13.42 21.9 13.7 21.86 13.98 21.8C14.05 21.79 14.12 21.76 14.2 21.75C14.44 21.69 14.69 21.64 14.92 21.56C15 21.53 15.08 21.5 15.16 21.48C15.38 21.4 15.61 21.33 15.82 21.24C15.9 21.21 15.98 21.17 16.06 21.13C16.27 21.04 16.48 20.94 16.69 20.83C16.77 20.79 16.84 20.74 16.91 20.7C17.11 20.58 17.31 20.47 17.51 20.34C17.58 20.3 17.64 20.25 17.71 20.2C17.91 20.06 18.1 19.92 18.28 19.77C18.34 19.72 18.39 19.67 18.45 19.63C18.56 19.54 18.67 19.45 18.77 19.36C18.77 19.35 18.77 19.35 18.76 19.34C20.75 17.51 22 14.9 22 12ZM16.94 16.97C14.23 15.15 9.79 15.15 7.06 16.97C6.62 17.26 6.26 17.6 5.96 17.97C4.44 16.43 3.5 14.32 3.5 12C3.5 7.31 7.31 3.5 12 3.5C16.69 3.5 20.5 7.31 20.5 12C20.5 14.32 19.56 16.43 18.04 17.97C17.75 17.6 17.38 17.26 16.94 16.97Z"
+          fill="#292D32"
+        ></path>{" "}
+        <path
+          d="M12 6.92969C9.93 6.92969 8.25 8.60969 8.25 10.6797C8.25 12.7097 9.84 14.3597 11.95 14.4197C11.98 14.4197 12.02 14.4197 12.04 14.4197C12.06 14.4197 12.09 14.4197 12.11 14.4197C12.12 14.4197 12.13 14.4197 12.13 14.4197C14.15 14.3497 15.74 12.7097 15.75 10.6797C15.75 8.60969 14.07 6.92969 12 6.92969Z"
+          fill="#292D32"
+        ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function LeaveIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      className="flex-shrink-0 w-5 h-5"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 18 16"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+      />
+    </svg>
+  );
+}
+
+export function BankIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      version="1.0"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 64 64"
+      enableBackground="new 0 0 64 64"
+      xmlSpace="preserve"
+      fill="currentColor"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <g>
+          {" "}
+          <circle fill="currentColor" cx="32" cy="14" r="3"></circle>{" "}
+          <path
+            fill="currentColor"
+            d="M4,25h56c1.794,0,3.368-1.194,3.852-2.922c0.484-1.728-0.242-3.566-1.775-4.497l-28-17 C33.438,0.193,32.719,0,32,0s-1.438,0.193-2.076,0.581l-28,17c-1.533,0.931-2.26,2.77-1.775,4.497C0.632,23.806,2.206,25,4,25z M32,9c2.762,0,5,2.238,5,5s-2.238,5-5,5s-5-2.238-5-5S29.238,9,32,9z"
+          ></path>{" "}
+          <rect x="34" y="27" fill="currentColor" width="8" height="25"></rect>{" "}
+          <rect x="46" y="27" fill="currentColor" width="8" height="25"></rect>{" "}
+          <rect x="22" y="27" fill="currentColor" width="8" height="25"></rect>{" "}
+          <rect x="10" y="27" fill="currentColor" width="8" height="25"></rect>{" "}
+          <path
+            fill="currentColor"
+            d="M4,58h56c0-2.209-1.791-4-4-4H8C5.791,54,4,55.791,4,58z"
+          ></path>{" "}
+          <path
+            fill="currentColor"
+            d="M63.445,60H0.555C0.211,60.591,0,61.268,0,62v2h64v-2C64,61.268,63.789,60.591,63.445,60z"
+          ></path>{" "}
+        </g>{" "}
       </g>
     </svg>
   );

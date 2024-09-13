@@ -17,7 +17,7 @@ const SaveCancelPopup = ({
       }}
       className="select-none fixed z-10 bg-white bottom-3 w-fit border-2 border-secondaryYellow rounded-md flex gap-4 px-4 py-3 items-center"
     >
-      <div>Unsaved changes, do you want to save it ?</div>
+      <div className="max-sm:text-[12px]">Unsaved changes, do you want to save it ?</div>
       <div
         onClick={handleCancel}
         className="bg-white hover:bg-grayLight2 border-2 border-gray-400 p-1 rounded-md cursor-pointer"

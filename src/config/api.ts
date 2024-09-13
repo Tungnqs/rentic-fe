@@ -11,5 +11,7 @@ export const API_PATH_URL = {
     GET_ALL_POSTS: "/api/post/all",
     GET_ALL_MY_POSTS: "/api/post/user/",
     CREATE_POST: "/api/post/add/",
+    GET_POST_BY_ID: "/api/post/id/",
+    DELETE_POST_BY_ID: "/api/post/"
   },
 };

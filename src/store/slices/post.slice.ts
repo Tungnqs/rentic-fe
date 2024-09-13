@@ -2,14 +2,44 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { axiosFormData, axiosInstance } from "../../lib/axios";
 import { RootState } from "..";
-import { IAllPosts } from "../../interfaces/post.interface";
+import { IPost } from "../../interfaces/post.interface";
 
 interface IPostData {
-  allPosts: IAllPosts[];
+  allPosts: IPost[];
+  postDetail: IPost;
+  isLoading: "loading" | "loaded" | "fail";
 }
 
 const initialState: IPostData = {
+  isLoading: "loading",
   allPosts: [],
+  postDetail: {
+    desc: "",
+    bathroom: 0,
+    bedroom: 0,
+    commune: "",
+    district: "",
+    latitude: 0,
+    longitude: 0,
+    type: "",
+    pet: undefined,
+    size: undefined,
+    address: "",
+    city: "",
+    id: "",
+    images: [],
+    price: 0,
+    property: "",
+    title: "",
+    user: {
+      avatar: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      phonenumber: "",
+      username: "",
+    },
+  },
 };
 
 export const getAllMyPosts = createAsyncThunk(
@@ -46,17 +76,69 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const deletePostById = createAsyncThunk(
+  "landlord/deletePostById",
+  async ({ postId }: { postId: string }, { rejectWithValue, dispatch }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.DELETE_POST_BY_ID + postId;
+      const response = await axiosInstance.delete(url);
+      if (response.data) {
+        await dispatch(getAllMyPosts());
+      }
+      return response.data;
+    } catch (err) {
+      console.log("err: ", err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getPostById = createAsyncThunk(
+  "landlord/getPostById",
+  async ({ postId }: { postId: string }, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.GET_POST_BY_ID + postId;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (err) {
+      console.log("err: ", err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "postState",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllMyPosts.pending, (state, action) => {
+      state.isLoading = "loading";
+    });
     builder.addCase(getAllMyPosts.fulfilled, (state, action) => {
       state.allPosts = action.payload;
+      state.isLoading = "loaded";
+    });
+    builder.addCase(getAllMyPosts.rejected, (state, action) => {
+      state.isLoading = "fail";
+    });
+    builder.addCase(getPostById.pending, (state, action) => {
+      state.isLoading = "loading";
+    });
+    builder.addCase(getPostById.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.postDetail = action.payload;
+    });
+    builder.addCase(getPostById.rejected, (state, action) => {
+      state.isLoading = "fail";
     });
   },
 });
 
 export const selectAllMyPosts = (state: RootState) => state.postState.allPosts;
+export const selectCurrentPost = (state: RootState) =>
+  state.postState.postDetail;
+export const selectLoadingStatus = (state: RootState) =>
+  state.postState.isLoading;
 
 export default postSlice.reducer;

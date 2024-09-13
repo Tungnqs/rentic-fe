@@ -10,10 +10,13 @@ import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
 import {
   normalLogin,
+  selectIsLogin,
   selectUserProfile,
+  selectUserRole,
   setIsLoggedIn,
 } from "../../store/slices/auth.slice";
 import Navbar from "../../components/Navbar/Navbar";
+import { useAppRole } from "../../utils/useAppRole.utils";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -21,7 +24,15 @@ const Login = () => {
   const [inputPsw, setInputPsw] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLogin);
+
+  const {checkUserRole} = useAppRole();
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      checkUserRole();
+    }
+  }, [isLoggedIn])
 
   const handleLogin = async () => {
     const loginData: ILogin = {
@@ -33,7 +44,7 @@ const Login = () => {
     const isLoginSuccessful = normalLogin.fulfilled.match(result);
     if (isLoginSuccessful) {
       dispatch(setIsLoggedIn(true));
-      navigate("/");
+      checkUserRole();
     }
   };
 

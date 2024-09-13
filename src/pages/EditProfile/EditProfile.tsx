@@ -13,7 +13,7 @@ import { IUploadedImage } from "../../interfaces/uploadedImage.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 const EditProfile = () => {
-  const userProfile = useSelector(selectUserProfile).user;
+  const userProfile = useSelector(selectUserProfile);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -84,7 +84,7 @@ const EditProfile = () => {
   return (
     <div className="flex justify-center">
       <div
-        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5"
+        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%]"
         style={{
           boxShadow:
             "rgba(125, 125, 125, 0.25) 0px 14px 28px, rgba(125, 125, 125, 0.25) 0px 10px 10px",

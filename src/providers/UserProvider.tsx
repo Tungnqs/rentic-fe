@@ -16,36 +16,34 @@ interface IAppProvider {
 }
 
 export default function UserProvider({ children }: IAppProvider) {
-  const userRole = useSelector(selectUserProfile).user.roles[0];
+  const userRole = useSelector(selectUserProfile).roles[0];
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const token = getCookie("token");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const refetchUserData = async () => {
-      if (!token) {
-        navigate("/login");
-      } else if (token && !userRole) {
-        const getProfileResult = await dispatch(getUserProfile());
-        const isSetUserProfile = getUserProfile.fulfilled.match(getProfileResult);
-        dispatch(setIsLoggedIn(true));
-        if (isSetUserProfile) {
-          navigate("/");
-        } else {
-          navigate("/login");
-        }
-      }
-    };
-    refetchUserData();
-  }, [userRole, token]);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    Promise.all([]).then(() => setLoading(false));
-  }, [dispatch]);
+    const refetchUserData = async () => {
+      try {
+        if (token) {
+          const getProfileResult = await dispatch(getUserProfile());
+          const isSetUserProfile =
+            getUserProfile.fulfilled.match(getProfileResult);
+          setLoading(false);
+          if (isSetUserProfile) {
+            dispatch(setIsLoggedIn(true));
+          }
+        } else {
+          setLoading(false);
+        }
+      } catch {
+        setLoading(false);
+        navigate("/page404");
+      }
+    };
+    refetchUserData();
+  }, [userRole, token, dispatch, navigate]);
 
   return loading ? <Loader /> : children;
 }

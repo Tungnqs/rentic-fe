@@ -4,6 +4,8 @@ export const Layout = styled.div`
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #e6e6e6;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 export const Container = styled.div`
@@ -12,6 +14,9 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const LogoGroup = styled.div`
@@ -52,7 +57,7 @@ export const LeftItem = styled.div`
 
 export const RightNavbar = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 8px;
   align-items: center;
 `;
 
@@ -66,6 +71,9 @@ export const Balance = styled.div`
   p {
     margin: 0;
   }
+  @media (max-width: 550px) {
+    display: none;
+  }
 `;
 
 export const SubscribeBtn = styled.div`
@@ -75,6 +83,9 @@ export const SubscribeBtn = styled.div`
   cursor: pointer;
   &:hover {
     background-color: #e6e6e6;
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 

@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { LocationIcon } from "../../../assets/icon/icon";
 import AddPropertyPopUp from "./AddProperty/AddProperty";
 import { useSelector } from "react-redux";
-import { selectAllMyPosts } from "../../../store/slices/post.slice";
-import { IAllPosts } from "../../../interfaces/post.interface";
+import {
+  selectAllMyPosts,
+  selectLoadingStatus,
+} from "../../../store/slices/post.slice";
+import { IPost } from "../../../interfaces/post.interface";
+import { useNavigate } from "react-router";
+import Loader from "../../../components/Loader/Loader";
 
 const PropertyList = () => {
   const [isOpenAddPopup, setIsOpenAddPopup] = useState(false);
@@ -13,6 +18,7 @@ const PropertyList = () => {
   };
 
   const allMyPosts = useSelector(selectAllMyPosts);
+  const loadingStatus = useSelector(selectLoadingStatus);
   // const [postToDisplay, setPostToDisplay] = useState<IAllPosts[]>([]);
 
   // useEffect(() => {
@@ -34,14 +40,14 @@ const PropertyList = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[80%] p-7 flex flex-col gap-10 relative">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[450px] justify-between">
+      <div className="w-[80%] max-md:w-full p-7 flex flex-col gap-10 relative">
+        <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
+          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[70%] max-md:min-w-[300px] justify-between">
             <div className="w-8">
               <LocationIcon className="text-secondaryYellow w-full" />
             </div>
             <input
-              className="w-[68%]"
+              className="flex-1"
               value={searchingKeyword}
               onChange={(e) => setSearchingKeyword(e.target.value)}
               type="text"
@@ -63,7 +69,11 @@ const PropertyList = () => {
             </div>
           </div>
         </div>
-        {allMyPosts && <PropertyItems postToDisplay={allMyPosts} />}
+        {loadingStatus === "loading" ? (
+          <Loader />
+        ) : (
+          <PropertyItems postToDisplay={allMyPosts} />
+        )}
       </div>
       {isOpenAddPopup && <AddPropertyPopUp togglePopup={toggleAddPopup} />}
     </div>
@@ -71,14 +81,16 @@ const PropertyList = () => {
 };
 
 interface IPropertyItemsProps {
-  postToDisplay: IAllPosts[];
+  postToDisplay: IPost[];
 }
 
 const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
+  const navigate = useNavigate();
   return (
     <div className="flex w-full gap-2 flex-wrap gap-y-4 justify-evenly">
       {postToDisplay.map((item) => (
         <div
+          onClick={() => navigate(item.id)}
           key={item.id}
           className="w-[250px] p-4 cursor-pointer bg-grayLight1 flex flex-col gap-[10px] hover:bg-grayLight2 rounded-xl hover:-translate-y-1 hover:shadow-xl duration-100 border"
         >
@@ -94,9 +106,9 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
           />
           <div className="text-[19px]">
             {item.price}{" "}
-            <span className="text-green-700 font-semibold">VND</span>
+            <span className="text-green-700 font-semibold">₫</span>
           </div>
-          <div className="text-secondaryYellow text-[24px] font-bold">
+          <div className="text-secondaryYellow text-[24px] font-bold truncate">
             {item.title}
           </div>
           <div className="text-[11px]">{item.city}</div>

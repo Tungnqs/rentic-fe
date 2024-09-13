@@ -5,6 +5,7 @@ import Register from "../pages/Register/Register";
 import { Navigate } from "react-router";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
 import EditProfile from "../pages/EditProfile/EditProfile";
+import PropertyDetail from "../pages/LandLord/Property/PropertyDetail/PropertyDetail";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -22,6 +23,10 @@ export const landLordRoutes: IRoute[] = [
   {
     path: "/properties",
     component: <PropertyList />,
+  },
+  {
+    path: "/properties/:id",
+    component: <PropertyDetail />,
   },
   {
     path: "/profile",

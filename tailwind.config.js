@@ -11,8 +11,11 @@ module.exports = {
         'lightYellow': '#ffcf4d',
         'primaryYellow': "rgb(255, 186, 0)",
         'secondaryYellow': "#ce8236",
+        'thirdYellow': "#9e6327",
         'grayLight1': "#f2f2f2",
         'grayLight2': "#e6e6e6",
+        'gray1': '#cccccc',
+        'darkGray': '#403f3f',
       }
     },
   },

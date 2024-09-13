@@ -6,6 +6,7 @@ import UploadFileArea from "../UploadFileArea";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store";
 import { createPost } from "../../../../store/slices/post.slice";
+import MapAutoComplete from "../../../../components/MapAutoComplete/MapAutoComplete";
 
 interface IAddPropertyPopUpProps {
   togglePopup: () => void;
@@ -65,7 +66,7 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
         className="fixed inset-0 bg-black opacity-80"
         onClick={togglePopup}
       />
-      <div className="relative bg-white z-10 w-[70%] max-h-[95vh] overflow-y-scroll p-4 flex flex-col gap-5 rounded-md select-none">
+      <div className="relative bg-white z-10 w-[70%] max-md:w-full max-h-[95vh] max-md:max-h-screen overflow-y-scroll p-4 flex flex-col gap-5 rounded-md max-md:rounded-none select-none">
         <div className="flex justify-between">
           <div className="text-[24px] font-semibold text-secondaryYellow">
             Add a new property
@@ -77,23 +78,31 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
             <SquareCloseIcon className="w-full" />
           </div>
         </div>
-        <div className="middle-part flex gap-[2%]">
+        <div className="flex justify-center gap-3 items-center">
+          <div>Add your property location:</div>
+          <MapAutoComplete
+            setCity={setCity}
+            setCommune={setCommune}
+            setDistrict={setDistrict}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+        </div>
+        <div className="middle-part flex gap-[2%] max-sm:flex-col max-sm:gap-4">
           <LeftBlock
             purpose={purpose}
             setPriceField={setPriceField}
             setPurpose={setPurpose}
             title={title}
             setTitle={setTitle}
-            setDistrict={setDistrict}
             district={district}
           />
           <MiddleBlock
             city={city}
-            setCity={setCity}
             setPropertyType={setPropertyType}
             setSize={setSize}
-            setCommune={setCommune}
             commune={commune}
+            propertyType={propertyType}
           />
           <RightBlock
             address={address}
@@ -102,36 +111,17 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
             setBathroom={setBathroom}
             allowPet={allowPet}
             setBedroomNumber={setBedroomNumber}
+            latitude={latitude}
+            longitude={longitude}
           />
-        </div>
-        <div className="flex gap-3">
-          <div>
-            <div>Longitude:</div>
-            <input
-              value={longitude}
-              className="border-2 border-black rounded-md p-2"
-              type="number"
-              onChange={(e) => setLongitude(Number(e.target.value))}
-              required
-            />
-          </div>
-          <div>
-            <div>Latitude:</div>
-            <input
-              value={latitude}
-              className="border-2 border-black rounded-md p-2"
-              type="number"
-              onChange={(e) => setLatitude(Number(e.target.value))}
-              required
-            />
-          </div>
         </div>
         <div>
           <div>Description</div>
           <textarea
+            rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border-2 border-black rounded-md p-2 w-full max-h-[80px] min-h-[80px]"
+            className="border-2 border-black rounded-md p-2 w-full max-h-[200px] min-h-[80px]"
           ></textarea>
         </div>
         <div>
@@ -163,7 +153,6 @@ interface ILeftBlockProps {
   title: string;
   district: string;
   setTitle: (value: string) => void;
-  setDistrict: (value: string) => void;
 }
 
 const LeftBlock = ({
@@ -172,13 +161,12 @@ const LeftBlock = ({
   purpose,
   title,
   setTitle,
-  setDistrict,
-  district
+  district,
 }: ILeftBlockProps) => {
   return (
     <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="h-[100px] flex flex-col gap-1">
-        <div>Do you want it to be rented or sold?</div>
+      <div className="h-[100px] max-sm:h-fit flex flex-col gap-1">
+        <div>Do you want it to be rented or purchased?</div>
         <div>
           <div className="flex items-center gap-2">
             <input
@@ -198,7 +186,7 @@ const LeftBlock = ({
               checked={purpose === "buy"}
               onChange={(e) => setPurpose(e.target.value)}
             />
-            <div>Sell</div>
+            <div>Buy</div>
           </div>
         </div>
       </div>
@@ -212,19 +200,17 @@ const LeftBlock = ({
           required
         />
       </div>
-      <div>
-        <div>District:</div>
-        <input
-          value={district}
-          className="border-2 border-black rounded-md w-full p-2"
-          type="text"
-          onChange={(e) => setDistrict(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <div>Price (in VND):</div>
-        <Counter setValue={setPriceField} noNeedBtn={true} />
+      <div className="flex flex-col gap-4 max-sm:flex-row">
+        <div className="flex-1">
+          <div>District:</div>
+          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
+            {district}
+          </div>
+        </div>
+        <div className="flex-1">
+          <div>Price (in VND):</div>
+          <Counter setValue={setPriceField} noNeedBtn={true} />
+        </div>
       </div>
     </div>
   );
@@ -235,51 +221,50 @@ interface IMiddleBlockProps {
   setSize: (value: number) => void;
   city: string;
   commune: string;
-  setCity: (value: string) => void;
-  setCommune: (value: string) => void;
+  propertyType: string;
 }
 
 const MiddleBlock = ({
   setPropertyType,
   setSize,
   city,
-  setCity,
-  setCommune,
-  commune
+  commune,
+  propertyType,
 }: IMiddleBlockProps) => {
   const dropdownValues = ["apartment", "house", "condo", "land"];
   return (
     <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="h-[100px]">
-        <div>Property Type</div>
-        <Dropdown
-          chooseValue={setPropertyType}
-          dropdownTitle="Choose property type"
-          dropdownValues={dropdownValues}
-        />
+      <div className="h-[100px] max-sm:h-fit flex flex-col gap-1">
+        <div>
+          <div>Property Type</div>
+          <Dropdown
+            chooseValue={setPropertyType}
+            dropdownTitle="Choose Type"
+            dropdownValues={dropdownValues}
+          />
+        </div>
+        {!propertyType && (
+          <div className="text-[13px] font-semibold text-red-600">
+            *You have to choose property type
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col gap-4 max-sm:flex-row">
+        <div className="flex-1">
+          <div>City:</div>
+          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
+            {city}
+          </div>
+        </div>
+        <div className="flex-1">
+          <div>Commune:</div>
+          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
+            {commune}
+          </div>
+        </div>
       </div>
       <div>
-        <div>City:</div>
-        <input
-          className="border-2 border-black rounded-md w-full p-2"
-          type="text"
-          required
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </div>
-      <div>
-        <div>Commune:</div>
-        <input
-          className="border-2 border-black rounded-md w-full p-2"
-          type="text"
-          required
-          value={commune}
-          onChange={(e) => setCommune(e.target.value)}
-        />
-      </div>
-      <div>
-        <div>Size (in m²):</div>
+        <div>Acreage (in m²):</div>
         <Counter setValue={setSize} noNeedBtn={true} />
       </div>
     </div>
@@ -293,6 +278,8 @@ interface IRightBlockProps {
   address: string;
   setAddress: (value: string) => void;
   setBedroomNumber: (value: number) => void;
+  longitude: number;
+  latitude: number;
 }
 
 const RightBlock = ({
@@ -301,54 +288,74 @@ const RightBlock = ({
   allowPet,
   address,
   setAddress,
-  setBedroomNumber
+  setBedroomNumber,
+  longitude,
+  latitude,
 }: IRightBlockProps) => {
   return (
     <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="h-[100px] flex flex-col gap-1">
-        <div>Do you allow renter to have pets in the property?</div>
+      <div className="flex flex-col gap-4 max-sm:flex-row">
+        <div className="h-[100px] max-sm:h-fit flex flex-col gap-1 flex-1">
+          <div>Do you allow renter to have pets in the property?</div>
+          <div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="petAllowed"
+                className="text-secondaryYellow"
+                checked={allowPet}
+                onChange={() => setAllowPet(true)}
+              />
+              <div>Yes</div>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="petAllowed"
+                checked={!allowPet}
+                onChange={() => setAllowPet(false)}
+              />
+              <div>No</div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1">
+          <div>Address:</div>
+          <input
+            className="border-2 border-black rounded-md w-full p-2"
+            type="text"
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="flex gap-5">
         <div>
-          <div className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="petAllowed"
-              className="text-secondaryYellow"
-              checked={allowPet}
-              onChange={() => setAllowPet(true)}
-            />
-            <div>Yes</div>
+          <div>Bathroom:</div>
+          <div className="w-[130px]">
+            <Counter setValue={setBathroom} />
           </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="petAllowed"
-              checked={!allowPet}
-              onChange={() => setAllowPet(false)}
-            />
-            <div>No</div>
+        </div>
+        <div className="flex-1">
+          <div>Longitude:</div>
+          <div className="border-2 border-black rounded-md p-2 cursor-not-allowed bg-grayLight2">
+            {longitude}
           </div>
         </div>
       </div>
-      <div>
-        <div>Address:</div>
-        <input
-          className="border-2 border-black rounded-md w-full p-2"
-          type="text"
-          required
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-      </div>
-      <div>
-        <div>Bathroom:</div>
-        <div className="w-[130px]">
-          <Counter setValue={setBathroom} />
+      <div className="flex gap-5">
+        <div>
+          <div>Bedroom:</div>
+          <div className="w-[130px]">
+            <Counter setValue={setBedroomNumber} />
+          </div>
         </div>
-      </div>
-      <div>
-        <div>Bedroom:</div>
-        <div className="w-[130px]">
-          <Counter setValue={setBedroomNumber} />
+        <div className="flex-1">
+          <div>Latitude:</div>
+          <div className="border-2 border-black rounded-md p-2 cursor-not-allowed bg-grayLight2">
+            {latitude}
+          </div>
         </div>
       </div>
     </div>
