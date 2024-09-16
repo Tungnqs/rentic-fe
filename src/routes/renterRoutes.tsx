@@ -3,7 +3,7 @@ import { IRoute } from "../interfaces";
 import Loader from "../components/Loader/Loader";
 import Register from "../pages/Register/Register";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
-import Login from "../pages/Login/Login";
+import Login from "../pages/SignIn/Login";
 
 export const renterRoutes: IRoute[] = [
   {

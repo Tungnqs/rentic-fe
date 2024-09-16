@@ -2,7 +2,7 @@ import React from "react";
 import { IRoute } from "../interfaces";
 import Register from "../pages/Register/Register";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
-import Login from "../pages/Login/Login";
+import Login from "../pages/SignIn/Login";
 import { Navigate } from "react-router";
 
 export const standaloneRoutes: IRoute[] = [
