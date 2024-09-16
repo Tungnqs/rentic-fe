@@ -5,6 +5,8 @@ import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { deleteCookie, setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
 import { IUserProfile } from "../../interfaces/userProfile.iterface";
+import { toast } from "react-toastify";
+import { checkErr } from "../../utils/notification.utils";
 
 interface IAuth {
   userRole?: string;
@@ -38,10 +40,12 @@ export const registerAccount = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.AUTH.REGISTER;
       const response = await axiosInstance.post(url, data);
-      console.log(response.data);
+      toast.success(response.data.message);
+      console.log("response.data: ", response.data);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -54,8 +58,9 @@ export const getUserProfile = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.get(url);
       return response.data;
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -74,13 +79,14 @@ export const editUserProfile = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.put(url, data);
-      console.log("response.data: ", response.data);
       if (response.data) {
         await dispatch(getUserProfile());
       }
+      toast.success(response.data.message);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log("err: ", err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -94,9 +100,11 @@ export const normalLogin = createAsyncThunk(
       const response = await axiosInstance.post(url, data);
       setCookie("token", response.data.token);
       dispatch(getUserProfile());
+      toast.success(response.data.message);
       return response.data;
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -109,6 +117,7 @@ export const authLogout = createAsyncThunk(
       deleteCookie("token");
       dispatch(setIsLoggedIn(false));
       dispatch(clearUserProfile());
+      toast.success("Logout successfully!");
     } catch (err) {
       return rejectWithValue(err);
     }

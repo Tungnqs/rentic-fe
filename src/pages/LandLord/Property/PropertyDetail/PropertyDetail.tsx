@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { AppDispatch } from "../../../../store";
@@ -25,6 +25,7 @@ import "leaflet/dist/leaflet.css";
 import { icon } from "leaflet";
 import mapMaker from "../../../../assets/images/map-marker.png";
 import ConfirmModal from "../../../../components/ConfirmModal/ConfirmModal";
+import EditProperty from "../EditProperty/EditProperty";
 
 const PropertyDetail = () => {
   const postId = useParams().id;
@@ -46,6 +47,16 @@ const PropertyDetail = () => {
     navigate("/properties");
   };
 
+  const [isOpenEditPopup, setIsOpenEditPopup] = useState(false);
+  const toggleEditPopup = () => {
+    setIsOpenEditPopup(!isOpenEditPopup);
+  };
+
+  const imageToDisplay = useMemo(() => {
+    const imageUrlArr: string[] = currentPostData.images.map((imgObj) => imgObj.path);
+    return imageUrlArr;
+  }, [currentPostData.images]);
+
   return (
     <div className="flex justify-center py-10">
       {isOpenDeletePopup && (
@@ -58,7 +69,8 @@ const PropertyDetail = () => {
           confirmBtnClass="bg-red-600 hover:bg-red-700 text-white"
         />
       )}
-      <div className="w-2/3 max-md:w-[90%] flex flex-col gap-5">
+      {isOpenEditPopup && (<EditProperty currentPostData={currentPostData} togglePopup={toggleEditPopup}/>)}
+      <div className="w-2/3 max-md:w-[90%] flex flex-col gap-5 z-10">
         <div className="flex justify-between items-center max-md:flex-col max-md:items-start max-md:gap-3">
           <div
             onClick={() => navigate("/properties")}
@@ -70,7 +82,7 @@ const PropertyDetail = () => {
             <div className="group-hover:underline">Back to Property List</div>
           </div>
           <div className="flex gap-3 items-center">
-            <div className="bg-lightYellow hover:bg-primaryYellow px-3 py-2 font-medium cursor-pointer rounded-sm">
+            <div onClick={toggleEditPopup} className="bg-lightYellow hover:bg-primaryYellow px-3 py-2 font-medium cursor-pointer rounded-sm">
               Edit property detail
             </div>
             <div
@@ -111,15 +123,21 @@ const PropertyDetail = () => {
                 </div>
                 <div>
                   <span className="text-secondaryYellow font-semibold">
-                    Type:{" "}
+                    Purpose:{" "}
                   </span>
                   For {currentPostData.type}ing
+                </div>
+                <div>
+                  <span className="text-secondaryYellow font-semibold">
+                    Property Type:{" "}
+                  </span>
+                  <span className="uppercase">{currentPostData.property}</span>
                 </div>
               </div>
               <div className="flex justify-center">
                 <div className="w-2/3 max-lg:w-full">
                   <Carousel
-                    imageArray={currentPostData.images}
+                    imageArray={imageToDisplay}
                     expandedClassName="w-full aspect-video"
                   />
                 </div>

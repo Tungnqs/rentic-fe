@@ -3,6 +3,8 @@ import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { axiosFormData, axiosInstance } from "../../lib/axios";
 import { RootState } from "..";
 import { IPost } from "../../interfaces/post.interface";
+import { toast } from "react-toastify";
+import { checkErr } from "../../utils/notification.utils";
 
 interface IPostData {
   allPosts: IPost[];
@@ -27,7 +29,12 @@ const initialState: IPostData = {
     address: "",
     city: "",
     id: "",
-    images: [],
+    images: [
+      {
+        name: "",
+        path: "",
+      }
+    ],
     price: 0,
     property: "",
     title: "",
@@ -49,8 +56,9 @@ export const getAllMyPosts = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.POST.GET_ALL_MY_POSTS;
       const response = await axiosInstance.get(url);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -68,9 +76,34 @@ export const createPost = createAsyncThunk(
       if (response.data) {
         await dispatch(getAllMyPosts());
       }
+      toast.success(response.data.message);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const editPost = createAsyncThunk(
+  "landlord/editPost",
+  async (
+    { formData, postId }: { formData: FormData; postId: string },
+    { dispatch, rejectWithValue }
+  ) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.MODIFY_POST_BY_ID + postId;
+      const response = await axiosFormData.put(url, formData);
+      if (response.data) {
+        await dispatch(getPostById({postId: postId}));
+      }
+      toast.success(response.data.message);
+      console.log('response.data: ', response.data);
+      return response.data;
+    } catch (err: any) {
+      console.log("err: ", err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -80,14 +113,16 @@ export const deletePostById = createAsyncThunk(
   "landlord/deletePostById",
   async ({ postId }: { postId: string }, { rejectWithValue, dispatch }) => {
     try {
-      const url = API_BASE_URL + API_PATH_URL.POST.DELETE_POST_BY_ID + postId;
+      const url = API_BASE_URL + API_PATH_URL.POST.MODIFY_POST_BY_ID + postId;
       const response = await axiosInstance.delete(url);
       if (response.data) {
         await dispatch(getAllMyPosts());
       }
+      toast.success(response.data.message);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log("err: ", err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }
@@ -100,8 +135,9 @@ export const getPostById = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.POST.GET_POST_BY_ID + postId;
       const response = await axiosInstance.get(url);
       return response.data;
-    } catch (err) {
+    } catch (err:any) {
       console.log("err: ", err);
+      checkErr(err);
       return rejectWithValue(err);
     }
   }

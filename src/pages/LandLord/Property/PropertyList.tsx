@@ -99,7 +99,7 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
             className="w-full object-cover rounded-md"
             src={
               item.images.length > 0
-                ? item.images[0]
+                ? item.images[0].path
                 : "https://chefjob.vn/wp-content/uploads/2020/04/homestay-duoc-nhieu-du-khach-lua-chon.jpg"
             }
             alt=""

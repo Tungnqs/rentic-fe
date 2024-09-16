@@ -141,14 +141,17 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/3">
-              <Dropdown
-                dropdownValues={roleDropDownValues}
-                dropdownTitle="Choose role"
-                chooseValue={(value) => setRoleField(value.toLocaleUpperCase())}
-              />
+            <div>
+              <div>Choose Account Role:</div>
+              <div className="w-1/3">
+                <Dropdown
+                  dropdownValues={roleDropDownValues}
+                  chooseValue={(value) =>
+                    setRoleField(value.toLocaleUpperCase())
+                  }
+                />
+              </div>
             </div>
-
             <button
               type="submit"
               className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"

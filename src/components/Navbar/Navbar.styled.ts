@@ -103,6 +103,6 @@ export const UserAvatar = styled.img`
   aspect-ratio: 1/1;
   width: 50px;
   border-radius: 999px;
-  border: 1px solid #000000;
+  border: 3px solid #ce8236;
   object-fit: cover;
 `;

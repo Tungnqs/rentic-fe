@@ -1,9 +1,14 @@
 export interface IPost {
   id: string;
   title: string;
-  desc: string
+  desc: string;
   price: number;
-  images: string[];
+  images: [
+    {
+      name: string;
+      path: string;
+    }
+  ];
   address: string;
   district: string;
   commune: string;

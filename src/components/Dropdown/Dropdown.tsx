@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowDownIcon } from "../../assets/icon/icon";
 
 interface IDropdownProps {
-  dropdownTitle: string;
   dropdownValues: string[];
   chooseValue: (value: string) => void;
 }
 
 const Dropdown = ({
-  dropdownTitle,
   dropdownValues,
   chooseValue,
 }: IDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState(dropdownTitle);
+  const [title, setTitle] = useState(dropdownValues[0]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -24,6 +22,10 @@ const Dropdown = ({
     setTitle(option);
     chooseValue(option);
   };
+
+  useEffect(()=>{
+    chooseValue(dropdownValues[0]);
+  }, [])
 
   return (
     <div className="relative inline-block w-full min-w-[130px]">
@@ -37,7 +39,6 @@ const Dropdown = ({
         <ArrowDownIcon />
       </button>
 
-      {/* Dropdown menu */}
       {isOpen && (
         <div
           id="dropdown"

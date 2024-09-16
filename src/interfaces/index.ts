@@ -34,6 +34,18 @@ export interface IRegister {
   role: string;
 }
 
+export interface IError{
+  errors:[
+    {
+      type: string,
+      value: number | string;
+      msg: string;
+      path: string;
+      location: string
+    }
+  ]
+}
+
 export interface ILogin {
   email: string;
   password: string;

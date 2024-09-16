@@ -4,19 +4,19 @@ import { MinusIcon, PlusIcon } from "../../assets/icon/icon";
 interface ICounterProps {
   setValue: (value: number) => void;
   noNeedBtn?: boolean;
+  defaultValue: number
 }
 
-const Counter = ({ setValue, noNeedBtn }: ICounterProps) => {
-  const [quantity, setQuantity] = useState<number>(0);
+const Counter = ({ setValue, noNeedBtn, defaultValue }: ICounterProps) => {
 
-  const increment = () => setQuantity((prev) => prev + 1);
-  const decrement = () => setQuantity((prev) => (prev > 0 ? prev - 1 : 0));
+  const increment = () => setValue(defaultValue + 1);
+  const decrement = () => setValue(defaultValue > 0 ? defaultValue - 1 : 0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const numberValue = value === "" ? 0 : Number(value);
     if (!isNaN(numberValue)) {
-      setQuantity(numberValue);
+      setValue(numberValue);
     }
   };
   
@@ -25,10 +25,6 @@ const Counter = ({ setValue, noNeedBtn }: ICounterProps) => {
       e.preventDefault();
     }
   };
-
-  useEffect(() => {
-    setValue(quantity);
-  }, [quantity, setValue]);
 
   return (
     <div className="relative flex items-center w-full">
@@ -42,7 +38,7 @@ const Counter = ({ setValue, noNeedBtn }: ICounterProps) => {
       )}
       <input
         type="text"
-        value={quantity}
+        value={defaultValue}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         aria-describedby="helper-text-explanation"
