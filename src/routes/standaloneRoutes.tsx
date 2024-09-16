@@ -8,6 +8,7 @@ import PropertyList from "../pages/LandLord/Property/PropertyList";
 import Homepage from "../pages/Homepage/Homepage";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 
+
 export const standaloneRoutes: IRoute[] = [
   {
     path: "*",
@@ -15,7 +16,7 @@ export const standaloneRoutes: IRoute[] = [
   },
   {
     path: "/",
-    component: <Homepage />
+    component: <Navigate to={"/login"} />
   },
   {
     path: "/login",
