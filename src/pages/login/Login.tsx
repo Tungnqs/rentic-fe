@@ -8,8 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
-import { normalLogin, selectUserProfile, setIsLoggedIn } from "../../store/slices/auth.slice";
+import {
+  normalLogin,
+  selectIsLogin,
+  selectUserProfile,
+  selectUserRole,
+  setIsLoggedIn,
+} from "../../store/slices/auth.slice";
 import Navbar from "../../components/Navbar/Navbar";
+import { useAppRole } from "../../utils/useAppRole.utils";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -17,28 +24,29 @@ const Login = () => {
   const [inputPsw, setInputPsw] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLogin);
 
-  const handleLogin = async() => {
+  const {checkUserRole} = useAppRole();
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      checkUserRole();
+    }
+  }, [isLoggedIn])
+
+  const handleLogin = async () => {
     const loginData: ILogin = {
       email: inputAccount,
       password: inputPsw,
     };
-    const isLoginSuccessful = await dispatch(normalLogin(loginData));
-    if(isLoginSuccessful){
-      dispatch(setIsLoggedIn(true));
-      navigate("/");
-    } 
-  };
 
-  // const userRole = useSelector(selectUserProfile).userProfile.roles[0];
-  
-  // useEffect(()=>{
-  // console.log("s");
-  //   if(userRole){
-  //     navigate("/");
-  //   }
-  // }, [navigate, userRole]);
+    const result = await dispatch(normalLogin(loginData));
+    const isLoginSuccessful = normalLogin.fulfilled.match(result);
+    if (isLoginSuccessful) {
+      dispatch(setIsLoggedIn(true));
+      checkUserRole();
+    }
+  };
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
@@ -47,7 +55,7 @@ const Login = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="layout flex justify-center flex-1">
         <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
           <div className="top-block">

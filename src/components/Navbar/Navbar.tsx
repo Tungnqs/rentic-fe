@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearUserProfile,
+  authLogout,
   selectIsLogin,
-  setIsLoggedIn,
+  selectUserProfile,
 } from "../../store/slices/auth.slice";
 import { AppDispatch } from "../../store";
-import { deleteCookie } from "../../utils/cookies.utils";
+import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
+import { MenuIcon } from "../../assets/icon/icon";
+import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
 
 export interface INavbarItems {
   title: string;
-  path: string;
+  path?: string;
+  popup?: React.JSX.Element;
+  icon?: React.JSX.Element;
 }
 
 interface INavbarItemsProps {
@@ -23,29 +27,52 @@ interface INavbarItemsProps {
 const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
-  const handleLogout = () => {
-    deleteCookie("token");
-    dispatch(setIsLoggedIn(false));
-    dispatch(clearUserProfile());
-  };
-  // useEffect(()=>{
-
-  // })
-  console.log("navbarItems", navbarItems);
   
+  const navigate = useNavigate();
+  const userProfile = useSelector(selectUserProfile);
+
+  const avatar = useMemo(() => {
+    if (userProfile.avatar) {
+      return userProfile.avatar;
+    }
+    return AnonymousAvatar;
+  }, [userProfile.avatar]);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = async () => {
+    await dispatch(authLogout());
+    setIsSidebarOpen(false);
+    navigate("/login");
+  };
+
   return (
     <S.Layout>
+      <CollapseSidebar handleLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} menuItems={navbarItems}/>
       <S.Container>
         <div className="flex items-center gap-3">
-          <S.LogoGroup>
-            <S.Logo src={Logo} />
-            <S.LeftItem>Rentic</S.LeftItem>
-          </S.LogoGroup>
-          <div className="flex items-center gap-3">
+          <div className="flex max-md:gap-3">
+          {isLogin && <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
+              <MenuIcon onClick={toggleSidebar} className="max-md:w-[45px] max-md:block hidden" />
+            </div> }
+            <S.LogoGroup
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              <S.Logo src={Logo} />
+              <S.LeftItem>Rentic</S.LeftItem>
+            </S.LogoGroup>
+          </div>
+          <div className="flex items-center gap-3 max-md:hidden">
             {navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
-                  to={navbarItem.path}
+                  to={navbarItem.path as string}
                   key={index}
                   className="hover:underline cursor-pointer"
                 >
@@ -58,15 +85,14 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
             <>
               <S.Balance>
-                <i className="bi bi-wallet2"></i>
-                <p>Balance: 0 VND</p>
+                <p className="w-fit">Balance: 0 VND</p>
               </S.Balance>
               <S.SubscribeBtn>Deposit</S.SubscribeBtn>
             </>
           )}
           {isLogin ? (
             <div className="flex gap-3 items-center">
-              <S.UserAvatar src="https://avatars.preply.com/i/logos/90ee146d-c421-4333-8247-d558d988330a.jpg" />
+              <S.UserAvatar src={avatar} />
               <div
                 onClick={handleLogout}
                 className="cursor-pointer hover:underline"

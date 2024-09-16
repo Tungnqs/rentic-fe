@@ -25,11 +25,25 @@ export interface INotificationState {
 }
 
 export interface IRegister {
+  firstName: string;
+  lastName: string;
   email: string;
   username: string;
   password: string;
   phonenumber: string;
   role: string;
+}
+
+export interface IError{
+  errors:[
+    {
+      type: string,
+      value: number | string;
+      msg: string;
+      path: string;
+      location: string
+    }
+  ]
 }
 
 export interface ILogin {

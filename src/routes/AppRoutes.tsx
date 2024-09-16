@@ -9,14 +9,9 @@ import { adminRoutes } from "./adminRoutes";
 import { renterRoutes } from "./renterRoutes";
 import LandlordLayout from "../components/Layout/LandlordLayout";
 import { landLordRoutes } from "./landLordRoutes";
-import { llRoutes } from "./llRoutes";
 
 export default function AppRoutes() {
-  const userRole = useSelector(selectUserProfile).userProfile.roles[0];
-  // const nav = useNavigate();
-  // useEffect(()=>{
-  //   nav("/");
-  // }, [userRole])
+  const userRole = useSelector(selectUserProfile).roles[0];
 
   return (
     <Routes>

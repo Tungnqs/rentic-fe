@@ -8,10 +8,6 @@ import PropertyList from "../pages/LandLord/Property/PropertyList";
 export const renterRoutes: IRoute[] = [
   {
     path: "/",
-    component: <PropertyList />,
-  },
-  {
-    path: "/test",
     component: <Loader />,
   },
   {
@@ -21,9 +17,5 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/register",
     component: <Register />
-  },
-  {
-    path: "/properties",
-    component: <PropertyList />,
   },
 ];

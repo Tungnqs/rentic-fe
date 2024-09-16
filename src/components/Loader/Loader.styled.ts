@@ -34,7 +34,7 @@ export const FirstCircle = styled(Circle)`
   height: var(--s-14);
   border: var(--s-6) solid;
   border-radius: 50%;
-  border-color: transparent var(--blue-light-2) var(--blue-light-2) var(--blue-light-2);
+  border-color: transparent var(--yellow-2) var(--yellow-2) var(--yellow-2);
   box-sizing: border-box;
   transform: rotate(45deg);
   transform-origin: var(--s-13) var(--s-13);
@@ -47,7 +47,7 @@ export const SecondCircle = styled(Circle)`
   height: var(--s-14);
   border: var(--s-6) solid;
   border-radius: 50%;
-  border-color: transparent var(--blue-light-2) var(--blue-light-2) var(--blue-light-2);
+  border-color: transparent var(--yellow-2) var(--yellow-2) var(--yellow-2);
   box-sizing: border-box;
   transform: rotate(0deg);
   transform-origin: var(--s-13) var(--s-13);
@@ -59,7 +59,7 @@ export const ThirdCircle = styled(Circle)`
   width: 0;
   height: 0;
   border: var(--s-6) solid;
-  border-color: transparent transparent transparent #93dbe9;
+  border-color: transparent transparent transparent #ce8236;
   transform: translate(var(--s-13), var(--s-1-larger));
 `;
 
