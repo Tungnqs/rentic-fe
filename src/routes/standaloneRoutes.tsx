@@ -1,9 +1,9 @@
 import React from "react";
 import { IRoute } from "../interfaces";
-import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import Homepage from "../pages/Homepage/Homepage";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Login from "../pages/Login/Login";
+import { Navigate } from "react-router";
 
 export const standaloneRoutes: IRoute[] = [
   {
@@ -12,7 +12,7 @@ export const standaloneRoutes: IRoute[] = [
   },
   {
     path: "/",
-    component: <Homepage />
+    component: <Navigate to={"/login"} />,
   },
   {
     path: "/login",
