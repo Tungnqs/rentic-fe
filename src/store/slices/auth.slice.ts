@@ -4,9 +4,10 @@ import { axiosInstance } from "../../lib/axios";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
 import { deleteCookie, setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
-import { IUserProfile } from "../../interfaces/userProfile.iterface";
+import { IUserProfile } from "../../interfaces/userProfile.interface";
 import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
+import { useNavigate } from "react-router";
 
 interface IAuth {
   userRole?: string;
@@ -30,6 +31,8 @@ const initialState: IAuth = {
       phonenumber: "",
       roles: [],
       username: "",
+      createdAt: "",
+      googleId: "",
     },
   },
 };
@@ -58,7 +61,7 @@ export const getUserProfile = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.get(url);
       return response.data;
-    } catch (err:any) {
+    } catch (err: any) {
       console.log(err);
       checkErr(err);
       return rejectWithValue(err);
@@ -102,7 +105,7 @@ export const normalLogin = createAsyncThunk(
       dispatch(getUserProfile());
       toast.success(response.data.message);
       return response.data;
-    } catch (err:any) {
+    } catch (err: any) {
       console.log(err);
       checkErr(err);
       return rejectWithValue(err);
@@ -151,6 +154,8 @@ export const authSlice = createSlice({
           balance: undefined,
           isBlocked: undefined,
           isVerified: undefined,
+          createdAt: "",
+          googleId: "",
         },
       };
     },
@@ -162,7 +167,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(normalLogin.fulfilled, (state, action) => {
       state.isLogin = true;
-      state.userRole = action.payload.roles[0]
+      state.userRole = action.payload.roles[0];
     });
   },
 });

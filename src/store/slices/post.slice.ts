@@ -7,14 +7,14 @@ import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
 
 interface IPostData {
-  allPosts: IPost[];
+  post: IPost[];
   postDetail: IPost;
   isLoading: "loading" | "loaded" | "fail";
 }
 
 const initialState: IPostData = {
   isLoading: "loading",
-  allPosts: [],
+  post: [],
   postDetail: {
     desc: "",
     bathroom: 0,
@@ -33,7 +33,7 @@ const initialState: IPostData = {
       {
         name: "",
         path: "",
-      }
+      },
     ],
     price: 0,
     property: "",
@@ -96,10 +96,9 @@ export const editPost = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.POST.MODIFY_POST_BY_ID + postId;
       const response = await axiosFormData.put(url, formData);
       if (response.data) {
-        await dispatch(getPostById({postId: postId}));
+        await dispatch(getPostById({ postId: postId }));
       }
       toast.success(response.data.message);
-      console.log('response.data: ', response.data);
       return response.data;
     } catch (err: any) {
       console.log("err: ", err);
@@ -135,7 +134,7 @@ export const getPostById = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.POST.GET_POST_BY_ID + postId;
       const response = await axiosInstance.get(url);
       return response.data;
-    } catch (err:any) {
+    } catch (err: any) {
       console.log("err: ", err);
       checkErr(err);
       return rejectWithValue(err);
@@ -152,7 +151,7 @@ export const postSlice = createSlice({
       state.isLoading = "loading";
     });
     builder.addCase(getAllMyPosts.fulfilled, (state, action) => {
-      state.allPosts = action.payload;
+      state.post = action.payload;
       state.isLoading = "loaded";
     });
     builder.addCase(getAllMyPosts.rejected, (state, action) => {
@@ -171,7 +170,7 @@ export const postSlice = createSlice({
   },
 });
 
-export const selectAllMyPosts = (state: RootState) => state.postState.allPosts;
+export const selectAllMyPosts = (state: RootState) => state.postState.post;
 export const selectCurrentPost = (state: RootState) =>
   state.postState.postDetail;
 export const selectLoadingStatus = (state: RootState) =>
