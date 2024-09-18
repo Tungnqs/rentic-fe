@@ -27,7 +27,7 @@ const Register = () => {
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
-    await dispatch(
+    const registerResult = await dispatch(
       registerAccount({
         firstName: firstNameField,
         lastName: lastNameField,
@@ -38,7 +38,10 @@ const Register = () => {
         role: roleField,
       })
     );
-    navigate("/login");
+    const isRegistered = registerAccount.fulfilled.match(registerResult);
+    if(isRegistered){
+      navigate("/login");
+    }
   };
 
   return (

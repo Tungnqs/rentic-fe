@@ -13,6 +13,9 @@ export const API_PATH_URL = {
     CREATE_POST: "/api/post/add/",
     GET_POST_BY_ID: "/api/post/id/",
     MODIFY_POST_BY_ID: "/api/post/",
-
+  },
+  PAYMENT: {
+    CREATE_PAYMENT_LINK: "/api/order/createPaymentLink/",
+    GET_ORDER: "/api/order/",
   },
 };

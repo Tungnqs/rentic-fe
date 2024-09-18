@@ -16,10 +16,10 @@ const getNotificationBg = (type: ENotificationType | undefined): string => {
 export { getNotificationBg };
 
 export const checkErr = (err: any) => {
-  if (err.response.data.message) {
-    toast.error(`${err.response.data.message}`);
-  } else if (err.response.data.error) {
+  if (err.response.data.error) {
     toast.error(`${err.response.data.error}`);
+  } else if (err.response.data.message) {
+    toast.error(`${err.response.data.message}`);
   } else {
     toast.error(`${err.response.data.errors[0].msg}`);
   }

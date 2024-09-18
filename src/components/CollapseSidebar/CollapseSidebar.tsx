@@ -56,7 +56,7 @@ const CollapseSidebar = ({
         <div className="py-4 overflow-y-auto">
           <div className="p-2"><span className="font-semibold">User:</span> {userProfile.username}</div>
           <div className="p-2 pb-4 border-b-2 border-thirdYellow"><span className="font-semibold">Balance:</span> {userProfile.balance} VND</div>
-          <div className="p-2 pt-4 flex gap-3"><BankIcon className="w-[24px]"/><div>Deposit</div></div>
+          <Link onClick={toggleSidebar} to={"/deposit"} className="p-2 pt-4 flex gap-3"><BankIcon className="w-[24px]"/><div>Deposit</div></Link>
           <ul className="space-y-2 font-medium">
             {menuItems &&
               menuItems.map((item, index) => (

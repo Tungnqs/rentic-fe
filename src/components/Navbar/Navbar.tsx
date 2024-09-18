@@ -12,6 +12,10 @@ import { AppDispatch } from "../../store";
 import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
 import { MenuIcon } from "../../assets/icon/icon";
 import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
+import {
+  createPaymentLink,
+  IDataForCreatePaymentLink,
+} from "../../store/slices/payment.slice";
 
 export interface INavbarItems {
   title: string;
@@ -27,7 +31,7 @@ interface INavbarItemsProps {
 const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
-  
+
   const navigate = useNavigate();
   const userProfile = useSelector(selectUserProfile);
 
@@ -52,13 +56,23 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
 
   return (
     <S.Layout>
-      <CollapseSidebar handleLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} menuItems={navbarItems}/>
+      <CollapseSidebar
+        handleLogout={handleLogout}
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        menuItems={navbarItems}
+      />
       <S.Container>
         <div className="flex items-center gap-3">
           <div className="flex max-md:gap-3">
-          {isLogin && <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
-              <MenuIcon onClick={toggleSidebar} className="max-md:w-[45px] max-md:block hidden" />
-            </div> }
+            {isLogin && (
+              <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
+                <MenuIcon
+                  onClick={toggleSidebar}
+                  className="max-md:w-[45px] max-md:block hidden"
+                />
+              </div>
+            )}
             <S.LogoGroup
               onClick={() => {
                 navigate("/");
@@ -85,9 +99,9 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
             <>
               <S.Balance>
-                <p className="w-fit">Balance: 0 VND</p>
+                <p className="w-fit">Balance: {userProfile.balance} VND</p>
               </S.Balance>
-              <S.SubscribeBtn>Deposit</S.SubscribeBtn>
+              <S.SubscribeBtn onClick={()=>navigate("/deposit")}>Deposit</S.SubscribeBtn>
             </>
           )}
           {isLogin ? (

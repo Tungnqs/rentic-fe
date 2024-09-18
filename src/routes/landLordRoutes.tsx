@@ -6,6 +6,8 @@ import { Navigate } from "react-router";
 import PropertyList from "../pages/LandLord/Property/PropertyList";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import PropertyDetail from "../pages/LandLord/Property/PropertyDetail/PropertyDetail";
+import DepositPage from "../pages/DepositPage/DepositPage";
+import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmation";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -32,4 +34,12 @@ export const landLordRoutes: IRoute[] = [
     path: "/profile",
     component: <EditProfile />
   },
+  {
+    path: "/deposit",
+    component: <DepositPage />
+  },
+  {
+    path: "/payment/:id",
+    component: <PaymentConfirmation />
+  }
 ];
