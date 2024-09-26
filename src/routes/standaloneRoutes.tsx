@@ -4,6 +4,7 @@ import Register from "../pages/Register/Register";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Login from "../pages/SignIn/Login";
 import { Navigate } from "react-router";
+import Homepage from "../pages/Homepage/Homepage";
 
 export const standaloneRoutes: IRoute[] = [
   {
@@ -12,7 +13,7 @@ export const standaloneRoutes: IRoute[] = [
   },
   {
     path: "/",
-    component: <Navigate to={"/login"} />,
+    component: <Homepage />,
   },
   {
     path: "/login",

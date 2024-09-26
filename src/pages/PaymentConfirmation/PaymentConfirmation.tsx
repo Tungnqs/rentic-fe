@@ -14,6 +14,10 @@ const PaymentConfirmation = () => {
   const paymentId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
 
+  useEffect(()=>{
+    
+  }, [])
+
   useEffect(() => {
     if (paymentId) {
       dispatch(getPaymentById(paymentId));

@@ -117,7 +117,7 @@ export const authLogout = createAsyncThunk(
   "auth/authLogout",
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      deleteCookie("token");
+      await deleteCookie("token");
       dispatch(setIsLoggedIn(false));
       dispatch(clearUserProfile());
       toast.success("Logout successfully!");

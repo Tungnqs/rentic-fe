@@ -43,7 +43,7 @@ export default function UserProvider({ children }: IAppProvider) {
       }
     };
     refetchUserData();
-  }, [userRole, token, dispatch, navigate]);
+  }, [userRole, token]);
 
   return loading ? <Loader /> : children;
 }

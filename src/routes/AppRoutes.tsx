@@ -9,6 +9,8 @@ import { adminRoutes } from "./adminRoutes";
 import { renterRoutes } from "./renterRoutes";
 import LandlordLayout from "../components/Layout/LandlordLayout";
 import { landLordRoutes } from "./landLordRoutes";
+import { moderatorRoutes } from "./moderatorRoutes";
+import ModeratorLayout from "../components/Layout/ModeratorLayout";
 
 export default function AppRoutes() {
   const userRole = useSelector(selectUserProfile).roles[0];
@@ -34,6 +36,14 @@ export default function AppRoutes() {
       {userRole === "LANDLORD" && (
         <Route path="/" element={<LandlordLayout />}>
           {landLordRoutes.map(({ path, component }) => (
+            <Route key={path} path={path} element={component} />
+          ))}
+        </Route>
+      )}
+
+      {userRole === "MODERATOR" && (
+        <Route path="/" element={<ModeratorLayout />}>
+          {moderatorRoutes.map(({ path, component }) => (
             <Route key={path} path={path} element={component} />
           ))}
         </Route>
