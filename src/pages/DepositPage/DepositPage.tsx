@@ -81,7 +81,7 @@ const DepositPage = () => {
       <div className="w-fit mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] mediumBoxShadow">
         <div className="flex gap-5 max-[450px]:flex-col">
           <img
-            className="aspect-square w-[100px] rounded-full"
+            className="aspect-square w-[100px] rounded-full object-cover"
             src={userProfile.avatar ? userProfile.avatar : AnonymousAvatar}
             alt=""
           />

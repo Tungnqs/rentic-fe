@@ -16,6 +16,9 @@ module.exports = {
         'grayLight2': "#e6e6e6",
         'gray1': '#cccccc',
         'darkGray': '#403f3f',
+        'bgDarkPrimary': '#2d3539',
+        'bgLeftNavbar': '#22272a',
+        'bgDarkSecondary': '#4f5d64',
       }
     },
   },

@@ -1,21 +1,29 @@
-import React from "react";
 import { IRoute } from "../interfaces";
-import Loader from "../components/Loader/Loader";
-import Register from "../pages/Register/Register";
-import PropertyList from "../pages/LandLord/Property/PropertyList";
-import Login from "../pages/SignIn/Login";
+import { Navigate } from "react-router";
+import EditProfile from "../pages/EditProfile/EditProfile";
+import PublishPost from "../pages/Renter/PublishPost";
+import DepositPage from "../pages/DepositPage/DepositPage";
+import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmation";
 
 export const renterRoutes: IRoute[] = [
   {
     path: "/",
-    component: <Loader />,
+    component: <Navigate to={'/publish-posts'}/>
   },
   {
-    path: "/login",
-    component: <Login />
+    path: "/publish-posts",
+    component: <PublishPost />
   },
   {
-    path: "/register",
-    component: <Register />
+    path: '/profile',
+    component: <EditProfile />
   },
+  {
+    path: "/deposit",
+    component: <DepositPage />
+  },
+  {
+    path: "/payment/:id",
+    component: <PaymentConfirmation />
+  }
 ];

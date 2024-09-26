@@ -23,14 +23,12 @@ const Login = () => {
   const [inputAccount, setInputAccount] = useState<string>("");
   const [inputPsw, setInputPsw] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
-
+  const navigate = useNavigate();
   const isLoggedIn = useSelector(selectIsLogin);
-
-  const {checkUserRole} = useAppRole();
 
   useEffect(()=>{
     if(isLoggedIn){
-      checkUserRole();
+      navigate("/");
     }
   }, [isLoggedIn])
 
@@ -44,7 +42,7 @@ const Login = () => {
     const isLoginSuccessful = normalLogin.fulfilled.match(result);
     if (isLoginSuccessful) {
       dispatch(setIsLoggedIn(true));
-      checkUserRole();
+      navigate("/");
     }
   };
 

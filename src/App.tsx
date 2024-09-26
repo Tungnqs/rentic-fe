@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import "./assets/css/global.css";
 import AppRoutes from "./routes/AppRoutes";
 import AppProvider from "./providers/AppProvider";
@@ -9,7 +8,7 @@ function App() {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
