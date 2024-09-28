@@ -34,7 +34,7 @@ export default function ModeratorLayout() {
   return (
     <div className="flex">
       <LeftNavBar navbarItems={navbarItems} />
-      <div className="w-full pl-[80px]">
+      <div className="w-full pl-[30px]">
         <Outlet />
       </div>
     </div>

@@ -14,7 +14,7 @@ interface ILeftNavBarProps{
 }
 
 const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
-    const [isExpand, setIsExpand] = useState(false);
+    const [isExpand, setIsExpand] = useState(true);
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const handleLogout = async() => {
@@ -24,20 +24,21 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
   const userProfile = useSelector(selectUserProfile);
   
     return (
-        <div className={`z-50 fixed flex flex-col justify-between min-h-screen bg-bgLeftNavbar text-[color:var(--gray-light-2)] px-[14px] py-[8px] ease-in-out duration-200 ${isExpand ? "w-[280px]" : "w-[80px]"}`}>
-            <div>
+        <div className={`z-50 fixed flex flex-col justify-between min-h-screen bg-bgLeftNavbar text-[color:var(--gray-light-2)] px-[14px] py-[8px] ease-in-out duration-200 ${isExpand ? "w-[280px]" : "w-[30px]"}`}>
+            {isExpand && (
+                <div>
                 <div className={`flex  items-center border-b border-gray-500 pb-3 ${!isExpand ? "justify-center" : "justify-between"}`}>
                     <div className='flex gap-3 items-center'>
                         <div className='p-3 box-border bg-grayLight1 rounded-full cursor-pointer' onClick={()=> setIsExpand(!isExpand)}>
                             <img className='aspect-square w-[33px] ' src={Logo} alt="Logo"/>
                         </div>
-                        {isExpand && <div className='text-[20px] font-semibold'>{userProfile.roles[0]}</div>}
+                        <div className='text-[20px] font-semibold'>{userProfile.roles[0]}</div>
                     </div>
-                    {isExpand &&<BackIcon className=' w-[20px] cursor-pointer' onClick={()=> setIsExpand(!isExpand)} />}
+                    <BackIcon className=' w-[20px] cursor-pointer' onClick={()=> setIsExpand(!isExpand)} />
                 </div>
                 <div className={` flex gap-3 items-center border-b border-gray-500 py-5 ${!isExpand ? "justify-center" : "pl-[5px]"}`}>
                     <img className='aspect-square rounded-full w-[60px] object-cover' src={userProfile.avatar ? userProfile.avatar : anonymousAvatar} alt="Logo" />
-                    {isExpand && <div className='default-text font-semibold'>{userProfile.username}</div>}
+                    <div className='default-text font-semibold'>{userProfile.username}</div>
                 </div>
                 <div className='flex mt-5 w-full border-b border-gray-500 pb-5 justify-center'>
                     <Link to={'/profile'} className='w-full flex items-center gap-2 justify-center'>
@@ -53,11 +54,12 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
                     ))}
                 </div>
             </div>
+            )}
             <div className='flex flex-col gap-3 items-center'>
                 {!isExpand &&<BackIcon className='w-[20px] cursor-pointer -rotate-180' onClick={()=> setIsExpand(!isExpand)} />}
-                <div onClick={handleLogout} className='hover:underline cursor-pointer'>
+                {isExpand && (<div onClick={handleLogout} className='hover:underline cursor-pointer'>
                     Logout
-                </div>
+                </div>)}
             </div>
         </div>
     );

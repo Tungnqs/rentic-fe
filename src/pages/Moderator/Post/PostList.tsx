@@ -54,7 +54,7 @@ const PostList = () => {
         All User's Posts of Property
       </div>
       <div className="flex justify-between items-center max-sm:flex-col max-sm:gap-3 max-sm:items-start">
-        <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[300px] justify-between">
+        <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[250px] justify-between">
           <div className="w-fit">
             <LocationIcon className="text-secondaryYellow w-8" />
           </div>

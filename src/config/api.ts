@@ -1,5 +1,5 @@
-export const API_BASE_URL = "https://rentic.onrender.com";
-// export const API_BASE_URL = "http://localhost:3000";
+// export const API_BASE_URL = "https://rentic.onrender.com";
+export const API_BASE_URL = "http://localhost:3000";
 
 export const API_PATH_URL = {
   UPLOAD_FILE_TO_FIREBASE: "/api/upload/",
