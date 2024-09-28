@@ -9,14 +9,11 @@ import {
 } from "../../store/slices/payment.slice";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
+import { getUserProfile } from "../../store/slices/auth.slice";
 
 const PaymentConfirmation = () => {
   const paymentId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(()=>{
-    
-  }, [])
 
   useEffect(() => {
     if (paymentId) {
@@ -25,7 +22,6 @@ const PaymentConfirmation = () => {
   }, [paymentId]);
 
   const currentPayment = useSelector(selectCurrentTransaction);
-  console.log('currentPayment: ', currentPayment);
   const isLoading = useSelector(selectPaymentLoading);
 
   const paymentStatus = useMemo(() => {
@@ -38,10 +34,11 @@ const PaymentConfirmation = () => {
 
   useEffect(() => {
     if (currentPayment.data.status === "CANCELLED") {
-      toast.warning("Your transaction has been cancelled !")
-    } else if(currentPayment.data.status === "PAID") {
-      toast.success("Your transaction is successful !")
+      toast.warning("Your transaction has been cancelled !");
+    } else if (currentPayment.data.status === "PAID") {
+      toast.success("Your transaction is successful !");
     }
+    dispatch(getUserProfile());
   }, [currentPayment]);
 
   return (
@@ -116,7 +113,8 @@ const PaymentConfirmation = () => {
                       Amount
                     </td>
                     <td className="border-2 border-secondaryYellow p-3">
-                      {currentPayment.data.amount} <b className="text-green-600">₫</b>
+                      {currentPayment.data.amount}{" "}
+                      <b className="text-green-600">₫</b>
                     </td>
                   </tr>
                   <tr>

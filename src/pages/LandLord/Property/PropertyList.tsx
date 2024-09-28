@@ -37,7 +37,7 @@ const PropertyList = () => {
     <div className="flex justify-center">
       <div className="w-[80%] max-md:w-full p-7 flex flex-col gap-10 relative">
         <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
-          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[300px] justify-between">
+          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[230px] justify-between">
             <div className="w-fit">
               <LocationIcon className="text-secondaryYellow w-8" />
             </div>

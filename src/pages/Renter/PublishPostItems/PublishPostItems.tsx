@@ -26,6 +26,7 @@ const PublishPostItems = ({post}: IPublishPostItemsProps) => {
             reason: reasonInput
         }
         await dispatch(reportPostById(body));
+        setReasonInput("");
         togglePopup();
     }
 

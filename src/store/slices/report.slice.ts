@@ -79,9 +79,6 @@ export const approveReportById = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.MODERATOR.REPORT_ACTION + id + "/accept";
       const res = await axiosInstance.post(url);
       toast.success(res.data.message);
-      if (res.data) {
-        dispatch(getAllReports());
-      }
       return res.data;
     } catch (err: any) {
       console.log("err: ", err);
@@ -125,6 +122,15 @@ export const reportSlice = createSlice({
     });
     builder.addCase(getAllReports.rejected, (state) => {
       state.loadingStatus = "fail";
+    });
+    builder.addCase(approveReportById.fulfilled, (state, action) => {
+      const reportIndex = state.allReports.findIndex(
+        (report) => report.id === action.payload.report.id
+      );
+      console.log('reportIndex: ', reportIndex);
+      if (reportIndex !== -1) {
+        state.allReports[reportIndex].status = action.payload.report.status;
+      }
     });
   },
 });
