@@ -26,9 +26,10 @@ export interface INavbarItems {
 
 interface INavbarItemsProps {
   navbarItems?: INavbarItems[];
+  isRenterLayout?:boolean;
 }
 
-const Navbar = ({ navbarItems }: INavbarItemsProps) => {
+const Navbar = ({ navbarItems, isRenterLayout }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -64,12 +65,12 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
       />
       <S.Container>
         <div className="flex items-center gap-3">
-          <div className="flex max-md:gap-3">
+          <div className={`flex ${isRenterLayout ? "gap-3" : "max-md:gap-3"}`}>
             {isLogin && (
-              <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
+              <div className={`${isRenterLayout ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px] border-secondaryYellow rounded-md`}>
                 <MenuIcon
                   onClick={toggleSidebar}
-                  className="max-md:w-[45px] max-md:block hidden"
+                  className={`${isRenterLayout ? "w-[45px]" : "max-md:w-[45px] max-md:block hidden"}`}
                 />
               </div>
             )}
@@ -83,7 +84,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
             </S.LogoGroup>
           </div>
           <div className="flex items-center gap-3 max-md:hidden">
-            {navbarItems &&
+            {!isRenterLayout && navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
                   to={navbarItem.path as string}

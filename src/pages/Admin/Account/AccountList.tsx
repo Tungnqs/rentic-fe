@@ -6,6 +6,7 @@ import { SearchIcon } from "../../../assets/icon/icon";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { blockUserById, unBlockUserById } from "../../../store/slices/admin.slice";
+import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 
 const AccountList = () => {
   const users: IUser[] = [
@@ -124,7 +125,8 @@ const AccountList = () => {
       <div className="text-red-600 font-semibold hidden max-[550px]:block">
         *Recommend to use application in landscape view
       </div>
-      <div
+      {usersToDisplay.length > 0 ? (
+        <div
         style={{ transform: "rotateX(180deg)" }}
         className="relative overflow-x-auto shadow-md darkScrollBar sm:rounded-lg"
       >
@@ -206,6 +208,7 @@ const AccountList = () => {
           </tbody>
         </table>
       </div>
+      ) : (<DataNotFound />)}
     </div>
   );
 };

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import { SearchIcon } from "../../assets/icon/icon";
-import PublishPropertyList from "./PublishPostItems/PublishPostItems";
 import MapBlock from "./MapBlock/MapBlock";
 import { useSelector } from "react-redux";
 import { selectAllFetchedPosts, selectLoadingStatus } from "../../store/slices/post.slice";
 import Loader from "../../components/Loader/Loader";
+import PublishPostItems from "./PublishPostItems/PublishPostItems";
+import { useNavigate } from "react-router";
 
 const PublishPost = () => {
   const [filteredPurpose, setFilteredPurpose] = useState("");
   const [filteredProperty, setFilteredProperty] = useState("");
   const allPublishPosts = useSelector(selectAllFetchedPosts);
   const loadingStatus = useSelector(selectLoadingStatus);
-
 
   return (
     <div className="flex justify-center">
@@ -44,7 +44,7 @@ const PublishPost = () => {
               <div className='flex gap-4 w-full flex-wrap'>
                 {allPublishPosts.map((post)=>(
                   <div key={post.id} className='flex gap-2 border-2 p-3 rounded-lg hover:border-gray1 hover:shadow-xl cursor-pointer select-none w-[48%] max-xl:w-full relative text-[14px]'>
-                  <PublishPropertyList post={post}/>
+                  <PublishPostItems post={post}/>
               </div>
             ))}
         </div>
