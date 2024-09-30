@@ -1,13 +1,13 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import {
   GoogleIcon,
   HidePasswordIcon,
   ShowPasswordIcon,
 } from "../../assets/icon/icon";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { registerAccount } from "../../store/slices/auth.slice";
+import { registerAccount, selectIsLogin } from "../../store/slices/auth.slice";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Navbar from "../../components/Navbar/Navbar";
 
@@ -43,6 +43,14 @@ const Register = () => {
       navigate("/login");
     }
   };
+
+  const isLoggedIn = useSelector(selectIsLogin);
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      navigate("/");
+    }
+  }, [isLoggedIn])
 
   return (
     <>

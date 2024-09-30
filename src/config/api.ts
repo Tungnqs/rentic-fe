@@ -1,5 +1,5 @@
-export const API_BASE_URL = "https://rentic.onrender.com";
-// export const API_BASE_URL = "http://localhost:3000";
+// export const API_BASE_URL = "https://rentic.onrender.com";
+export const API_BASE_URL = "http://localhost:3000";
 
 export const API_PATH_URL = {
   UPLOAD_FILE_TO_FIREBASE: "/api/upload/",
@@ -26,5 +26,9 @@ export const API_PATH_URL = {
   },
   REPORT:{
     REPORT_POST_BY_ID: "/api/user/report/",
+  },
+  ADMIN:{
+    BLOCK_ACCOUNT_BY_ID: "/api/admin/block/",
+    UNBLOCK_ACCOUNT_BY_ID: "/api/admin/unblock/",
   }
 };

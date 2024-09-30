@@ -4,6 +4,7 @@ import { postSlice } from "./slices/post.slice";
 import { appSlice } from "./slices/app.slice";
 import { paymentSlice } from "./slices/payment.slice";
 import { reportSlice } from "./slices/report.slice";
+import {adminSlice} from "./slices/admin.slice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     [appSlice.name]: appSlice.reducer,
     [paymentSlice.name]: paymentSlice.reducer,
     [reportSlice.name]: reportSlice.reducer,
+    [adminSlice.name]: adminSlice.reducer,
   },
 });
 
