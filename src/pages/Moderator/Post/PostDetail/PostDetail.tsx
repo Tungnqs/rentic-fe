@@ -89,23 +89,17 @@ const PostDetail = () => {
         </div>
         {modifyPostBtn}
       </div>
-      <div className="flex gap-2 max-md:flex-col max-md:items-center">
-        <div className="thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 w-[70%] max-md:w-full">
-          {loadingStatus === "loading" ? (
-            <Loader />
-          ) : (
+      {loadingStatus === "loading" ? (
+        <Loader />
+      ) : (
+        <div className="flex gap-2 max-md:flex-col max-md:items-center">
+          <div className="thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 w-[70%] max-md:w-full">
             <div className="flex flex-col gap-4  pb-1">
               <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
                 <div>Property: {currentPostData.title}</div>
                 <div>{currentPostData.price} $</div>
               </div>
               <div className="border-b">
-                <div className="text-[18px]">
-                  <span className="text-secondaryYellow font-semibold">
-                    Id:{" "}
-                  </span>
-                  {currentPostData.id}
-                </div>
                 <div className="flex gap-[2px]">
                   <div className="w-[24px] text-secondaryYellow">
                     <LocationIcon className="w-full" />
@@ -158,18 +152,41 @@ const PostDetail = () => {
               </div>
               <MapBlock currentPostData={currentPostData} />
             </div>
-          )}
-        </div>
-        <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 flex flex-col gap-2">
-          <img src={currentPostData.user.avatar ? currentPostData.user.avatar : unknownAvatar} alt="" className="w-full aspect-square" />
-          <div className="flex flex-col gap-2">
-            <div className="text-[22px] font-semibold"><span className="text-secondaryYellow">Author:</span> {currentPostData.user.firstName}. {currentPostData.user.lastName}</div>
-            <div><b className="text-secondaryYellow">Username:</b> {currentPostData.user.username}</div>
-            <div className="flex gap-2"><PhoneIcon className="w-6 text-secondaryYellow"/><div>{currentPostData.user.phonenumber}</div></div>
-            <div className="flex gap-2 break-all"><div className="w-6"><EmailIcon className="w-6 text-secondaryYellow"/></div><div>{currentPostData.user.email}</div></div>
+          </div>
+          <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 flex flex-col gap-2">
+            <img
+              src={
+                currentPostData.user.avatar
+                  ? currentPostData.user.avatar
+                  : unknownAvatar
+              }
+              alt=""
+              className="w-full aspect-square"
+            />
+            <div className="flex flex-col gap-2">
+              <div className="text-[22px] font-semibold">
+                <span className="text-secondaryYellow">Author:</span>{" "}
+                {currentPostData.user.firstName}.{" "}
+                {currentPostData.user.lastName}
+              </div>
+              <div>
+                <b className="text-secondaryYellow">Username:</b>{" "}
+                {currentPostData.user.username}
+              </div>
+              <div className="flex gap-2">
+                <PhoneIcon className="w-6 text-secondaryYellow" />
+                <div>{currentPostData.user.phonenumber}</div>
+              </div>
+              <div className="flex gap-2 break-all">
+                <div className="w-6">
+                  <EmailIcon className="w-6 text-secondaryYellow" />
+                </div>
+                <div>{currentPostData.user.email}</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

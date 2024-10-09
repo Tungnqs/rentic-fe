@@ -10,7 +10,7 @@ export interface IUser {
   roles: string[];
   isBlocked?: boolean;
   isVerified?: boolean;
-  googleId: string;
+  googleId?: string;
   createdAt: string
 }
 

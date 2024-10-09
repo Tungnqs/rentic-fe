@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const Layout = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: white;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #e6e6e6;

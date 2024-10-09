@@ -83,6 +83,7 @@ const Login = () => {
             <div className="account field">
               <div className="text-lightGray">Email/Phone number</div>
               <input
+                required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter email or phone number"
@@ -93,6 +94,7 @@ const Login = () => {
               <div>Password</div>
               <div className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black flex gap-2">
                 <input
+                  required
                   className="flex-1"
                   type={isShowPassword ? "text" : "password"}
                   placeholder="Enter password"
@@ -121,10 +123,7 @@ const Login = () => {
               <div>Remember me</div>
             </div>
             <button
-              onClick={(e: FormEvent) => {
-                e.preventDefault();
-                handleLogin();
-              }}
+              type="submit"
               className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"
             >
               Login

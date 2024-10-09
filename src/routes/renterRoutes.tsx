@@ -4,6 +4,9 @@ import EditProfile from "../pages/EditProfile/EditProfile";
 import PublishPost from "../pages/Renter/PublishPost";
 import DepositPage from "../pages/DepositPage/DepositPage";
 import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmation";
+import PostDetail from "../pages/Renter/PostDetail/PostDetail";
+import Appointments from "../pages/Appointments/Appointments";
+import Conversation from "../pages/Conversation/Conversation";
 
 export const renterRoutes: IRoute[] = [
   {
@@ -13,6 +16,10 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/publish-posts",
     component: <PublishPost />
+  },
+  {
+    path: "/publish-posts/:id",
+    component: <PostDetail />
   },
   {
     path: '/profile',
@@ -25,5 +32,13 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/payment/:id",
     component: <PaymentConfirmation />
+  },
+  {
+    path: "/appointments",
+    component: <Appointments isLandLord={false}/>
+  },
+  {
+    path: "/conversations",
+    component: <Conversation />
   }
 ];

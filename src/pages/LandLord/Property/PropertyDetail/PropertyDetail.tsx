@@ -103,12 +103,6 @@ const PropertyDetail = () => {
                 <div>{currentPostData.price} $</div>
               </div>
               <div className="border-b">
-                <div className="text-[18px]">
-                  <span className="text-secondaryYellow font-semibold">
-                    Id:{" "}
-                  </span>
-                  {currentPostData.id}
-                </div>
                 <div className="flex gap-[2px]">
                   <div className="w-[24px] text-secondaryYellow">
                     <LocationIcon className="w-full" />

@@ -8,6 +8,8 @@ import EditProfile from "../pages/EditProfile/EditProfile";
 import PropertyDetail from "../pages/LandLord/Property/PropertyDetail/PropertyDetail";
 import DepositPage from "../pages/DepositPage/DepositPage";
 import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmation";
+import Appointments from "../pages/Appointments/Appointments";
+import Conversation from "../pages/Conversation/Conversation";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -41,5 +43,13 @@ export const landLordRoutes: IRoute[] = [
   {
     path: "/payment/:id",
     component: <PaymentConfirmation />
+  },
+  {
+    path: "/appointments",
+    component: <Appointments isLandLord={true}/>
+  },
+  {
+    path: "/conversations",
+    component: <Conversation />
   }
 ];

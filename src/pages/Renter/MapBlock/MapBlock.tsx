@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import mapMaker from "../../../assets/images/house-pin.png";
 import { IPost } from "../../../interfaces/post.interface";
 import demoProperty from "../../../assets/images/demo-property.jpg"
+import { useNavigate } from "react-router";
 
 interface IMapBlockProps{
     allPublishPosts: IPost[]
@@ -13,12 +14,12 @@ interface IMapBlockProps{
 const MapBlock = ({allPublishPosts}:IMapBlockProps) => {
   const position: [number, number] = [19.022782, 105.486331];
   return (
-    <div className="flex-1 z-10">
+    <div className="md:flex-1 z-10">
       <MapContainer
         center={position}
         zoom={7}
         scrollWheelZoom={true}
-        className="w-full h-full"
+        className="w-full h-full lg:min-h-[500px] max-md:h-[400px]"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -39,6 +40,7 @@ interface IPinProps {
 }
 
 const Pin = ({ post }: IPinProps) => {
+  const navigate = useNavigate();
   const postPosition: [number, number] = [post.latitude, post.longitude];
   const ICON = icon({
     iconUrl: mapMaker,
@@ -47,8 +49,8 @@ const Pin = ({ post }: IPinProps) => {
   return (
     <Marker position={postPosition} icon={ICON}>
       <Popup>
-        <div className="w-fit flex flex-col gap-2">
-            <img  src={post.images.length > 0 ? post.images[0].path : demoProperty} alt="" />
+        <div onClick={()=>navigate(post.id)} className="w-fit flex flex-col gap-2 cursor-pointer">
+            <img src={post.images.length > 0 ? post.images[0].path : demoProperty} alt="" />
             <div className="text-[12px] text-center">
                 <div className="font-semibold text-[14px]">{post.title}</div>
                 <div>{post.bathroom} bathrooms</div>

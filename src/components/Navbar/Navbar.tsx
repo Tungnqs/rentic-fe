@@ -54,6 +54,8 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
     navigate("/login");
   };
 
+  const hasManyNavItems = navbarItems && navbarItems?.length >= 4;
+
   return (
     <S.Layout>
       <CollapseSidebar
@@ -64,12 +66,12 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
       />
       <S.Container>
         <div className="flex items-center gap-3">
-          <div className="flex max-md:gap-3">
+          <div className={`flex ${hasManyNavItems ? "gap-3" : "max-md:gap-3"}`}>
             {isLogin && (
-              <div className="max-md:block hidden text-secondaryYellow border-[3px] border-secondaryYellow rounded-md">
+              <div className={`${hasManyNavItems ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px] border-secondaryYellow rounded-md cursor-pointer`}>
                 <MenuIcon
                   onClick={toggleSidebar}
-                  className="max-md:w-[45px] max-md:block hidden"
+                  className={`${hasManyNavItems ? "w-[45px]" : "max-md:w-[45px] max-md:block hidden"}`}
                 />
               </div>
             )}
@@ -83,7 +85,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
             </S.LogoGroup>
           </div>
           <div className="flex items-center gap-3 max-md:hidden">
-            {navbarItems &&
+            {!hasManyNavItems && navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
                   to={navbarItem.path as string}

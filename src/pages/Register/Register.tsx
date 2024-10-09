@@ -1,13 +1,13 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import {
   GoogleIcon,
   HidePasswordIcon,
   ShowPasswordIcon,
 } from "../../assets/icon/icon";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { registerAccount } from "../../store/slices/auth.slice";
+import { registerAccount, selectIsLogin } from "../../store/slices/auth.slice";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Navbar from "../../components/Navbar/Navbar";
 
@@ -44,6 +44,14 @@ const Register = () => {
     }
   };
 
+  const isLoggedIn = useSelector(selectIsLogin);
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      navigate("/");
+    }
+  }, [isLoggedIn])
+
   return (
     <>
       <Navbar />
@@ -79,6 +87,7 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">First Name</div>
               <input
+                required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter your first name"
@@ -88,6 +97,7 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Last Name</div>
               <input
+                required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter your last name"
@@ -97,6 +107,7 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Username</div>
               <input
+              required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter your username"
@@ -106,6 +117,7 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Email</div>
               <input
+              required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter email"
@@ -115,6 +127,7 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Phone number</div>
               <input
+              required
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
                 placeholder="Enter phone number"
@@ -125,6 +138,7 @@ const Register = () => {
               <div>Password</div>
               <div className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black flex gap-2">
                 <input
+                  required
                   className="flex-1"
                   type={isShowPassword ? "text" : "password"}
                   placeholder="Enter password"

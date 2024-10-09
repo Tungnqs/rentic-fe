@@ -1,20 +1,20 @@
 import React from "react";
 import { IRoute } from "../interfaces";
-import Loader from "../components/Loader/Loader";
-import Register from "../pages/Register/Register";
 import { Navigate } from "react-router";
+import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
+import AccountList from "../pages/Admin/Account/AccountList";
 
 export const adminRoutes: IRoute[] = [
   {
-    path: "/test",
-    component: <Loader />,
-  },
-  {
     path: "/",
-    component: <Navigate to={"/register"} />,
+    component: <Navigate to="/accounts" />,
   },
   {
-    path: "/register",
-    component: <Register />
+    path: "/profile",
+    component: <DarkEditProfile />,
+  },
+  {
+    path: "/accounts",
+    component: <AccountList />,
   }
 ];

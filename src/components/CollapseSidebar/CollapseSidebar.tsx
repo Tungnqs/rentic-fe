@@ -22,7 +22,7 @@ const CollapseSidebar = ({
   const userProfile = useSelector(selectUserProfile);
 
   return (
-    <div>
+    <div className="z-50">
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-80 z-10"

@@ -45,25 +45,25 @@ const ReportList = () => {
         <table style={{ transform: 'rotateX(180deg)' }} className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Report Date
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Reason
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 PostId
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Post Title
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Reported by
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Status
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Action
               </th>
             </tr>
@@ -80,17 +80,17 @@ const ReportList = () => {
               >
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-1/6  overflow-hidden"
+                  className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-1/6  overflow-hidden"
                 >
                   {formatDate(report.createdAt as string)}
                 </th>
                 
-                <td className="px-6 py-4 w-1/6 min-w-fit break-words">{report.reason}</td>
-                <td className="px-6 py-4 w-1/6 truncate overflow-hidden">{report.postId}</td>
-                <td className="px-6 py-4 w-1/6 truncate overflow-hidden">{report.post.title}</td>
-                <td className="px-6 py-4 w-1/6 truncate overflow-hidden">{report.user.firstName}, {report.user.lastName}</td>
-                <td className="px-6 py-4 w-1/6 truncate overflow-hidden">{report.status === "ACCEPTED" ? <span className="text-secondaryYellow">{report.status}</span> : <span>{report.status}</span>}</td>
-                <td className="px-6 py-4 w-1/6 select-none">
+                <td className="px-2 py-4 w-1/6 min-w-fit break-words">{report.reason}</td>
+                <td className="px-2 py-4 max-w-[150px] overflow-hidden truncate">{report.postId}</td>
+                <td className="px-2 py-4 w-1/6 truncate overflow-hidden">{report.post.title}</td>
+                <td className="px-2 py-4 w-1/6 truncate overflow-hidden">{report.user.firstName}, {report.user.lastName}</td>
+                <td className="px-2 py-4 w-1/6 truncate overflow-hidden">{report.status === "ACCEPTED" ? <span className="text-secondaryYellow">{report.status}</span> : <span>{report.status}</span>}</td>
+                <td className="px-2 py-4 w-1/6 select-none">
                   <div className="w-full flex flex-col gap-2 text-center">
                   {report.status === "ACCEPTED" ?
                    <div className="font-medium cursor-not-allowed">Approved</div> 

@@ -9,7 +9,6 @@ import {
 import { IPost } from "../../../interfaces/post.interface";
 import { useNavigate } from "react-router";
 import Loader from "../../../components/Loader/Loader";
-import { toast } from "react-toastify";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 
 const PropertyList = () => {
@@ -35,9 +34,9 @@ const PropertyList = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[80%] max-md:w-full p-7 flex flex-col gap-10 relative">
+      <div className="w-[80%] max-xl:w-[90%] max-lg:w-[95%] max-md:w-full p-7 max-lg:px-0 flex flex-col gap-10 relative">
         <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
-          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[230px] justify-between">
+          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:w-2/3 max-md:min-w-[230px] justify-between">
             <div className="w-fit">
               <LocationIcon className="text-secondaryYellow w-8" />
             </div>
@@ -80,12 +79,12 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
       {postToDisplay.length === 0 ? (
         <DataNotFound />
       ) : (
-        <div className="flex w-full gap-2 flex-wrap gap-y-4 justify-evenly">
+        <div className="flex w-full gap-[1%] flex-wrap gap-y-4">
           {postToDisplay.map((item) => (
             <div
               onClick={() => navigate(item.id)}
               key={item.id}
-              className="w-[250px] p-4 cursor-pointer bg-grayLight1 flex flex-col gap-[10px] hover:bg-grayLight2 rounded-xl hover:-translate-y-1 hover:shadow-xl duration-100 border"
+              className="w-[19%] max-lg:w-[24%] max-md:w-[32%] max-sm:w-[49%] max-[500px]:w-full p-4 cursor-pointer bg-grayLight1 flex flex-col gap-[10px] hover:bg-grayLight2 rounded-xl hover:-translate-y-1 hover:shadow-xl duration-100 border"
             >
               <img
                 style={{ aspectRatio: "3/2" }}
