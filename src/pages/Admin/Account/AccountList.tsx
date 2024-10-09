@@ -13,7 +13,6 @@ import {
   unBlockUserById,
 } from "../../../store/slices/admin.slice";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
-import LoadingScreen from "../../../components/LoadingScreen/LoadingScreen";
 import Loader from "../../../components/Loader/Loader";
 
 const AccountList = () => {

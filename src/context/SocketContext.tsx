@@ -14,10 +14,6 @@ const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const newSocket = io(API_BASE_URL);
     setSocket(newSocket);
-    // Cleanup function to disconnect the socket when the component unmounts
-    return () => {
-      newSocket.disconnect();
-    };
   }, []);
 
   return (

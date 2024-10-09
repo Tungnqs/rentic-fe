@@ -70,7 +70,7 @@ export const deleteAppointmentById = createAsyncThunk(
       const response = await axiosInstance.delete(url);
       toast.success(response.data.message);
       if(response.data){
-        dispatch(getAllAppointmentOfLandlord());
+        dispatch(getAllAppointmentOfRenter());
       }
       return response.data;
     } catch (err: any) {
@@ -104,7 +104,6 @@ export const getAllAppointmentOfLandlord = createAsyncThunk(
       const url =
         API_BASE_URL + API_PATH_URL.APPOINTMENT.GET_LANDLORD_APPOINTMENT;
       const response = await axiosInstance.get(url);
-      console.log('response.data.viewingAppointments: ', response.data.appointments);
       return response.data.appointments;
     } catch (err: any) {
       console.log("err: ", err);

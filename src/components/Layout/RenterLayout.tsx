@@ -31,16 +31,6 @@ export default function RenterLayout() {
       icon: <ProfileIcon className="w-full" />,
     },
     {
-      path: "/all-roommate-post",
-      title: "Roommate post",
-      icon: <FindRoommateIcon className="w-full" />,
-    },
-    {
-      path: "/my-roommate-post",
-      title: "Your roommate post",
-      icon: <RoommateIcon className="w-full" />,
-    },
-    {
       path: "/conversations",
       title: "Conversations",
       icon: <MessageIcon className="w-full"/>

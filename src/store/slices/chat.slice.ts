@@ -21,13 +21,15 @@ export interface IChat {
   receiver: IUser;
   updatedAt?: string;
   seenBy?: string[];
-  lastMessage?: string;
+  lastMessage?: IMessage;
 }
 
 interface IChatState {
-  loadingStatus: "loading" | "loaded" | "fail";
+  loadingStatusOfGetAllChats: "loading" | "loaded" | "fail";
+  loadingStatusOfViewChat: "loading" | "loaded" | "fail";
   chats: IChat[];
   currentChat: {
+    chatId: string;
     sender: IUser;
     currentUser: IUser;
     createdAt?: string;
@@ -40,9 +42,11 @@ interface IChatState {
 }
 
 const initialState: IChatState = {
-  loadingStatus: "loading",
+  loadingStatusOfGetAllChats: "loading",
+  loadingStatusOfViewChat: "loading",
   chats: [],
   currentChat: {
+    chatId: "",
     currentUser: {
       firstName: "",
       lastName: "",
@@ -114,22 +118,23 @@ export const createConversation = createAsyncThunk(
 export interface ISendMessageReq {
   chatId: string;
   text: string;
+  userId: string;
 }
 
-export const sendMessage = createAsyncThunk(
-  "chat/createConversation",
-  async (data: ISendMessageReq, { rejectWithValue, dispatch }) => {
-    try {
-      const url = API_BASE_URL + API_PATH_URL.CHAT.SEND_MESSAGE;
-      const response = await axiosInstance.post(url, data);
-      return response.data.message;
-    } catch (err: any) {
-      console.log("err: ", err);
-      checkErr(err);
-      return rejectWithValue(err);
-    }
-  }
-);
+// export const sendMessage = createAsyncThunk(
+//   "chat/createConversation",
+//   async (data: ISendMessageReq, { rejectWithValue, dispatch }) => {
+//     try {
+//       const url = API_BASE_URL + API_PATH_URL.CHAT.SEND_MESSAGE;
+//       const response = await axiosInstance.post(url, data);
+//       return response.data.message;
+//     } catch (err: any) {
+//       console.log("err: ", err);
+//       checkErr(err);
+//       return rejectWithValue(err);
+//     }
+//   }
+// );
 
 export const getAllConversations = createAsyncThunk(
   "chat/getAllConversations",
@@ -149,24 +154,39 @@ export const getAllConversations = createAsyncThunk(
 export const chatSlice = createSlice({
   name: "chatState",
   initialState,
-  reducers: {},
+  reducers: {
+    pushNewMessage: (state, action)=>{
+      state.currentChat.messages.push(action.payload);
+    },
+    setLastMsg: (state, action: {payload : IMessage})=>{
+      const chat = state.chats.find((chat) => {
+        return chat.id === action.payload.chatId
+      });
+      if(chat){
+        chat.lastMessage = action.payload
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllConversations.pending, (state) => {
-      state.loadingStatus = "loading";
+      state.loadingStatusOfGetAllChats = "loading";
     });
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
-      state.loadingStatus = "loaded";
+      state.loadingStatusOfGetAllChats = "loaded";
       state.chats = action.payload;
     });
     builder.addCase(getAllConversations.rejected, (state) => {
-      state.loadingStatus = "fail";
+      state.loadingStatusOfGetAllChats = "fail";
+    });
+    builder.addCase(readChat.pending, (state) => {
+      state.loadingStatusOfViewChat = "loading";
     });
     builder.addCase(readChat.fulfilled, (state, action) => {
-      state.loadingStatus = "loaded";
+      state.loadingStatusOfViewChat = "loaded";
       state.currentChat = action.payload;
     });
-    builder.addCase(sendMessage.fulfilled, (state, action) => {
-      state.currentChat.messages.push(action.payload)
+    builder.addCase(readChat.rejected, (state) => {
+      state.loadingStatusOfViewChat = "fail";
     });
   },
 });
@@ -175,7 +195,11 @@ export const selectAllConversation = (state: RootState) =>
   state.chatState.chats || [];
 export const selectCurrentConversation = (state: RootState) =>
   state.chatState.currentChat;
-export const selectChatLoading = (state: RootState) =>
-  state.chatState.loadingStatus;
+export const selectAllChatsLoading = (state: RootState) =>
+  state.chatState.loadingStatusOfGetAllChats;
 
+export const selectAllMessagesLoading = (state: RootState) =>
+  state.chatState.loadingStatusOfViewChat;
+
+export const { pushNewMessage, setLastMsg } = chatSlice.actions;
 export default chatSlice.reducer;

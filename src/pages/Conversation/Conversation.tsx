@@ -4,11 +4,30 @@ import { selectUserProfile } from "../../store/slices/auth.slice";
 import unknownAvatar from "../../assets/images/anonymous-avatar.png";
 import Messages from "./Messages/Messages";
 import { AppDispatch } from "../../store";
-import { get } from "http";
-import { getAllConversations, selectAllConversation } from "../../store/slices/chat.slice";
+import { getAllConversations, IMessage, selectAllChatsLoading, selectAllConversation } from "../../store/slices/chat.slice";
+import { SocketContext } from "../../context/SocketContext";
+import Loader from "../../components/Loader/Loader";
+import { toast } from "react-toastify";
+
+export const formatDateTime = (dateTimeString: string): string => {
+    const date = new Date(dateTimeString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    return `${day}/${month}/${year} at ${hours}:${minutes} ${ampm}`;
+};
 
 const Conversation = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const {socket} = useContext(SocketContext);
     useEffect(()=>{
         dispatch(getAllConversations());
     }, [])
@@ -16,34 +35,56 @@ const Conversation = () => {
     const myProfile = useSelector(selectUserProfile);
     const [selectedConversation, setSelectedConversation] = useState(allConversations[0]);
 
+    const loadingSttOfGetChats = useSelector(selectAllChatsLoading);
+
+    useEffect(() => {
+        if (selectedConversation && socket) {
+            socket.emit('joinChat', selectedConversation.id);
+        }
+        // if (socket) {
+        //     const messageListener = (newMessage: IMessage) => {
+        //         console.log('newMessage: ', newMessage);
+        //         const chat = allConversations.find((chat) => chat.id === newMessage.chatId);
+        //         if (chat) {
+        //             toast.info(`${chat.receiver.username}: ${newMessage.text}`);
+        //         }
+        //     };
+        //     socket.on('message', messageListener);
+        //     // Clean up the listener when the component unmounts or when the dependencies change
+        //     return () => {
+        //         socket.off('message', messageListener);
+        //     };
+        // }
+    }, [selectedConversation, socket, allConversations]);
+
   return (
-    <div className="flex justify-center py-10">
+    <div className="flex justify-center pb-10 pt-2">
       <div className="w-[90%] flex flex-col gap-5">
         <div className="thinBoxShadow rounded-md flex">
-            <div className="w-[25%] max-lg:w-[40%] bg-grayLight2 p-7 flex flex-col gap-5">
-                <div className="flex gap-2 items-center">
+            <div className="w-[25%] max-lg:w-[40%] bg-grayLight2 p-7 max-sm:p-2 flex flex-col gap-5">
+                <div className="flex justify-center gap-2 items-center">
                     <img className="w-[75px] aspect-square object-cover rounded-full" src={myProfile.avatar ? myProfile.avatar : unknownAvatar} alt="" />
-                    <div>
+                    <div className="max-[500px]:hidden">
                         <div className="text-[20px] font-semibold">{myProfile.firstName} {myProfile.lastName}</div>
                         <div>{myProfile.username}</div>
                     </div>
                 </div>
                 <div className="text-[24px] font-semibold text-center text-secondaryYellow border-y-2 border-black py-2">
-                    People In Conversation
+                    People <span className="max-[500px]:hidden">In Conversation</span>
                 </div>
                 <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto overflow-x-hidden">
-                    {allConversations.map((chat)=>(
+                    {loadingSttOfGetChats === "loading" ? <Loader /> : allConversations.map((chat)=>(
                             <div key={chat?.id} onClick={()=>{setSelectedConversation(chat)}} className={`flex w-full gap-2 items-center cursor-pointer p-2 border-2 rounded-lg hover:border-secondaryYellow hover:bg-grayLight1 ${selectedConversation?.id === chat?.id ? "border-secondaryYellow bg-grayLight1" : "bg-transparent"}`}>
                                 <img className="w-[50px] aspect-square object-cover rounded-full" src={chat?.receiver?.avatar ? chat?.receiver?.avatar : unknownAvatar} alt="" />
                                 <div className="overflow-x-hidden">
-                                    <div className="font-semibold overflow-x-hidden truncate">{chat?.receiver?.firstName} {chat?.receiver?.lastName}</div>
-                                    <div className="text-[14px] overflow-x-hidden truncate">{chat?.receiver?.username}</div>
+                                    <div className="font-semibold overflow-x-hidden truncate">{chat?.receiver?.username}</div>
+                                    <div className="text-[14px] overflow-x-hidden truncate"><b>{chat?.lastMessage?.userId === myProfile.id ? "Me" : chat?.receiver?.username}: </b>{chat?.lastMessage?.text}</div>
                                 </div>
                             </div>
                         ))}
                 </div>
             </div>
-            {selectedConversation && <Messages selectedConversation={selectedConversation} />}
+            {selectedConversation && <Messages myProfile={myProfile} selectedConversation={selectedConversation} />}
         </div>
       </div>
     </div>
