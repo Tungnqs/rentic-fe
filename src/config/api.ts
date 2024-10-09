@@ -1,5 +1,5 @@
-// export const API_BASE_URL = "https://rentic.onrender.com";
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "https://www.api.rentic.click";
+// export const API_BASE_URL = "http://localhost:3000";
 
 export const API_PATH_URL = {
   UPLOAD_FILE_TO_FIREBASE: "/api/upload/",
@@ -28,7 +28,19 @@ export const API_PATH_URL = {
     REPORT_POST_BY_ID: "/api/user/report/",
   },
   ADMIN:{
+    GET_ALL_ACCOUNTS: "/api/admin/getallusers/",
     BLOCK_ACCOUNT_BY_ID: "/api/admin/block/",
     UNBLOCK_ACCOUNT_BY_ID: "/api/admin/unblock/",
+  },
+  APPOINTMENT: {
+    GET_RENTER_APPOINTMENT: "/api/appointment/user/appointments/",
+    GET_LANDLORD_APPOINTMENT: "/api/appointment/landlord/appointments/",
+    MODIFY_APPOINTMENT: "/api/appointment/"
+  },
+  CHAT:{
+    GET_ALL_CHATS: "/api/chat/all/",
+    READ_CHAT: "/api/chat/",
+    SEND_MESSAGE: "/api/chat/send/",
+    CREATE_CHAT: "/api/chat/create/",
   }
 };

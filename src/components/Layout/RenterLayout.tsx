@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import {
+  AppointmentIcon,
   FindRoommateIcon,
+  MessageIcon,
   ProfileIcon,
   PropertyIcon,
   RoommateIcon,
@@ -15,8 +17,13 @@ export default function RenterLayout() {
   const navbarItems: INavbarItems[] = [
     {
       path: "/publish-posts",
-      title: "Publish Property",
+      title: "Published Property",
       icon: <PropertyIcon className="w-full" />,
+    },
+    {
+      path: "/appointments",
+      title: "Appointments",
+      icon: <AppointmentIcon className="w-full"/>
     },
     {
       path: "/profile",
@@ -33,6 +40,11 @@ export default function RenterLayout() {
       title: "Your roommate post",
       icon: <RoommateIcon className="w-full" />,
     },
+    {
+      path: "/conversations",
+      title: "Conversations",
+      icon: <MessageIcon className="w-full"/>
+    },
   ];
 
   const dispatch = useDispatch<AppDispatch>();
@@ -42,7 +54,7 @@ export default function RenterLayout() {
 
   return (
     <div className="block">
-      <Navbar isRenterLayout={true} navbarItems={navbarItems} />
+      <Navbar navbarItems={navbarItems} />
       <div className="z-10">
         <Outlet />
       </div>

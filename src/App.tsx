@@ -3,6 +3,7 @@ import AppRoutes from "./routes/AppRoutes";
 import AppProvider from "./providers/AppProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SocketContextProvider from "./context/SocketContext";
 function App() {
   return (
     <>
@@ -19,7 +20,9 @@ function App() {
         theme="colored"
       />
       <AppProvider>
-        <AppRoutes />
+        <SocketContextProvider>
+          <AppRoutes />
+        </SocketContextProvider>
       </AppProvider>
     </>
   );

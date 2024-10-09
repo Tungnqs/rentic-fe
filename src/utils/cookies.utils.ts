@@ -16,3 +16,11 @@ export function deleteCookie(name: string) {
   const expires = new Date(0);
   document.cookie = `${name}=; expires=${expires.toUTCString()}`;
 }
+
+export const checkAccessToken = (accessToken: string)=>{
+  if(!accessToken){
+    return;
+  }
+  setCookie("token", accessToken);
+  window.location.reload();
+}

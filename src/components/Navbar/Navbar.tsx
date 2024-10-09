@@ -26,10 +26,9 @@ export interface INavbarItems {
 
 interface INavbarItemsProps {
   navbarItems?: INavbarItems[];
-  isRenterLayout?:boolean;
 }
 
-const Navbar = ({ navbarItems, isRenterLayout }: INavbarItemsProps) => {
+const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -55,6 +54,8 @@ const Navbar = ({ navbarItems, isRenterLayout }: INavbarItemsProps) => {
     navigate("/login");
   };
 
+  const hasManyNavItems = navbarItems && navbarItems?.length >= 4;
+
   return (
     <S.Layout>
       <CollapseSidebar
@@ -65,12 +66,12 @@ const Navbar = ({ navbarItems, isRenterLayout }: INavbarItemsProps) => {
       />
       <S.Container>
         <div className="flex items-center gap-3">
-          <div className={`flex ${isRenterLayout ? "gap-3" : "max-md:gap-3"}`}>
+          <div className={`flex ${hasManyNavItems ? "gap-3" : "max-md:gap-3"}`}>
             {isLogin && (
-              <div className={`${isRenterLayout ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px] border-secondaryYellow rounded-md`}>
+              <div className={`${hasManyNavItems ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px] border-secondaryYellow rounded-md cursor-pointer`}>
                 <MenuIcon
                   onClick={toggleSidebar}
-                  className={`${isRenterLayout ? "w-[45px]" : "max-md:w-[45px] max-md:block hidden"}`}
+                  className={`${hasManyNavItems ? "w-[45px]" : "max-md:w-[45px] max-md:block hidden"}`}
                 />
               </div>
             )}
@@ -84,7 +85,7 @@ const Navbar = ({ navbarItems, isRenterLayout }: INavbarItemsProps) => {
             </S.LogoGroup>
           </div>
           <div className="flex items-center gap-3 max-md:hidden">
-            {!isRenterLayout && navbarItems &&
+            {!hasManyNavItems && navbarItems &&
               navbarItems.map((navbarItem, index) => (
                 <NavLink
                   to={navbarItem.path as string}

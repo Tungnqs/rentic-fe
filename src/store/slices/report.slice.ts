@@ -127,7 +127,6 @@ export const reportSlice = createSlice({
       const reportIndex = state.allReports.findIndex(
         (report) => report.id === action.payload.report.id
       );
-      console.log('reportIndex: ', reportIndex);
       if (reportIndex !== -1) {
         state.allReports[reportIndex].status = action.payload.report.status;
       }

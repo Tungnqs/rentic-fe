@@ -29,6 +29,7 @@ import {
 } from "../../../store/slices/post.slice";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import unknownAvatar from "../../../assets/images/anonymous-avatar.png";
+import CreateAppointmentPopup from "../CreateAppointmentPopup/CreateAppointmentPopup";
 
 const PostDetail = () => {
   const postId = useParams().id;
@@ -47,9 +48,15 @@ const PostDetail = () => {
     return imageUrlArr;
   }, [currentPostData.images]);
 
+  const [isShowAppointmentPopup, setIsShowAppointmentPopup] = useState(false);
+  const toggleAppointmentPopup = ()=>{
+    setIsShowAppointmentPopup(!isShowAppointmentPopup);
+  }
+
   return (
       <div className="p-10 max-md:p-2 max-lg:p-5 flex flex-col gap-4 z-10">
-        <div className="flex justify-between items-center min-w-full max-md:flex-col max-md:items-start max-md:gap-3">
+        {isShowAppointmentPopup && <CreateAppointmentPopup postId={currentPostData.id} togglePopup={toggleAppointmentPopup} />}
+        <div className="flex justify-between items-center min-w-full">
           <div
             onClick={() => navigate(-1)}
             className="flex gap-2 items-center cursor-pointer group"
@@ -59,14 +66,14 @@ const PostDetail = () => {
             </div>
             <div className="group-hover:underline text-[24px]">Return</div>
           </div>
-          <div className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 w-[200px] text-center font-medium cursor-pointer rounded-md text-black">
+          <div onClick={toggleAppointmentPopup} className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 w-[200px] text-center font-medium cursor-pointer rounded-md text-black">
             Get an appointment with owner
           </div>
         </div>
         {loadingStatus === "loading" ? (
           <Loader />
         ) : (
-          <div className="flex gap-2 max-md:flex-col max-md:items-center">
+          <div className="flex gap-2 max-md:flex-col max-md:items-center z-10">
             <div className="thinBoxShadow rounded-md p-7 max-sm:p-2 w-[70%] max-md:w-full">
               <div className="flex flex-col gap-4  pb-1">
                 <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
@@ -74,12 +81,6 @@ const PostDetail = () => {
                   <div>{currentPostData.price} $</div>
                 </div>
                 <div className="border-b">
-                  <div className="text-[18px]">
-                    <span className="text-secondaryYellow font-semibold">
-                      Id:{" "}
-                    </span>
-                    {currentPostData.id}
-                  </div>
                   <div className="flex gap-[2px]">
                     <div className="w-[24px] text-secondaryYellow">
                       <LocationIcon className="w-full" />

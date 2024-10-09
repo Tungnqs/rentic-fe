@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ILogin, IRegister } from "../../interfaces";
 import { axiosInstance } from "../../lib/axios";
 import { API_BASE_URL, API_PATH_URL } from "../../config/api";
-import { deleteCookie, setCookie } from "../../utils/cookies.utils";
+import { checkAccessToken, deleteCookie, setCookie } from "../../utils/cookies.utils";
 import { RootState } from "..";
 import { IUserProfile } from "../../interfaces/userProfile.interface";
 import { toast } from "react-toastify";
@@ -60,6 +60,7 @@ export const getUserProfile = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.AUTH.USER_PROFILE;
       const response = await axiosInstance.get(url);
+      checkAccessToken(response.data.accessToken);
       return response.data;
     } catch (err: any) {
       console.log(err);
