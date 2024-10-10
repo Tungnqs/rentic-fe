@@ -41,7 +41,7 @@ const PublishPostItems = ({post}: IPublishPostItemsProps) => {
             {showReportPopup && <ReportPopup reasonInput={reasonInput} setReasonInput={setReasonInput} handleSubmit={reportPost} confirmBtnTitle='Report' popupContent={`Tell us the reason why you decide to report this post: "${post.title}"`} popupTitle='Report post' togglePopup={togglePopup} confirmBtnClass='bg-red-600 hover:bg-red-800 text-white' />}
             <div className={`absolute top-[3px] left-[3px] border-2 border-darkGray bg-grayLight1 text-[13px] w-[50px] p-2 aspect-square rounded-full uppercase flex justify-center items-center font-semibold ${post.type === "rent" ? "text-green-700": "text-secondaryYellow"}`}>{post.type}</div>
             <img onClick={directToPostDetail}  className='aspectPostImg w-[45%] rounded-lg object-cover' src={post.images.length > 0 ? post.images[0].path : demoProperty} alt="" />
-            <div onClick={togglePopup} className='absolute top-3 right-3 p-2 border-2 rounded-md hover:bg-grayLight2 hover:border-red-600 cursor-pointer'><ReportIcon className='w-4' /></div>
+            <div onClick={togglePopup} className='absolute bg-white top-3 right-3 p-2 border-2 rounded-md hover:bg-grayLight2 hover:border-red-600 cursor-pointer'><ReportIcon className='w-4' /></div>
             <div onClick={directToPostDetail} className='flex flex-col gap-3 w-[55%] justify-between'>
                 <div className='text-[20px] font-semibold'>
                     {post.title}
