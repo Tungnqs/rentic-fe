@@ -10,6 +10,7 @@ import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
 import {
   normalLogin,
+  selectAuthLoading,
   selectIsLogin,
   selectUserProfile,
   selectUserRole,
@@ -25,12 +26,13 @@ const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(selectIsLogin);
+  const authLoading = useSelector(selectAuthLoading);
 
   useEffect(()=>{
-    if(isLoggedIn){
+    if(isLoggedIn && authLoading === "loaded"){
       navigate("/");
     }
-  }, [isLoggedIn])
+  }, [authLoading, isLoggedIn])
 
   const handleLogin = async () => {
     const loginData: ILogin = {
@@ -40,7 +42,7 @@ const Login = () => {
 
     const result = await dispatch(normalLogin(loginData));
     const isLoginSuccessful = normalLogin.fulfilled.match(result);
-    if (isLoginSuccessful) {
+    if (isLoginSuccessful && authLoading === "loaded") {
       dispatch(setIsLoggedIn(true));
       navigate("/");
     }
