@@ -10,6 +10,7 @@ import { IPost } from "../../../interfaces/post.interface";
 import { useNavigate } from "react-router";
 import Loader from "../../../components/Loader/Loader";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
+import { formatMoney } from "../../../store/slices/app.slice";
 
 const PropertyList = () => {
   const [isOpenAddPopup, setIsOpenAddPopup] = useState(false);
@@ -97,13 +98,16 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
                 alt=""
               />
               <div className="text-[19px]">
-                {item.price}{" "}
+                {formatMoney(item.price)}{" "}
                 <span className="text-green-700 font-semibold">₫</span>
               </div>
               <div className="text-secondaryYellow text-[24px] font-bold truncate">
                 {item.title}
               </div>
-              <div className="text-[11px]">{item.city}</div>
+              <div className="flex justify-between items-center flex-wrap font-semibold">
+                <div className="text-[11px]">{item.city}</div>
+                <div className="text-[14px]">{item.isVerified ? <span className="text-green-600">Published</span> : <span className="text-red-600">Not Published</span>}</div>
+              </div>
             </div>
           ))}
         </div>

@@ -12,6 +12,15 @@ const initialState: IApp = {
   a: "",
 };
 
+export const formatMoney = (number: number) => {
+  if (number === 0) {
+    return 0;
+  }
+  if (number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+};
+
 export const handleUploadFile = createAsyncThunk(
   "app/handleUploadFile",
   async ({ formData }: { formData: FormData }, { rejectWithValue }) => {
@@ -21,7 +30,7 @@ export const handleUploadFile = createAsyncThunk(
       console.log("response.data: ", response.data);
       toast.success("Upload image successfully!");
       return response.data;
-    } catch (err:any) {
+    } catch (err: any) {
       console.log("err: ", err);
       checkErr(err);
       return rejectWithValue(err);

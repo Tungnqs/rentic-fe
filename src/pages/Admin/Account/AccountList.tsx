@@ -14,6 +14,7 @@ import {
 } from "../../../store/slices/admin.slice";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 import Loader from "../../../components/Loader/Loader";
+import { formatMoney } from "../../../store/slices/app.slice";
 
 const AccountList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -152,7 +153,7 @@ const AccountList = () => {
                     {user.phonenumber}
                   </td>
                   <td className="px-2 py-4 border border-gray-700">
-                    {user.balance}₫
+                    {formatMoney(user.balance as number)}₫
                   </td>
                   <td className="px-2 py-4 font-semibold border border-gray-700">
                     {user.isBlocked ? (

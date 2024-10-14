@@ -1,20 +1,25 @@
 import React from "react";
 import { Outlet } from "react-router";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
-import { AccountIcon, ChartIcon } from "../../assets/icon/icon";
+import { AccountIcon, ChartIcon, PackageIcon } from "../../assets/icon/icon";
 import { INavbarItems } from "../Navbar/Navbar";
 
 export default function AdminLayout() {
   const navbarItems: INavbarItems[] = [
-    {
-      title: "Statistics",
-      path: "/statistic",
-      icon: <ChartIcon />,
-    },
+    // {
+    //   title: "Statistics",
+    //   path: "/statistic",
+    //   icon: <ChartIcon />,
+    // },
     {
       title: "Account Management",
       path: "/accounts",
       icon: <AccountIcon />,
+    },
+    {
+      title: "Package Management",
+      path: "/packages",
+      icon: <PackageIcon />,
     },
   ];
 

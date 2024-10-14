@@ -30,6 +30,7 @@ import {
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import unknownAvatar from "../../../assets/images/anonymous-avatar.png";
 import CreateAppointmentPopup from "../CreateAppointmentPopup/CreateAppointmentPopup";
+import { formatMoney } from "../../../store/slices/app.slice";
 
 const PostDetail = () => {
   const postId = useParams().id;
@@ -78,7 +79,7 @@ const PostDetail = () => {
               <div className="flex flex-col gap-4  pb-1">
                 <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
                   <div>Property: {currentPostData.title}</div>
-                  <div>{currentPostData.price} $</div>
+                  <div>{formatMoney(currentPostData.price)} $</div>
                 </div>
                 <div className="border-b">
                   <div className="flex gap-[2px]">

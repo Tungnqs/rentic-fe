@@ -5,6 +5,21 @@ import { approveReportById, deleteReportById, getAllReports, selectAllReport, se
 import LoadingScreen from "../../../components/LoadingScreen/LoadingScreen";
 import { Link } from "react-router-dom";
 
+export const formatDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
 const ReportList = () => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -20,21 +35,6 @@ const ReportList = () => {
   const handleDeleteReport = (id: string) =>{
     dispatch(deleteReportById(id));
   } 
-
-  const formatDate = (isoDateString: string): string => {
-    const date = new Date(isoDateString);
-  
-    const options: Intl.DateTimeFormatOptions = {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    };
-  
-    return new Intl.DateTimeFormat('en-US', options).format(date);
-  };
 
   return (
     <div className="p-8 max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
