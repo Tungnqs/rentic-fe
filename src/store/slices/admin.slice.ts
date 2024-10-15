@@ -34,7 +34,7 @@ export const getAllPackages = createAsyncThunk(
   }
 );
 
-export interface IAddPackageReq{
+export interface IPackageReqBody{
   name: string;
   dailyRate: number;
   description: string;
@@ -42,12 +42,46 @@ export interface IAddPackageReq{
 
 export const addNewPackage = createAsyncThunk(
   "admin/addNewPackage",
-  async (data: IAddPackageReq, { rejectWithValue }) => {
+  async (data: IPackageReqBody, { rejectWithValue }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE;
       const res = await axiosInstance.post(url, data);
       toast.success(res.data.message);
       return res.data.data;
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const editPackageById = createAsyncThunk(
+  "admin/editPackageById",
+  async ({data, packageId} : {data:IPackageReqBody, packageId: string}, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
+      const res = await axiosInstance.put(url, data);
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deletePackageById = createAsyncThunk(
+  "admin/deletePackageById",
+  async (packageId: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
+      const res = await axiosInstance.delete(url);
+      toast.success(res.data.message);
+      if(res.data.error === 0){
+        return packageId;
+      }
     } catch (err) {
       console.log("err: ", err);
       checkErr(err);
@@ -149,6 +183,20 @@ export const adminSlice = createSlice({
     });
     builder.addCase(addNewPackage.fulfilled, (state, action) => {
       state.allPackages.push(action.payload);
+    });
+    builder.addCase(deletePackageById.fulfilled, (state, action) => {
+      const newPackages = state.allPackages.filter((pack)=>{
+        return pack.id !== action.payload
+      })
+      state.allPackages = newPackages;
+    });
+    builder.addCase(editPackageById.fulfilled, (state, action) => {
+      const editedPackageIndex = state.allPackages.findIndex(
+        (pack) => pack.id === action.payload.id
+      )
+      if(editedPackageIndex !== -1){
+        state.allPackages[editedPackageIndex] = action.payload;
+      }
     });
   },
 });

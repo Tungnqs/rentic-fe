@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import Loader from "../../../components/Loader/Loader";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 import { formatMoney } from "../../../store/slices/app.slice";
+import DemoProperty from "../../../assets/images/demo-property.jpg";
 
 const PropertyList = () => {
   const [isOpenAddPopup, setIsOpenAddPopup] = useState(false);
@@ -93,7 +94,7 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
                 src={
                   item.images.length > 0
                     ? item.images[0].path
-                    : "https://chefjob.vn/wp-content/uploads/2020/04/homestay-duoc-nhieu-du-khach-lua-chon.jpg"
+                    : DemoProperty
                 }
                 alt=""
               />

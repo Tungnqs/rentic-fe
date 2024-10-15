@@ -162,7 +162,7 @@ const PostDetail = () => {
                   : unknownAvatar
               }
               alt=""
-              className="w-full aspect-square"
+              className="w-full aspect-square object-cover"
             />
             <div className="flex flex-col gap-2">
               <div className="text-[22px] font-semibold">

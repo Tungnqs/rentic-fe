@@ -4,10 +4,10 @@ import { selectUserProfile } from "../../store/slices/auth.slice";
 import unknownAvatar from "../../assets/images/anonymous-avatar.png";
 import Messages from "./Messages/Messages";
 import { AppDispatch } from "../../store";
-import { getAllConversations, IMessage, selectAllChatsLoading, selectAllConversation } from "../../store/slices/chat.slice";
+import { getAllConversations, IChat, IMessage, selectAllChatsLoading, selectAllConversation } from "../../store/slices/chat.slice";
 import { SocketContext } from "../../context/SocketContext";
 import Loader from "../../components/Loader/Loader";
-import { toast } from "react-toastify";
+import { EmptyInboxIcon } from "../../assets/icon/icon";
 
 export const formatDateTime = (dateTimeString: string): string => {
     const date = new Date(dateTimeString);
@@ -33,7 +33,7 @@ const Conversation = () => {
     }, [])
     const allConversations = useSelector(selectAllConversation);
     const myProfile = useSelector(selectUserProfile);
-    const [selectedConversation, setSelectedConversation] = useState(allConversations[0]);
+    const [selectedConversation, setSelectedConversation] = useState<IChat | null>(null);
 
     const loadingSttOfGetChats = useSelector(selectAllChatsLoading);
 
@@ -41,20 +41,6 @@ const Conversation = () => {
         if (selectedConversation && socket) {
             socket.emit('joinChat', selectedConversation.id);
         }
-        // if (socket) {
-        //     const messageListener = (newMessage: IMessage) => {
-        //         console.log('newMessage: ', newMessage);
-        //         const chat = allConversations.find((chat) => chat.id === newMessage.chatId);
-        //         if (chat) {
-        //             toast.info(`${chat.receiver.username}: ${newMessage.text}`);
-        //         }
-        //     };
-        //     socket.on('message', messageListener);
-        //     // Clean up the listener when the component unmounts or when the dependencies change
-        //     return () => {
-        //         socket.off('message', messageListener);
-        //     };
-        // }
     }, [selectedConversation, socket, allConversations]);
 
   return (
@@ -84,7 +70,12 @@ const Conversation = () => {
                         ))}
                 </div>
             </div>
-            {selectedConversation && <Messages myProfile={myProfile} selectedConversation={selectedConversation} />}
+            {selectedConversation ? 
+            <Messages myProfile={myProfile} selectedConversation={selectedConversation} /> 
+            : (<div className="flex-1 flex p-7 max-sm:p-2 max-sm:pl-4 flex-col justify-center items-center h-[590px]">
+                <EmptyInboxIcon className="text-black w-24" />
+                <div className="font-semibold">Inbox is empty, connect to a partner to have conversation!</div>
+            </div>)}
         </div>
       </div>
     </div>
