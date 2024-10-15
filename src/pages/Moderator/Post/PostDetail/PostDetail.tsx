@@ -28,6 +28,7 @@ import "leaflet/dist/leaflet.css";
 import { icon } from "leaflet";
 import mapMaker from "../../../../assets/images/map-marker.png";
 import unknownAvatar from "../../../../assets/images/anonymous-avatar.png";
+import { formatMoney } from "../../../../store/slices/app.slice";
 
 const PostDetail = () => {
   const postId = useParams().id;
@@ -97,7 +98,7 @@ const PostDetail = () => {
             <div className="flex flex-col gap-4  pb-1">
               <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
                 <div>Property: {currentPostData.title}</div>
-                <div>{currentPostData.price} $</div>
+                <div>{formatMoney(currentPostData.price)} $</div>
               </div>
               <div className="border-b">
                 <div className="flex gap-[2px]">
@@ -161,7 +162,7 @@ const PostDetail = () => {
                   : unknownAvatar
               }
               alt=""
-              className="w-full aspect-square"
+              className="w-full aspect-square object-cover"
             />
             <div className="flex flex-col gap-2">
               <div className="text-[22px] font-semibold">

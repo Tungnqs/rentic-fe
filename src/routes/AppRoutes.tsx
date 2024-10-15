@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { standaloneRoutes } from "./standaloneRoutes";
 import { useSelector } from "react-redux";
-import { selectUserProfile, selectUserRole } from "../store/slices/auth.slice";
+import { selectUserProfile } from "../store/slices/auth.slice";
 import RenterLayout from "../components/Layout/RenterLayout";
 import AdminLayout from "../components/Layout/AdminLayout";
 import { adminRoutes } from "./adminRoutes";
@@ -14,7 +14,6 @@ import ModeratorLayout from "../components/Layout/ModeratorLayout";
 
 export default function AppRoutes() {
   const userRole = useSelector(selectUserProfile).roles[0];
-
   return (
     <Routes>
       {userRole === "RENTER" && (

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { usePayOS, PayOSConfig } from "payos-checkout";
 import useScript from "react-script-hook/lib/use-script";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
+import { formatMoney } from "../../store/slices/app.slice";
 
 const DepositPage = () => {
   const userProfile = useSelector(selectUserProfile);
@@ -100,7 +101,7 @@ const DepositPage = () => {
             </div>
           </div>
         </div>
-        <div className="text-[24px]">Balance: {userProfile.balance} VND</div>
+        <div className="text-[24px]">Balance: {formatMoney(userProfile.balance as number)} VND</div>
         <div className="flex flex-col gap-3 select-none">
           <div>Choose value to deposit into your account:</div>
           <div

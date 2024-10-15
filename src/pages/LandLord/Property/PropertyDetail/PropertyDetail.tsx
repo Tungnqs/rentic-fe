@@ -26,6 +26,7 @@ import { icon } from "leaflet";
 import mapMaker from "../../../../assets/images/map-marker.png";
 import ConfirmModal from "../../../../components/ConfirmModal/ConfirmModal";
 import EditProperty from "../EditProperty/EditProperty";
+import { formatMoney } from "../../../../store/slices/app.slice";
 
 const PropertyDetail = () => {
   const postId = useParams().id;
@@ -100,7 +101,7 @@ const PropertyDetail = () => {
             <div className="flex flex-col gap-4  pb-1">
               <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
                 <div>Property: {currentPostData.title}</div>
-                <div>{currentPostData.price} $</div>
+                <div>{formatMoney(currentPostData.price)} $</div>
               </div>
               <div className="border-b">
                 <div className="flex gap-[2px]">

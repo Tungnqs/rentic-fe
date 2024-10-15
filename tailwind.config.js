@@ -19,6 +19,9 @@ module.exports = {
         'bgDarkPrimary': '#2d3539',
         'bgLeftNavbar': '#22272a',
         'bgDarkSecondary': '#4f5d64',
+        'bgDarkPopupFooter': '#2b2d31',
+        'bgDarkPopupBody': '#313338',
+        'darkInput': '#1e1f22',
       }
     },
   },

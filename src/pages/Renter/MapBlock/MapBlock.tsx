@@ -6,6 +6,7 @@ import mapMaker from "../../../assets/images/house-pin.png";
 import { IPost } from "../../../interfaces/post.interface";
 import demoProperty from "../../../assets/images/demo-property.jpg"
 import { useNavigate } from "react-router";
+import { formatMoney } from "../../../store/slices/app.slice";
 
 interface IMapBlockProps{
     allPublishPosts: IPost[]
@@ -55,7 +56,7 @@ const Pin = ({ post }: IPinProps) => {
                 <div className="font-semibold text-[14px]">{post.title}</div>
                 <div>{post.bathroom} bathrooms</div>
                 <div>{post.bedroom} bedrooms</div>
-                <div className="font-semibold text-[14px] text-green-600">{post.price}₫</div>
+                <div className="font-semibold text-[14px] text-green-600">{formatMoney(post.price)}₫</div>
             </div>
         </div>
       </Popup>

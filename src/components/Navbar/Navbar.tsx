@@ -16,6 +16,7 @@ import {
   createPaymentLink,
   IDataForCreatePaymentLink,
 } from "../../store/slices/payment.slice";
+import { formatMoney } from "../../store/slices/app.slice";
 
 export interface INavbarItems {
   title: string;
@@ -54,7 +55,9 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
     navigate("/login");
   };
 
-  const hasManyNavItems = navbarItems && navbarItems?.length >= 4;
+  const hasManyNavItems = useMemo(()=>{
+    return navbarItems && navbarItems?.length >= 4;
+  }, [navbarItems])
 
   return (
     <S.Layout>
@@ -101,7 +104,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
             <>
               <S.Balance>
-                <p className="w-fit">Balance: {userProfile.balance} VND</p>
+                <p className="w-fit">Balance: {formatMoney(userProfile.balance as number)} VND</p>
               </S.Balance>
               <S.SubscribeBtn onClick={()=>navigate("/deposit")}>Deposit</S.SubscribeBtn>
             </>

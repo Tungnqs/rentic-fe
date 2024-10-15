@@ -59,7 +59,7 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
 
   return (
     <form
-      className="fixed inset-0 flex items-center justify-center z-10"
+      className="fixed inset-0 flex items-center justify-center z-50"
       onSubmit={handleAddProperty}
     >
       <div

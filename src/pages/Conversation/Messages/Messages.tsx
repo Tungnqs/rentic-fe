@@ -17,6 +17,7 @@ import { SocketContext } from "../../../context/SocketContext";
 import { toast } from "react-toastify";
 import { IUser } from "../../../interfaces/userProfile.interface";
 import Loader from "../../../components/Loader/Loader";
+import { formatDateTime } from "../Conversation";
 
 interface IMessagesProps {
   selectedConversation: IChat;
@@ -77,6 +78,7 @@ const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
       };
     }
   }, [socket, currentConversation]);
+
   return (
     <div className="flex-1 p-7 max-sm:p-2 max-sm:pl-4 flex flex-col gap-4">
       <div className="flex gap-2 items-center border-b-2 border-grayLight2 pb-2 h-fit">
@@ -100,12 +102,16 @@ const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
         {loadingSttOfGetMsgs === "loading" ? <Loader /> : msgArr &&
           msgArr.map((msg) => (
             <div key={msg.id} className="break-all">
-              {msg.userId === myProfile.id ? (
-                <b className="text-secondaryYellow">Me:</b>
-              ) : (
-                <b>{currentConversation?.sender?.username}:</b>
-              )}{" "}
-              {msg.text}
+              <div className="flex gap-3">
+                <img className="w-10 h-10 aspect-square object-cover rounded-full" src={msg.userId === myProfile.id ? myProfile.avatar : (currentConversation.sender.avatar ? currentConversation.sender.avatar : unknownAvatar)} alt="" />
+                <div>
+                  <div className="flex gap-2 items-center">
+                    <div className={`h-fit font-semibold ${msg.userId === myProfile.id ? "text-secondaryYellow" : ""}`}>{msg.userId === myProfile.id ? "Me" : currentConversation.sender.username}</div>
+                    <div className="text-[11px] h-fit">{formatDateTime(msg.createdAt as string)}</div>
+                  </div>
+                  <div className="break-all">{msg.text}</div>
+                </div>
+              </div>
             </div>
           ))}
       </div>

@@ -4,6 +4,7 @@ import { INavbarItems } from "../Navbar/Navbar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserProfile } from "../../store/slices/auth.slice";
+import { formatMoney } from "../../store/slices/app.slice";
 
 interface ICollapseSidebarProps {
   isSidebarOpen: boolean;
@@ -55,7 +56,7 @@ const CollapseSidebar = ({
         </button>
         <div className="py-4 overflow-y-auto">
           <div className="p-2"><span className="font-semibold">User:</span> {userProfile.username}</div>
-          <div className="p-2 pb-4 border-b-2 border-thirdYellow"><span className="font-semibold">Balance:</span> {userProfile.balance} VND</div>
+          <div className="p-2 pb-4 border-b-2 border-thirdYellow"><span className="font-semibold">Balance:</span> {formatMoney(userProfile.balance as number)} VND</div>
           <Link onClick={toggleSidebar} to={"/deposit"} className="p-2 pt-4 flex gap-3"><BankIcon className="w-[24px]"/><div>Deposit</div></Link>
           <ul className="space-y-2 font-medium">
             {menuItems &&

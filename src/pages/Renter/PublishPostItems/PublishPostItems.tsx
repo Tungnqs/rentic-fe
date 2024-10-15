@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store';
 import { IReportPostBody, reportPostById } from '../../../store/slices/report.slice';
 import { useNavigate } from 'react-router';
+import { formatMoney } from '../../../store/slices/app.slice';
+import { createConversation } from '../../../store/slices/chat.slice';
 
 interface IPublishPostItemsProps{
     post: IPost;
@@ -36,6 +38,12 @@ const PublishPostItems = ({post}: IPublishPostItemsProps) => {
         togglePopup();
     }
 
+    const handleGoToChat = async (userId: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        await dispatch(createConversation(userId));
+        navigate("/conversations");
+    };
+
     return (
         <>
             {showReportPopup && <ReportPopup reasonInput={reasonInput} setReasonInput={setReasonInput} handleSubmit={reportPost} confirmBtnTitle='Report' popupContent={`Tell us the reason why you decide to report this post: "${post.title}"`} popupTitle='Report post' togglePopup={togglePopup} confirmBtnClass='bg-red-600 hover:bg-red-800 text-white' />}
@@ -51,7 +59,7 @@ const PublishPostItems = ({post}: IPublishPostItemsProps) => {
                         <LocationIcon className='w-4 text-secondaryYellow' /><div className='flex-1 truncate'>{post.commune}, {post.district}, {post.city}</div>
                     </div>
                         <div className='bg-lightYellow px-[6px] h-fit py-[2px] rounded-sm w-fit text-[13px]'>
-                            {post.price} VND
+                            {formatMoney(post.price)} VND
                         </div>
                     <div className='uppercase font-semibold flex'>{post.property}</div>
                     <div className='flex justify-between flex-wrap gap-y-2'>
@@ -60,7 +68,7 @@ const PublishPostItems = ({post}: IPublishPostItemsProps) => {
                             <div className='flex gap-1 p-1 bg-grayLight2 rounded-md items-center'><BathIcon className='w-4'/><div>{post.bathroom}</div></div>
                             <div className='flex gap-1 p-1 bg-grayLight2 rounded-md items-center'><ResizeIcon className='w-4'/><div>{post.size}</div></div>
                         </div>
-                        <div className='p-2 border-2 rounded-md hover:bg-grayLight2 hover:border-black cursor-pointer'><MessageIcon className='w-4' /></div>
+                        <div onClick={(e)=>handleGoToChat(post.user.id, e)} className='p-2 border-2 rounded-md hover:bg-grayLight2 hover:border-black cursor-pointer'><MessageIcon className='w-4' /></div>
                     </div>
                 </div>
             </div>

@@ -41,6 +41,7 @@ const initialState: IPostData = {
     property: "",
     title: "",
     user: {
+      id: "",
       avatar: "",
       email: "",
       firstName: "",

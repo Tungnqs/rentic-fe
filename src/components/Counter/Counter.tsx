@@ -4,10 +4,11 @@ import { MinusIcon, PlusIcon } from "../../assets/icon/icon";
 interface ICounterProps {
   setValue: (value: number) => void;
   noNeedBtn?: boolean;
-  defaultValue: number
+  defaultValue: number;
+  isDark?: boolean;
 }
 
-const Counter = ({ setValue, noNeedBtn, defaultValue }: ICounterProps) => {
+const Counter = ({ setValue, noNeedBtn, defaultValue, isDark }: ICounterProps) => {
 
   const increment = () => setValue(defaultValue + 1);
   const decrement = () => setValue(defaultValue > 0 ? defaultValue - 1 : 0);
@@ -42,7 +43,7 @@ const Counter = ({ setValue, noNeedBtn, defaultValue }: ICounterProps) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         aria-describedby="helper-text-explanation"
-        className={`border h-11 text-gray-900 text-sm block w-full p-2.5 ${noNeedBtn ? "rounded-md border-2 border-black" : "border-x-0 text-center bg-gray-100 border-gray-300"}`}
+        className={`border h-11 text-sm block w-full p-2.5 ${noNeedBtn ? "rounded-md border-2 border-black" : "border-x-0 text-center bg-gray-100 border-gray-300"} ${isDark ? "bg-darkInput border-none" : "text-gray-900"}`}
         placeholder="999"
         required
         readOnly={!noNeedBtn}

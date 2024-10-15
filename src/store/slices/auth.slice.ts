@@ -10,12 +10,14 @@ import { checkErr } from "../../utils/notification.utils";
 import { useNavigate } from "react-router";
 
 interface IAuth {
+  authLoading: "loading" | "loaded" | "fail",
   userRole?: string;
   isLogin: boolean;
   userProfile: IUserProfile;
 }
 
 const initialState: IAuth = {
+  authLoading: "loading",
   userRole: "",
   isLogin: false,
   userProfile: {
@@ -121,6 +123,7 @@ export const authLogout = createAsyncThunk(
       await deleteCookie("token");
       dispatch(setIsLoggedIn(false));
       dispatch(clearUserProfile());
+      dispatch(setAuthLoading("loading"))
       toast.success("Logout successfully!");
     } catch (err) {
       return rejectWithValue(err);
@@ -140,6 +143,9 @@ export const authSlice = createSlice({
     },
     setIsLoggedIn: (state, action) => {
       state.isLogin = action.payload;
+    },
+    setAuthLoading: (state, action) => {
+      state.authLoading = action.payload;
     },
     clearUserProfile: (state) => {
       state.userProfile = {
@@ -162,9 +168,16 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getUserProfile.pending, (state) => {
+      state.authLoading = "loading";
+    });
     builder.addCase(getUserProfile.fulfilled, (state, action) => {
+      state.authLoading = "loaded";
       state.userProfile = action.payload;
       state.isLogin = true;
+    });
+    builder.addCase(getUserProfile.rejected, (state) => {
+      state.authLoading = "fail";
     });
     builder.addCase(normalLogin.fulfilled, (state, action) => {
       state.isLogin = true;
@@ -175,6 +188,7 @@ export const authSlice = createSlice({
 
 export const selectUserRole = (state: RootState) => state.authState.userRole;
 export const selectIsLogin = (state: RootState) => state.authState.isLogin;
+export const selectAuthLoading = (state: RootState) => state.authState.authLoading;
 export const selectUserProfile = (state: RootState) =>
   state.authState.userProfile.user;
 export const {
@@ -182,5 +196,6 @@ export const {
   clearCurrentUserRole,
   setIsLoggedIn,
   clearUserProfile,
+  setAuthLoading,
 } = authSlice.actions;
 export default authSlice.reducer;

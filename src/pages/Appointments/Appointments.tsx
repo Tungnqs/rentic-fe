@@ -13,6 +13,8 @@ import {
 } from "../../store/slices/appointment.slice";
 import Loader from "../../components/Loader/Loader";
 import { createConversation } from "../../store/slices/chat.slice";
+import { formatMoney } from "../../store/slices/app.slice";
+import { formatDate } from "../Moderator/Report/ReportList";
 
 interface IAppointmentsProps {
   isLandLord: boolean;
@@ -92,6 +94,9 @@ const Appointments = ({ isLandLord }: IAppointmentsProps) => {
                         Partner
                       </th>
                       <th scope="col" className="px-2 py-3">
+                        Date and Time
+                      </th>
+                      <th scope="col" className="px-2 py-3">
                         Status
                       </th>
                       <th scope="col" className="px-2 py-3 text-center">
@@ -116,11 +121,14 @@ const Appointments = ({ isLandLord }: IAppointmentsProps) => {
                         <td className="px-2 py-4">
                           {appointment.post.property}
                         </td>
-                        <td className="px-2 py-4">{appointment.post.type}</td>
-                        <td className="px-2 py-4">{appointment.post.price}₫</td>
+                        <td className="px-2 py-4 uppercase text-black font-semibold">{appointment.post.type}</td>
+                        <td className="px-2 py-4 text-green-600 font-bold">{formatMoney(appointment.post.price)}₫</td>
                         <td className="px-2 py-4">
                           {appointment.user?.firstName}{" "}
                           {appointment.user?.lastName}
+                        </td>
+                        <td className="px-2 py-4">
+                          {formatDate(appointment.dateTime)}
                         </td>
                         <td className="px-2 py-4 font-semibold">
                           {appointment.approved ? (

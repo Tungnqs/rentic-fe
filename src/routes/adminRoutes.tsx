@@ -3,6 +3,7 @@ import { IRoute } from "../interfaces";
 import { Navigate } from "react-router";
 import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
 import AccountList from "../pages/Admin/Account/AccountList";
+import PackageList from "../pages/Admin/Package/PackageList";
 
 export const adminRoutes: IRoute[] = [
   {
@@ -16,5 +17,9 @@ export const adminRoutes: IRoute[] = [
   {
     path: "/accounts",
     component: <AccountList />,
+  },
+  {
+    path: "/packages",
+    component: <PackageList />,
   }
 ];

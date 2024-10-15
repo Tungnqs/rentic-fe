@@ -112,7 +112,7 @@ const EditProperty = ({ togglePopup, currentPostData }: IEditPropertyProps) => {
 
   return (
     <form
-      className="fixed inset-0 flex items-center justify-center z-20"
+      className="fixed inset-0 flex items-center justify-center z-50"
       onSubmit={handleEditProperty}
     >
       <div

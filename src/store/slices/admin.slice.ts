@@ -5,16 +5,90 @@ import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
 import { IUser } from "../../interfaces/userProfile.interface";
 import { RootState } from "..";
+import { IPackage } from "../../interfaces/ads.interface";
 
 interface IAdminState {
+  allPackages: IPackage[],
   allAccounts: IUser[];
   loadingStatus: "loading" | "loaded" | "fail";
 }
 
 const initialState: IAdminState = {
+  allPackages: [],
   allAccounts: [],
   loadingStatus: "loading",
 };
+
+export const getAllPackages = createAsyncThunk(
+  "admin/getAllPackages",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE;
+      const res = await axiosInstance.get(url);
+      return res.data.data;
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export interface IPackageReqBody{
+  name: string;
+  dailyRate: number;
+  description: string;
+}
+
+export const addNewPackage = createAsyncThunk(
+  "admin/addNewPackage",
+  async (data: IPackageReqBody, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE;
+      const res = await axiosInstance.post(url, data);
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const editPackageById = createAsyncThunk(
+  "admin/editPackageById",
+  async ({data, packageId} : {data:IPackageReqBody, packageId: string}, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
+      const res = await axiosInstance.put(url, data);
+      toast.success(res.data.message);
+      return res.data.data;
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deletePackageById = createAsyncThunk(
+  "admin/deletePackageById",
+  async (packageId: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
+      const res = await axiosInstance.delete(url);
+      toast.success(res.data.message);
+      if(res.data.error === 0){
+        return packageId;
+      }
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
 
 export const getAllAccounts = createAsyncThunk(
   "admin/getAllAccounts",
@@ -97,10 +171,38 @@ export const adminSlice = createSlice({
         state.allAccounts[unblockedAccountIdx].isBlocked = false;
       }
     });
+    builder.addCase(getAllPackages.pending, (state) => {
+      state.loadingStatus = "loading";
+    });
+    builder.addCase(getAllPackages.fulfilled, (state, action) => {
+      state.loadingStatus = "loaded";
+      state.allPackages = action.payload;
+    });
+    builder.addCase(getAllPackages.rejected, (state) => {
+      state.loadingStatus = "fail";
+    });
+    builder.addCase(addNewPackage.fulfilled, (state, action) => {
+      state.allPackages.push(action.payload);
+    });
+    builder.addCase(deletePackageById.fulfilled, (state, action) => {
+      const newPackages = state.allPackages.filter((pack)=>{
+        return pack.id !== action.payload
+      })
+      state.allPackages = newPackages;
+    });
+    builder.addCase(editPackageById.fulfilled, (state, action) => {
+      const editedPackageIndex = state.allPackages.findIndex(
+        (pack) => pack.id === action.payload.id
+      )
+      if(editedPackageIndex !== -1){
+        state.allPackages[editedPackageIndex] = action.payload;
+      }
+    });
   },
 });
 
 export const selectAdminLoadingStatus = (state: RootState) => state.adminState.loadingStatus;
 export const selectAllUserAccounts = (state: RootState) => state.adminState.allAccounts;
+export const selectAllPackages = (state: RootState) => state.adminState.allPackages;
 
 export default adminSlice.reducer;
