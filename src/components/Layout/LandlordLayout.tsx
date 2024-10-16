@@ -4,7 +4,7 @@ import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllMyPosts } from "../../store/slices/post.slice";
-import { AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
+import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
 
 export default function LandlordLayout() {
   const navbarItems:INavbarItems[] = [
@@ -22,6 +22,11 @@ export default function LandlordLayout() {
       path: "/appointments",
       title: "Appointments",
       icon: <AppointmentIcon className="w-full"/>
+    },
+    {
+      title: "Advertisement",
+      path: "/ads",
+      icon: <AdsIcon />,
     },
     {
       path: "/conversations",

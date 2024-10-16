@@ -10,6 +10,7 @@ import DepositPage from "../pages/DepositPage/DepositPage";
 import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmation";
 import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
+import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -34,22 +35,26 @@ export const landLordRoutes: IRoute[] = [
   },
   {
     path: "/profile",
-    component: <EditProfile />
+    component: <EditProfile />,
   },
   {
     path: "/deposit",
-    component: <DepositPage />
+    component: <DepositPage />,
   },
   {
     path: "/payment/:id",
-    component: <PaymentConfirmation />
+    component: <PaymentConfirmation />,
   },
   {
     path: "/appointments",
-    component: <Appointments isLandLord={true}/>
+    component: <Appointments isLandLord={true} />,
   },
   {
     path: "/conversations",
-    component: <Conversation />
-  }
+    component: <Conversation />,
+  },
+  {
+    path: "/ads",
+    component: <Advertisements />,
+  },
 ];

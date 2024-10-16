@@ -43,5 +43,9 @@ export const API_PATH_URL = {
     READ_CHAT: "/api/chat/",
     SEND_MESSAGE: "/api/chat/send/",
     CREATE_CHAT: "/api/chat/create/",
+  },
+  ADVERTISEMENT: {
+    ADS_MODIFY: "/api/ads/",
+    GET_ALL_MY_ADS: "/api/ads/user",
   }
 };

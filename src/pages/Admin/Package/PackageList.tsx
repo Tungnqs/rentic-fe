@@ -25,6 +25,7 @@ const PackageList = () => {
 
   const loadingStatus = useSelector(selectAdminLoadingStatus);
   const allPackages = useSelector(selectAllPackages);
+  console.log('allPackages: ', allPackages);
 
   const [chosenPackageForDeleting, setChosenPackageForDeleting] = useState<IPackage | null>(null);
   const [chosenPackageForEditing, setChosenPackageForEditing] = useState<IPackage | null>(null);

@@ -5,15 +5,20 @@ import { RootState } from "..";
 import { IPost } from "../../interfaces/post.interface";
 import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
+import { IAds } from "../../interfaces/ads.interface";
 
 interface IPostData {
+  myAds: IAds[];
   post: IPost[];
   postDetail: IPost;
   isLoading: "loading" | "loaded" | "fail";
+  adsLoading: "loading" | "loaded" | "fail";
 }
 
 const initialState: IPostData = {
+  myAds: [],
   isLoading: "loading",
+  adsLoading: "loading",
   post: [],
   postDetail: {
     desc: "",
@@ -51,6 +56,46 @@ const initialState: IPostData = {
     },
   },
 };
+
+export const getAllMyAds = createAsyncThunk(
+  "landlord/getAllMyAds",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.GET_ALL_MY_ADS;
+      const response = await axiosInstance.get(url);
+      return response.data.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export interface IAdsRequest {
+  startDate: string;
+  endDate: string;
+  postId: string;
+  adPackageId: string;
+}
+
+export const createNewAds = createAsyncThunk(
+  "landlord/createNewAds",
+  async (data: IAdsRequest, { rejectWithValue, dispatch }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.ADS_MODIFY;
+      const response = await axiosInstance.post(url, data);
+      if (response.data.data) {
+        dispatch(getAllMyAds());
+      }
+      return response.data.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
 
 export const getAllMyPosts = createAsyncThunk(
   "landlord/getAllMyPosts",
@@ -95,7 +140,7 @@ export const getAllPublishPosts = createAsyncThunk(
       return rejectWithValue(err);
     }
   }
-)
+);
 
 export const createPost = createAsyncThunk(
   "landlord/createPost",
@@ -179,12 +224,13 @@ export const verifyPost = createAsyncThunk(
   "moderator/verifyPost",
   async ({ postId }: { postId: string }, { rejectWithValue, dispatch }) => {
     try {
-      const url = API_BASE_URL + API_PATH_URL.MODERATOR.MODIFY_POST + postId + "/verify";
+      const url =
+        API_BASE_URL + API_PATH_URL.MODERATOR.MODIFY_POST + postId + "/verify";
       const response = await axiosInstance.post(url);
       if (response.data) {
         dispatch(getAllUserPosts());
       }
-      toast.success(response.data.message)
+      toast.success(response.data.message);
       return response.data;
     } catch (err: any) {
       console.log("err: ", err);
@@ -198,12 +244,16 @@ export const unVerifyPost = createAsyncThunk(
   "moderator/verifyPost",
   async ({ postId }: { postId: string }, { rejectWithValue, dispatch }) => {
     try {
-      const url = API_BASE_URL + API_PATH_URL.MODERATOR.MODIFY_POST + postId + "/unverify";
+      const url =
+        API_BASE_URL +
+        API_PATH_URL.MODERATOR.MODIFY_POST +
+        postId +
+        "/unverify";
       const response = await axiosInstance.post(url);
       if (response.data) {
         dispatch(getAllUserPosts());
       }
-      toast.success(response.data.message)
+      toast.success(response.data.message);
       return response.data;
     } catch (err: any) {
       console.log("err: ", err);
@@ -261,6 +311,16 @@ export const postSlice = createSlice({
     builder.addCase(verifyPost.fulfilled, (state, action) => {
       state.postDetail.isVerified = action.payload.post.isVerified;
     });
+    builder.addCase(getAllMyAds.pending, (state) => {
+      state.adsLoading = "loading";
+    });
+    builder.addCase(getAllMyAds.fulfilled, (state, action) => {
+      state.myAds = action.payload;
+      state.adsLoading = "loaded";
+    });
+    builder.addCase(getAllMyAds.rejected, (state) => {
+      state.adsLoading = "fail";
+    });
   },
 });
 
@@ -269,5 +329,8 @@ export const selectCurrentPost = (state: RootState) =>
   state.postState.postDetail;
 export const selectLoadingStatus = (state: RootState) =>
   state.postState.isLoading;
+export const selectAdsLoadingStatus = (state: RootState) =>
+  state.postState.adsLoading;
+export const selectAllMyAds = (state: RootState) => state.postState.myAds;
 
 export default postSlice.reducer;
