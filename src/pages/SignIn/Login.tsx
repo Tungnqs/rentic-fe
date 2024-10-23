@@ -83,7 +83,7 @@ const Login = () => {
           </div>
           <form className="bottom-block" onSubmit={handleSubmitForm}>
             <div className="account field">
-              <div className="text-lightGray">Email/Phone number</div>
+              <div className="text-lightGray">Email</div>
               <input
                 required
                 type="text"
