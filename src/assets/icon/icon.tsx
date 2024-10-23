@@ -1219,7 +1219,13 @@ export function PackageIcon(props: React.HTMLAttributes<SVGElement>) {
 
 export function EmptyInboxIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
-    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="" {...props}>
+    <svg
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -1229,6 +1235,61 @@ export function EmptyInboxIcon(props: React.HTMLAttributes<SVGElement>) {
       <g id="SVGRepo_iconCarrier">
         {" "}
         <path d="M20,15 L20,5.5 C20,4.67157288 19.3284271,4 18.5,4 L5.5,4 C4.67157288,4 4,4.67157288 4,5.5 L4,15 L9.5,15 C9.77614237,15 10,15.2238576 10,15.5 C10,16.3284271 10.6715729,17 11.5,17 L12.5,17 C13.3284271,17 14,16.3284271 14,15.5 C14,15.2238576 14.2238576,15 14.5,15 L20,15 Z M20,16 L14.9499909,16 C14.7183558,17.1411202 13.709479,18 12.5,18 L11.5,18 C10.290521,18 9.28164422,17.1411202 9.05000906,16 L4,16 L4,18.5 C4,19.3284271 4.67157288,20 5.5,20 L18.5,20 C19.3284271,20 20,19.3284271 20,18.5 L20,16 Z M5.5,3 L18.5,3 C19.8807119,3 21,4.11928813 21,5.5 L21,18.5 C21,19.8807119 19.8807119,21 18.5,21 L5.5,21 C4.11928813,21 3,19.8807119 3,18.5 L3,5.5 C3,4.11928813 4.11928813,3 5.5,3 Z"></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function FacebookIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function LinkedInIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="-271 283.9 256 235.1"
+      xmlSpace="preserve"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <g>
+          {" "}
+          <rect x="-264.4" y="359.3" width="49.9" height="159.7"></rect>{" "}
+          <path d="M-240.5,283.9c-18.4,0-30.5,11.9-30.5,27.7c0,15.5,11.7,27.7,29.8,27.7h0.4c18.8,0,30.5-12.3,30.4-27.7 C-210.8,295.8-222.1,283.9-240.5,283.9z"></path>{" "}
+          <path d="M-78.2,357.8c-28.6,0-46.5,15.6-49.8,26.6v-25.1h-56.1c0.7,13.3,0,159.7,0,159.7h56.1v-86.3c0-4.9-0.2-9.7,1.2-13.1 c3.8-9.6,12.1-19.6,27-19.6c19.5,0,28.3,14.8,28.3,36.4V519h56.6v-88.8C-14.9,380.8-42.7,357.8-78.2,357.8z"></path>{" "}
+        </g>{" "}
       </g>
     </svg>
   );

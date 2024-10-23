@@ -6,19 +6,24 @@ import { IPost } from "../../interfaces/post.interface";
 import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
 import { IAds } from "../../interfaces/ads.interface";
+import { getUserProfile } from "./auth.slice";
 
 interface IPostData {
-  myAds: IAds[];
+  ads: IAds[];
   post: IPost[];
   postDetail: IPost;
+  tenLatestPosts: IPost[];
+  latestPostsLoading: "loading" | "loaded" | "fail";
   isLoading: "loading" | "loaded" | "fail";
   adsLoading: "loading" | "loaded" | "fail";
 }
 
 const initialState: IPostData = {
-  myAds: [],
+  ads: [],
   isLoading: "loading",
   adsLoading: "loading",
+  latestPostsLoading: "loading",
+  tenLatestPosts: [],
   post: [],
   postDetail: {
     desc: "",
@@ -72,6 +77,36 @@ export const getAllMyAds = createAsyncThunk(
   }
 );
 
+export const getAllUserAds = createAsyncThunk(
+  "moderator/getAllUserAds",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.ADS_MODIFY;
+      const response = await axiosInstance.get(url);
+      return response.data.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getHomepageAds = createAsyncThunk(
+  "user/getHomepageAds",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.GET_PUBLISHED_ADS;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export interface IAdsRequest {
   startDate: string;
   endDate: string;
@@ -87,7 +122,40 @@ export const createNewAds = createAsyncThunk(
       const response = await axiosInstance.post(url, data);
       if (response.data.data) {
         dispatch(getAllMyAds());
+        dispatch(getUserProfile());
       }
+      return response.data.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteAdsById = createAsyncThunk(
+  "landlord/deleteAdsById",
+  async (adsId: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.ADS_MODIFY + adsId;
+      const response = await axiosInstance.delete(url);
+      toast.success(response.data.message);
+      return adsId;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const moderatorAdsModify = createAsyncThunk(
+  "moderator/moderatorAdsModify",
+  async ({adsId, isActive} : {adsId: string, isActive:boolean}, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.ADS_MODIFY + adsId;
+      const response = await axiosInstance.put(url, {isActive: !isActive});
+      toast.success(response.data.message);
       return response.data.data;
     } catch (err: any) {
       console.log(err);
@@ -117,6 +185,21 @@ export const getAllUserPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.POST.GET_ALL_POSTS;
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (err: any) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getTenLatestPosts = createAsyncThunk(
+  "guest/getTenLatestPosts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.GET_10_LATEST_POSTS;
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (err: any) {
@@ -268,6 +351,7 @@ export const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //getAllMyPosts - landlord
     builder.addCase(getAllMyPosts.pending, (state) => {
       state.isLoading = "loading";
     });
@@ -278,6 +362,8 @@ export const postSlice = createSlice({
     builder.addCase(getAllMyPosts.rejected, (state) => {
       state.isLoading = "fail";
     });
+
+    //getPostById - view post detail
     builder.addCase(getPostById.pending, (state) => {
       state.isLoading = "loading";
     });
@@ -288,6 +374,8 @@ export const postSlice = createSlice({
     builder.addCase(getPostById.rejected, (state) => {
       state.isLoading = "fail";
     });
+
+    //getAllUserPosts - get all posts
     builder.addCase(getAllUserPosts.pending, (state) => {
       state.isLoading = "loading";
     });
@@ -298,6 +386,8 @@ export const postSlice = createSlice({
     builder.addCase(getAllUserPosts.rejected, (state) => {
       state.isLoading = "fail";
     });
+
+    //getAllPublishPosts
     builder.addCase(getAllPublishPosts.pending, (state) => {
       state.isLoading = "loading";
     });
@@ -308,19 +398,77 @@ export const postSlice = createSlice({
     builder.addCase(getAllPublishPosts.rejected, (state) => {
       state.isLoading = "fail";
     });
+
+    //verifyPost
     builder.addCase(verifyPost.fulfilled, (state, action) => {
       state.postDetail.isVerified = action.payload.post.isVerified;
     });
+
+    //getAllMyAds - landlord
     builder.addCase(getAllMyAds.pending, (state) => {
       state.adsLoading = "loading";
     });
     builder.addCase(getAllMyAds.fulfilled, (state, action) => {
-      state.myAds = action.payload;
+      state.ads = action.payload;
       state.adsLoading = "loaded";
     });
     builder.addCase(getAllMyAds.rejected, (state) => {
       state.adsLoading = "fail";
     });
+
+    //getHomepageAds - homepage
+    builder.addCase(getHomepageAds.pending, (state) => {
+      state.adsLoading = "loading";
+    });
+    builder.addCase(getHomepageAds.fulfilled, (state, action) => {
+      state.ads = action.payload;
+      state.adsLoading = "loaded";
+    });
+    builder.addCase(getHomepageAds.rejected, (state) => {
+      state.adsLoading = "fail";
+    });
+
+    //deleteAdsById
+    builder.addCase(deleteAdsById.fulfilled, (state, action) => {
+      const newArr = state.ads.filter((ad)=>{
+        return ad.id !== action.payload
+      })
+      state.ads = newArr;
+    });
+
+    //getAllUserAds - get all ads
+    builder.addCase(getAllUserAds.pending, (state) => {
+      state.adsLoading = "loading";
+    });
+    builder.addCase(getAllUserAds.fulfilled, (state, action) => {
+      state.ads = action.payload;
+      state.adsLoading = "loaded";
+    });
+    builder.addCase(getAllUserAds.rejected, (state) => {
+      state.adsLoading = "fail";
+    });
+
+    //getTenLatestPosts
+    builder.addCase(getTenLatestPosts.pending, (state) => {
+      state.latestPostsLoading = "loading";
+    });
+    builder.addCase(getTenLatestPosts.fulfilled, (state, action) => {
+      state.tenLatestPosts = action.payload;
+      state.latestPostsLoading = "loaded";
+    });
+    builder.addCase(getTenLatestPosts.rejected, (state) => {
+      state.latestPostsLoading = "fail";
+    });
+
+    builder.addCase(moderatorAdsModify.fulfilled, (state, action) => {
+      const adsIndex = state.ads.findIndex(
+        (ads) => ads.id === action.payload.id
+      );
+      if (adsIndex !== -1) {
+        state.ads[adsIndex].isActive = action.payload.isActive;
+      }
+    });
+
   },
 });
 
@@ -331,6 +479,7 @@ export const selectLoadingStatus = (state: RootState) =>
   state.postState.isLoading;
 export const selectAdsLoadingStatus = (state: RootState) =>
   state.postState.adsLoading;
-export const selectAllMyAds = (state: RootState) => state.postState.myAds;
+export const selectFetchedAds = (state: RootState) => state.postState.ads;
+export const selectLatestPosts = (state: RootState) => state.postState.tenLatestPosts;
 
 export default postSlice.reducer;

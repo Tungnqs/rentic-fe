@@ -53,13 +53,14 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
 
     const handleAddNewAds = async()=>{
         if(dateStatus === ""){
-            const request: IAdsRequest = {
-                adPackageId: chosenPackage.id,
-                postId: chosenPost.id as string,
-                endDate: endDate,
-                startDate: startDate
-            }
-            await dispatch(createNewAds(request));
+          const request: IAdsRequest = {
+              adPackageId: chosenPackage.id,
+              postId: chosenPost.id as string,
+              endDate: endDate,
+              startDate: startDate
+          }
+          dispatch(createNewAds(request));
+          togglePopup();
         }
     }
 

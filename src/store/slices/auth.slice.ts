@@ -7,16 +7,17 @@ import { RootState } from "..";
 import { IUserProfile } from "../../interfaces/userProfile.interface";
 import { toast } from "react-toastify";
 import { checkErr } from "../../utils/notification.utils";
-import { useNavigate } from "react-router";
 
 interface IAuth {
   authLoading: "loading" | "loaded" | "fail",
+  otpSendingStatus: "sending" | "sent" | "not sent";
   userRole?: string;
   isLogin: boolean;
   userProfile: IUserProfile;
 }
 
 const initialState: IAuth = {
+  otpSendingStatus: "not sent",
   authLoading: "loading",
   userRole: "",
   isLogin: false,
@@ -45,6 +46,40 @@ export const registerAccount = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.AUTH.REGISTER;
       const response = await axiosInstance.post(url, data);
+      toast.success(response.data.message);
+      console.log("response.data: ", response.data);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const sendOtpForVerification = createAsyncThunk(
+  "auth/sendOtpForVerification",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.SEND_VERIFICATION_OTP;
+      const response = await axiosInstance.post(url);
+      toast.success(response.data.message);
+      console.log("response.data: ", response.data);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  "auth/verifyOtp",
+  async (otp: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.VERIFY_OTP;
+      const response = await axiosInstance.post(url, {otp: otp});
       toast.success(response.data.message);
       console.log("response.data: ", response.data);
       return response.data;
@@ -183,12 +218,25 @@ export const authSlice = createSlice({
       state.isLogin = true;
       state.userRole = action.payload.roles[0];
     });
+    builder.addCase(sendOtpForVerification.pending, (state) => {
+      state.otpSendingStatus = "sending";
+    });
+    builder.addCase(sendOtpForVerification.fulfilled, (state, action) => {
+      state.otpSendingStatus = "sent";
+    });
+    builder.addCase(sendOtpForVerification.rejected, (state) => {
+      state.otpSendingStatus = "not sent";
+    });
+    builder.addCase(verifyOtp.fulfilled, (state) => {
+      state.userProfile.user.isVerified = true;
+    });
   },
 });
 
 export const selectUserRole = (state: RootState) => state.authState.userRole;
 export const selectIsLogin = (state: RootState) => state.authState.isLogin;
 export const selectAuthLoading = (state: RootState) => state.authState.authLoading;
+export const selectOtpSendingStatus = (state: RootState) => state.authState.otpSendingStatus;
 export const selectUserProfile = (state: RootState) =>
   state.authState.userProfile.user;
 export const {

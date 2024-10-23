@@ -38,7 +38,6 @@ const PaymentConfirmation = () => {
     } else if (currentPayment.data.status === "PAID") {
       toast.success("Your transaction is successful !");
     }
-    dispatch(getUserProfile());
   }, [currentPayment]);
 
   return (

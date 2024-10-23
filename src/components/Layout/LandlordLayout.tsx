@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { getAllMyPosts } from "../../store/slices/post.slice";
+import { getAllMyAds, getAllMyPosts } from "../../store/slices/post.slice";
 import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
+import Footer from "../Footer/Footer";
+import { selectUserProfile } from "../../store/slices/auth.slice";
 
 export default function LandlordLayout() {
   const navbarItems:INavbarItems[] = [
@@ -37,12 +39,22 @@ export default function LandlordLayout() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getAllMyPosts());
+    dispatch(getAllMyAds());
   }, []);
+
+  const myProfile = useSelector(selectUserProfile);
+  const navigate = useNavigate();
 
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems}/>
-      <Outlet />
+      <div className="min-h-screen">
+        {!myProfile.isVerified && (
+          <div className=" bg-grayLight2 w-full py-3 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>
+        )}
+        <Outlet />
+      </div>
+      <Footer/>
     </div>
   );
 }

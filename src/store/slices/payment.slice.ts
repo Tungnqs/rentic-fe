@@ -5,6 +5,7 @@ import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-toastify";
 import { IPaymentDetail } from "../../interfaces/paymentDetail.interface";
 import { RootState } from "..";
+import { getUserProfile } from "./auth.slice";
 
 interface IPayment {
   paymentDetail: IPaymentDetail;
@@ -67,10 +68,13 @@ export const createPaymentLink = createAsyncThunk(
 
 export const getPaymentById = createAsyncThunk(
   "payment/getPaymentById",
-  async (id: string, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue,dispatch }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.PAYMENT.GET_ORDER + id;
       const response = await axiosInstance.get(url);
+      if(response.data){
+        dispatch(getUserProfile());
+      }
       return response.data;
     } catch (err) {
       console.log("err: ", err);

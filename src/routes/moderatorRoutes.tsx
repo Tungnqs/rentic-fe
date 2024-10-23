@@ -5,6 +5,7 @@ import PostList from "../pages/Moderator/Post/PostList";
 import PostDetail from "../pages/Moderator/Post/PostDetail/PostDetail";
 import ReportList from "../pages/Moderator/Report/ReportList";
 import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
+import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
 
 export const moderatorRoutes: IRoute[] = [
   {
@@ -26,5 +27,9 @@ export const moderatorRoutes: IRoute[] = [
   {
     path: "/profile",
     component: <DarkEditProfile />
+  },
+  {
+    path: "/ads",
+    component: <Advertisements isModerator={true} />
   }
 ];

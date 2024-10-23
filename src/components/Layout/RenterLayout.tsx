@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import {
   AppointmentIcon,
@@ -9,9 +9,11 @@ import {
   PropertyIcon,
   RoommateIcon,
 } from "../../assets/icon/icon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllPublishPosts } from "../../store/slices/post.slice";
+import Footer from "../Footer/Footer";
+import { selectUserProfile } from "../../store/slices/auth.slice";
 
 export default function RenterLayout() {
   const navbarItems: INavbarItems[] = [
@@ -42,12 +44,19 @@ export default function RenterLayout() {
     dispatch(getAllPublishPosts());
   }, []);
 
+  const myProfile = useSelector(selectUserProfile);
+  const navigate = useNavigate();
+
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems} />
-      <div className="z-10">
+      <div className="z-10 min-h-screen">
+        {!myProfile.isVerified && (
+          <div className=" bg-grayLight2 w-full py-3 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>
+        )}
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 }

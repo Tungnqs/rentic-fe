@@ -7,6 +7,8 @@ export const API_PATH_URL = {
     LOGIN: "/api/auth/login/",
     REGISTER: "/api/auth/register/",
     USER_PROFILE: "/api/user/profile/",
+    SEND_VERIFICATION_OTP: "/api/auth/send-otp/",
+    VERIFY_OTP: "/api/auth/verify-otp/"
   },
   POST: {
     GET_ALL_POSTS: "/api/post/getall/",
@@ -14,7 +16,8 @@ export const API_PATH_URL = {
     CREATE_POST: "/api/post/add/",
     GET_POST_BY_ID: "/api/post/id/",
     MODIFY_POST_BY_ID: "/api/post/",
-    GET_PUBLISH_POST: "/api/post/public/"
+    GET_PUBLISH_POST: "/api/post/public/",
+    GET_10_LATEST_POSTS: "/api/post/latest/",
   },
   PAYMENT: {
     CREATE_PAYMENT_LINK: "/api/order/createPaymentLink/",
@@ -46,6 +49,7 @@ export const API_PATH_URL = {
   },
   ADVERTISEMENT: {
     ADS_MODIFY: "/api/ads/",
-    GET_ALL_MY_ADS: "/api/ads/user",
+    GET_ALL_MY_ADS: "/api/ads/user/",
+    GET_PUBLISHED_ADS: "/api/ads/public/"
   }
 };

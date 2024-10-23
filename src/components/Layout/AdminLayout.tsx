@@ -26,7 +26,7 @@ export default function AdminLayout() {
   return (
     <div className="flex">
       <LeftNavBar navbarItems={navbarItems}/>
-      <div className="w-full pl-[30px]">
+      <div className="w-full pl-[30px] z-10">
         <Outlet />
       </div>
     </div>

@@ -6,24 +6,35 @@ import CreateAdsPopup from "./CreateAdsPopup/CreateAdsPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { getAllPackages } from "../../../store/slices/admin.slice";
-import { getAllMyAds, selectAdsLoadingStatus, selectAllMyAds } from "../../../store/slices/post.slice";
+import { deleteAdsById, getAllMyAds, getAllUserAds, moderatorAdsModify, selectAdsLoadingStatus, selectFetchedAds } from "../../../store/slices/post.slice";
 import { formatMoney } from "../../../store/slices/app.slice";
 import { formatDate } from "../../Moderator/Report/ReportList";
 
-const Advertisements = () => {
+interface IAdvertisementsProps{
+  isModerator?: boolean;
+}
+
+const Advertisements = ({isModerator}: IAdvertisementsProps) => {
   const navigate = useNavigate();
   const [isShowAddPopup, setShowAddPopup] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     useEffect(()=>{
         dispatch(getAllPackages());
-        dispatch(getAllMyAds());
     }, [])
 
-    const allMyAds = useSelector(selectAllMyAds);
-    console.log('allMyAds: ', allMyAds);
+    const allAdvertisements = useSelector(selectFetchedAds);
     const adsLoading = useSelector(selectAdsLoadingStatus);
+
+    const handleDeleteAds = (id:string) => {
+      dispatch(deleteAdsById(id));
+    }
+    
+    const handleModifyAds = (id: string, status: boolean)=>{
+      dispatch(moderatorAdsModify({adsId: id, isActive: status}))
+    }
+    
   return (
-    <div className="flex justify-center py-10">
+    <div className={`min-h-screen flex justify-center py-10 ${isModerator ? "bg-bgDarkPrimary text-grayLight2" : ""}`}>
         {isShowAddPopup && <CreateAdsPopup togglePopup={()=>setShowAddPopup(!isShowAddPopup)} />}
       <div className="w-[90%] flex flex-col gap-5">
         <div className="flex justify-between">
@@ -36,13 +47,13 @@ const Advertisements = () => {
             </div>
             <div className="group-hover:underline">Go back</div>
           </div>
-          <div onClick={()=>setShowAddPopup(true)} className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 cursor-pointer rounded-md">Create Post Advertisement</div>
+          {!isModerator && <div onClick={()=>setShowAddPopup(true)} className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 cursor-pointer rounded-md">Create Post Advertisement</div>}
         </div>
         <div className="text-red-600 font-semibold hidden max-[550px]:block">
           *Recommend to use application in landscape view
         </div>
         <div>
-          <div className="thinBoxShadow rounded-md p-7">
+          <div className={`${isModerator ? "" : "thinBoxShadow rounded-md p-7"}`}>
             {adsLoading === "loading" ? (
               <Loader />
             ) : (
@@ -54,7 +65,7 @@ const Advertisements = () => {
                 style={{ transform: "rotateX(180deg)" }}
                 className="w-full text-sm text-left rtl:text-right text-gray-500 "
               >
-                <thead className="text-xs text-gray-700 uppercase bg-grayLight2 ">
+                <thead className={`text-xs uppercase ${isModerator ? "bg-gray-700 text-gray-400" : "text-gray-700 bg-grayLight2"}`}>
                   <tr>
                     <th scope="col" className="px-2 py-3">
                       Package
@@ -82,22 +93,24 @@ const Advertisements = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-black">
-                  {allMyAds.map((ad, index) => (
+                <tbody className={`${isModerator ? "" : "text-black"}`}>
+                  {allAdvertisements.map((ad, index) => (
                   <tr
                     key={index}
                     className={`${
-                        index % 2 === 0 ? "bg-white " : "bg-grayLight1 "
-                    } border-b `}
+                      index % 2 === 0
+                      ? `${isModerator ? "dark:bg-gray-900" : "bg-white"}`
+                      : `${isModerator ? "dark:bg-gray-800" : "bg-gray-200"}`
+                    } border-b ${isModerator ? "border-gray-700" : ""}`}
                   >
                     <th
                       scope="row"
-                      className="px-2 py-4 max-w-[150px] overflow-hidden truncate text-black font-semibold whitespace-nowrap "
+                      className={`px-2 py-4 max-w-[150px] overflow-hidden truncate ${isModerator ? "text-white" : "text-black"} font-semibold whitespace-nowrap`}
                     >
                       {ad.adPackage.name}
                     </th>
                     <td className="px-2 py-4 text-green-600 font-bold">{formatMoney(ad.totalCost)}₫</td>
-                    <td className="px-2 py-4 text-black font-semibold">
+                    <td className={`px-2 py-4 ${isModerator ? "text-white" : "text-black"} font-semibold`}>
                       {ad.post.title}
                     </td>
                     <td className="px-2 py-4 text-green-600 font-bold">
@@ -110,11 +123,18 @@ const Advertisements = () => {
                     </td>
 
                     <td className="px-2 py-4 flex flex-col gap-2 items-center h-full">
+                      {isModerator ? (
+                        <div onClick={()=>handleModifyAds(ad.id, ad.isActive)} className={`w-fit font-medium ${ad.isActive ? "bg-secondaryYellow hover:bg-primaryYellow text-black" : "bg-blue-600 hover:bg-blue-800 text-white"} rounded-sm px-2 py-1 cursor-pointer`}>
+                          {ad.isActive ? "Reject" : "Approve"}
+                        </div>
+                      ) :
                       <div
+                        onClick={()=>handleDeleteAds(ad.id)}
                         className="w-fit font-medium bg-red-600 hover:bg-red-800 rounded-sm text-white px-2 py-1 cursor-pointer"
                       >
                         Delete
                       </div>
+                      }
                     </td>
                   </tr>
                   ))} 
