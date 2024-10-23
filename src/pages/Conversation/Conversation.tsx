@@ -51,7 +51,7 @@ const Conversation = () => {
                 <div className="flex justify-center gap-2 items-center">
                     <img className="w-[75px] aspect-square object-cover rounded-full" src={myProfile.avatar ? myProfile.avatar : unknownAvatar} alt="" />
                     <div className="max-[500px]:hidden">
-                        <div className="text-[20px] font-semibold">{myProfile.firstName} {myProfile.lastName}</div>
+                        <div className="text-[20px] font-semibold break-all">{myProfile.firstName} {myProfile.lastName}</div>
                         <div>{myProfile.username}</div>
                     </div>
                 </div>

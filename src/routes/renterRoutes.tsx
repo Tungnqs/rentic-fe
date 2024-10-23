@@ -7,6 +7,7 @@ import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmatio
 import PostDetail from "../pages/Renter/PostDetail/PostDetail";
 import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
+import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 
 export const renterRoutes: IRoute[] = [
   {
@@ -40,5 +41,9 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/conversations",
     component: <Conversation />
+  },
+  {
+    path: "/verifyAccount",
+    component: <VerifyEmail />
   }
 ];

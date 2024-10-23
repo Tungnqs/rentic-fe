@@ -11,6 +11,7 @@ import PaymentConfirmation from "../pages/PaymentConfirmation/PaymentConfirmatio
 import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
 import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
+import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -57,4 +58,8 @@ export const landLordRoutes: IRoute[] = [
     path: "/ads",
     component: <Advertisements />,
   },
+  {
+    path: "/verifyAccount",
+    component: <VerifyEmail />
+  }
 ];

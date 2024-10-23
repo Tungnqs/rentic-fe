@@ -103,7 +103,7 @@ const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
           msgArr.map((msg) => (
             <div key={msg.id} className="break-all">
               <div className="flex gap-3">
-                <img className="w-10 h-10 aspect-square object-cover rounded-full" src={msg.userId === myProfile.id ? myProfile.avatar : (currentConversation.sender.avatar ? currentConversation.sender.avatar : unknownAvatar)} alt="" />
+                <img className="w-10 h-10 aspect-square object-cover rounded-full" src={msg.userId === myProfile.id ? (myProfile.avatar ? myProfile.avatar : unknownAvatar) : (currentConversation.sender.avatar ? currentConversation.sender.avatar : unknownAvatar)} alt="" />
                 <div>
                   <div className="flex gap-2 items-center">
                     <div className={`h-fit font-semibold ${msg.userId === myProfile.id ? "text-secondaryYellow" : ""}`}>{msg.userId === myProfile.id ? "Me" : currentConversation.sender.username}</div>
