@@ -154,7 +154,7 @@ const PostDetail = () => {
               <MapBlock currentPostData={currentPostData} />
             </div>
           </div>
-          <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 flex flex-col gap-2">
+          <div className="w-[28%] max-md:w-[50%] max-sm:w-[70%] h-fit thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 flex flex-col gap-2">
             <img
               src={
                 currentPostData.user.avatar

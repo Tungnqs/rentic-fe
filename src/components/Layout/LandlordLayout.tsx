@@ -3,8 +3,9 @@ import { Outlet } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { getAllMyPosts } from "../../store/slices/post.slice";
+import { getAllMyAds, getAllMyPosts } from "../../store/slices/post.slice";
 import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
+import Footer from "../Footer/Footer";
 
 export default function LandlordLayout() {
   const navbarItems:INavbarItems[] = [
@@ -37,12 +38,16 @@ export default function LandlordLayout() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getAllMyPosts());
+    dispatch(getAllMyAds());
   }, []);
 
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems}/>
-      <Outlet />
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
+      <Footer/>
     </div>
   );
 }

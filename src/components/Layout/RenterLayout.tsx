@@ -12,6 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllPublishPosts } from "../../store/slices/post.slice";
+import Footer from "../Footer/Footer";
 
 export default function RenterLayout() {
   const navbarItems: INavbarItems[] = [
@@ -45,9 +46,10 @@ export default function RenterLayout() {
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems} />
-      <div className="z-10">
+      <div className="z-10 min-h-screen">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 }

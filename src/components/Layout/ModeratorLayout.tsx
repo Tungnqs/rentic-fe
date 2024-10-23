@@ -5,7 +5,7 @@ import LeftNavBar from "../LeftNavBar/LeftNavBar";
 import { AdsIcon, PropertyIcon, ReportIcon } from "../../assets/icon/icon";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { getAllUserPosts } from "../../store/slices/post.slice";
+import { getAllUserAds, getAllUserPosts } from "../../store/slices/post.slice";
 
 export default function ModeratorLayout() {
   const navbarItems: INavbarItems[] = [
@@ -29,12 +29,13 @@ export default function ModeratorLayout() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getAllUserPosts());
+    dispatch(getAllUserAds());
   }, []);
 
   return (
     <div className="flex">
       <LeftNavBar navbarItems={navbarItems} />
-      <div className="w-full pl-[30px]">
+      <div className="w-full pl-[30px] z-10">
         <Outlet />
       </div>
     </div>
