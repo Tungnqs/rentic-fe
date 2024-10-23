@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
 import { AccountIcon, ChartIcon, PackageIcon } from "../../assets/icon/icon";
 import { INavbarItems } from "../Navbar/Navbar";
+import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
 export default function AdminLayout() {
   const navbarItems: INavbarItems[] = [
@@ -29,6 +30,7 @@ export default function AdminLayout() {
       <div className="w-full pl-[30px] z-10">
         <Outlet />
       </div>
+      <ChatBotWidget />
     </div>
   );
 }
