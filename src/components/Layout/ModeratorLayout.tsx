@@ -6,6 +6,7 @@ import { AdsIcon, PropertyIcon, ReportIcon } from "../../assets/icon/icon";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllUserAds, getAllUserPosts } from "../../store/slices/post.slice";
+import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
 export default function ModeratorLayout() {
   const navbarItems: INavbarItems[] = [
@@ -38,6 +39,7 @@ export default function ModeratorLayout() {
       <div className="w-full pl-[30px] z-10">
         <Outlet />
       </div>
+      <ChatBotWidget />
     </div>
   );
 }

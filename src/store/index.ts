@@ -7,6 +7,7 @@ import { reportSlice } from "./slices/report.slice";
 import {adminSlice} from "./slices/admin.slice";
 import {appointmentSlice} from "./slices/appointment.slice";
 import { chatSlice } from "./slices/chat.slice";
+import { chatbotSlice } from "./slices/chatbot.slice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     [adminSlice.name]: adminSlice.reducer,
     [appointmentSlice.name]: appointmentSlice.reducer,
     [chatSlice.name]: chatSlice.reducer,
+    [chatbotSlice.name]: chatbotSlice.reducer,
   },
 });
 

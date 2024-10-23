@@ -7,6 +7,7 @@ import { getAllMyAds, getAllMyPosts } from "../../store/slices/post.slice";
 import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
 import Footer from "../Footer/Footer";
 import { selectUserProfile } from "../../store/slices/auth.slice";
+import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
 export default function LandlordLayout() {
   const navbarItems:INavbarItems[] = [
@@ -54,6 +55,7 @@ export default function LandlordLayout() {
         )}
         <Outlet />
       </div>
+      <ChatBotWidget />
       <Footer/>
     </div>
   );

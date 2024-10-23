@@ -14,6 +14,7 @@ import { AppDispatch } from "../../store";
 import { getAllPublishPosts } from "../../store/slices/post.slice";
 import Footer from "../Footer/Footer";
 import { selectUserProfile } from "../../store/slices/auth.slice";
+import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
 export default function RenterLayout() {
   const navbarItems: INavbarItems[] = [
@@ -56,6 +57,7 @@ export default function RenterLayout() {
         )}
         <Outlet />
       </div>
+      <ChatBotWidget />
       <Footer />
     </div>
   );

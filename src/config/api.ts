@@ -51,5 +51,8 @@ export const API_PATH_URL = {
     ADS_MODIFY: "/api/ads/",
     GET_ALL_MY_ADS: "/api/ads/user/",
     GET_PUBLISHED_ADS: "/api/ads/public/"
-  }
+  },
+  BOT: {
+    GET_CHAT_SESSION: "/api/bot/session",
+  },
 };
