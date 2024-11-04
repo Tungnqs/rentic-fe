@@ -109,4 +109,8 @@ export const UserAvatar = styled.img`
   border-radius: 999px;
   border: 3px solid #ce8236;
   object-fit: cover;
+  cursor: pointer;
+  &:hover{
+    border: 3px solid #ff9900;
+  }
 `;

@@ -11,10 +11,11 @@ import { AppDispatch } from "../../store";
 import { handleUploadFile } from "../../store/slices/app.slice";
 import { IUploadedImage } from "../../interfaces/uploadedImage.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router";
 
 const EditProfile = () => {
   const userProfile = useSelector(selectUserProfile);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const [avatarField, setAvatarField] = useState(userProfile.avatar);
@@ -90,8 +91,11 @@ const EditProfile = () => {
             "rgba(125, 125, 125, 0.25) 0px 14px 28px, rgba(125, 125, 125, 0.25) 0px 10px 10px",
         }}
       >
-        <div className="font-semibold text-[24px] text-secondaryYellow">
-          My profile
+        <div className="flex justify-between items-center">
+          <div className="font-semibold text-[24px] text-secondaryYellow">
+            My profile
+          </div>
+          <div onClick={()=>navigate("changePassword")} className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none">Change password</div>
         </div>
         <div>
           <div>Your avatar:</div>

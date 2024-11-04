@@ -8,6 +8,7 @@ import PostDetail from "../pages/Renter/PostDetail/PostDetail";
 import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 export const renterRoutes: IRoute[] = [
   {
@@ -45,5 +46,9 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/verifyAccount",
     component: <VerifyEmail />
+  },
+  {
+    path: "/profile/changePassword",
+    component: <ChangePassword />
   }
 ];

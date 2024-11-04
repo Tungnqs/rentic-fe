@@ -11,10 +11,11 @@ import { AppDispatch } from "../../store";
 import { handleUploadFile } from "../../store/slices/app.slice";
 import { IUploadedImage } from "../../interfaces/uploadedImage.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router";
 
 const DarkEditProfile = () => {
   const userProfile = useSelector(selectUserProfile);
-
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>();
 
   const [avatarField, setAvatarField] = useState(userProfile.avatar);
@@ -84,8 +85,16 @@ const DarkEditProfile = () => {
   return (
     <div className="flex justify-center bg-bgDarkPrimary min-h-screen">
       <div className="text-grayLight2 w-[35%] mt-7 mb-[90px] h-fit flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] bg-bgLeftNavbar">
-        <div className="font-semibold text-[24px] text-secondaryYellow">
-          My profile
+        <div className="flex justify-between items-center">
+          <div className="font-semibold text-[24px] text-secondaryYellow">
+            My profile
+          </div>
+          <div
+            onClick={() => navigate("changePassword")}
+            className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-secondaryYellow cursor-pointer select-none text-black"
+          >
+            Change password
+          </div>
         </div>
         <div>
           <div>Your avatar:</div>

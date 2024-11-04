@@ -6,6 +6,7 @@ import PostDetail from "../pages/Moderator/Post/PostDetail/PostDetail";
 import ReportList from "../pages/Moderator/Report/ReportList";
 import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
 import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 export const moderatorRoutes: IRoute[] = [
   {
@@ -14,22 +15,26 @@ export const moderatorRoutes: IRoute[] = [
   },
   {
     path: "/posts",
-    component: <PostList />
+    component: <PostList />,
   },
   {
     path: "/posts/:id",
-    component: <PostDetail />
+    component: <PostDetail />,
   },
   {
     path: "/reports",
-    component: <ReportList />
+    component: <ReportList />,
   },
   {
     path: "/profile",
-    component: <DarkEditProfile />
+    component: <DarkEditProfile />,
   },
   {
     path: "/ads",
-    component: <Advertisements isModerator={true} />
-  }
+    component: <Advertisements isModerator={true} />,
+  },
+  {
+    path: "/profile/changePassword",
+    component: <ChangePassword isManager={true} />,
+  },
 ];

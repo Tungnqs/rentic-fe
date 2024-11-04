@@ -8,7 +8,8 @@ export const API_PATH_URL = {
     REGISTER: "/api/auth/register/",
     USER_PROFILE: "/api/user/profile/",
     SEND_VERIFICATION_OTP: "/api/auth/send-otp/",
-    VERIFY_OTP: "/api/auth/verify-otp/"
+    VERIFY_OTP: "/api/auth/verify-otp/",
+    CHANGE_PASSWORD: "/api/auth/changePassword/"
   },
   POST: {
     GET_ALL_POSTS: "/api/post/getall/",

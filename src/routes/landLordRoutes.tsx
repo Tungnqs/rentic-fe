@@ -12,6 +12,7 @@ import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
 import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -61,5 +62,9 @@ export const landLordRoutes: IRoute[] = [
   {
     path: "/verifyAccount",
     component: <VerifyEmail />
+  },
+  {
+    path: "/profile/changePassword",
+    component: <ChangePassword />
   }
 ];

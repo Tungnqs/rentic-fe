@@ -133,6 +133,27 @@ export const editUserProfile = createAsyncThunk(
   }
 );
 
+export interface IChangeMyPasswordReq{
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const changeMyPassword = createAsyncThunk(
+  "auth/changeMyPassword",
+  async (data: IChangeMyPasswordReq, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.CHANGE_PASSWORD;
+      const response = await axiosInstance.post(url, data);
+      toast.success(response.data.message);
+      return response.data;
+    } catch (err: any) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const normalLogin = createAsyncThunk(
   "auth/normalLogin",
   async (data: ILogin, { rejectWithValue, dispatch }) => {
@@ -153,13 +174,15 @@ export const normalLogin = createAsyncThunk(
 
 export const authLogout = createAsyncThunk(
   "auth/authLogout",
-  async (_, { rejectWithValue, dispatch }) => {
+  async ({ isChangePsw }: { isChangePsw?: boolean } = {}, { rejectWithValue, dispatch }) => {
     try {
       await deleteCookie("token");
       dispatch(setIsLoggedIn(false));
       dispatch(clearUserProfile());
       dispatch(setAuthLoading("loading"))
-      toast.success("Logout successfully!");
+      if(!isChangePsw){
+        toast.success("Logout successfully!");
+      }
     } catch (err) {
       return rejectWithValue(err);
     }

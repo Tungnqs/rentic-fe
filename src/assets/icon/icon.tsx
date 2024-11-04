@@ -84,6 +84,7 @@ export function ShowPasswordIcon(props: React.HTMLAttributes<SVGElement>) {
       aria-hidden="true"
       focusable="false"
       className=""
+      fill="currentColor"
       {...props}
     >
       <path
@@ -103,6 +104,7 @@ export function HidePasswordIcon(props: React.HTMLAttributes<SVGElement>) {
       aria-hidden="true"
       focusable="false"
       className=""
+      fill="currentColor"
       {...props}
     >
       <path

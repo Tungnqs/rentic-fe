@@ -4,6 +4,7 @@ import { Navigate } from "react-router";
 import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
 import AccountList from "../pages/Admin/Account/AccountList";
 import PackageList from "../pages/Admin/Package/PackageList";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 export const adminRoutes: IRoute[] = [
   {
@@ -21,5 +22,9 @@ export const adminRoutes: IRoute[] = [
   {
     path: "/packages",
     component: <PackageList />,
+  },
+  {
+    path: "/profile/changePassword",
+    component: <ChangePassword isManager={true} />
   }
 ];

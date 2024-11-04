@@ -50,7 +50,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   };
 
   const handleLogout = async () => {
-    await dispatch(authLogout());
+    await dispatch(authLogout({}));
     setIsSidebarOpen(false);
     navigate("/login");
   };
@@ -111,7 +111,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           )}
           {isLogin ? (
             <div className="flex gap-3 items-center">
-              <S.UserAvatar src={avatar} />
+              <S.UserAvatar onClick={()=>navigate("/profile")} src={avatar} />
               <div
                 onClick={handleLogout}
                 className="cursor-pointer hover:underline"

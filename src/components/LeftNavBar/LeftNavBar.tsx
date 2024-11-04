@@ -18,7 +18,7 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const handleLogout = async() => {
-    await dispatch(authLogout());
+    await dispatch(authLogout({}));
     navigate("/login")
   }
   const userProfile = useSelector(selectUserProfile);
@@ -30,13 +30,13 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
                 <div className={`flex  items-center border-b border-gray-500 pb-3 ${!isExpand ? "justify-center" : "justify-between"}`}>
                     <div className='flex gap-3 items-center'>
                         <div className='p-3 box-border bg-grayLight1 rounded-full cursor-pointer' onClick={()=> setIsExpand(!isExpand)}>
-                            <img className='aspect-square w-[33px] ' src={Logo} alt="Logo"/>
+                            <img className='aspect-square w-[33px]' src={Logo} alt="Logo"/>
                         </div>
                         <div className='text-[20px] font-semibold'>{userProfile.roles[0]}</div>
                     </div>
                     <BackIcon className=' w-[20px] cursor-pointer' onClick={()=> setIsExpand(!isExpand)} />
                 </div>
-                <div className={` flex gap-3 items-center border-b border-gray-500 py-5 ${!isExpand ? "justify-center" : "pl-[5px]"}`}>
+                <div onClick={()=>navigate("/profile")} className={`cursor-pointer flex gap-3 items-center border-b border-gray-500 py-5 ${!isExpand ? "justify-center" : "pl-[5px]"}`}>
                     <img className='aspect-square rounded-full w-[60px] object-cover' src={userProfile.avatar ? userProfile.avatar : anonymousAvatar} alt="Logo" />
                     <div className='default-text font-semibold'>{userProfile.username}</div>
                 </div>
