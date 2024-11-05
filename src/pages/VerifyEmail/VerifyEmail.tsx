@@ -19,12 +19,12 @@ const VerifyEmail = () => {
 
     const sendingMessage = useMemo(()=>{
         if(sendingStatus === "sent"){
-            return "Please check your email to get Otp!"
+            return "Please check your email to get OTP code!"
         }
         else if(sendingStatus === "sending"){
             return "Please wait for the process ..."
         }
-        return "Click at button to get Otp via Gmail"
+        return "Click at button to get OTP code via Gmail"
     }, [sendingStatus])
 
     const handleVerifyOtp = async() => {

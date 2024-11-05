@@ -14,10 +14,12 @@ interface IAuth {
   userRole?: string;
   isLogin: boolean;
   userProfile: IUserProfile;
+  forgetPswSendingStatus: "sending" | "sent" | "not sent"  | "fail";
 }
 
 const initialState: IAuth = {
   otpSendingStatus: "not sent",
+  forgetPswSendingStatus: "not sent",
   authLoading: "loading",
   userRole: "",
   isLogin: false,
@@ -172,6 +174,44 @@ export const normalLogin = createAsyncThunk(
   }
 );
 
+export const forgetPassword = createAsyncThunk(
+  "auth/forgetPassword",
+  async (email: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.FORGET_PASSWORD;
+      const response = await axiosInstance.post(url, {email: email});
+      toast.success(response.data.message);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export interface IResetPasswordReq{
+  email: string;
+  token: string;
+  newPassword: string;
+}
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (data: IResetPasswordReq, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.RESET_PASSWORD;
+      const response = await axiosInstance.post(url, data);
+      toast.success(response.data.message);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const authLogout = createAsyncThunk(
   "auth/authLogout",
   async ({ isChangePsw }: { isChangePsw?: boolean } = {}, { rejectWithValue, dispatch }) => {
@@ -250,6 +290,15 @@ export const authSlice = createSlice({
     builder.addCase(sendOtpForVerification.rejected, (state) => {
       state.otpSendingStatus = "not sent";
     });
+    builder.addCase(forgetPassword.pending, (state) => {
+      state.forgetPswSendingStatus = "sending";
+    });
+    builder.addCase(forgetPassword.fulfilled, (state, action) => {
+      state.forgetPswSendingStatus = "sent";
+    });
+    builder.addCase(forgetPassword.rejected, (state) => {
+      state.forgetPswSendingStatus = "fail";
+    });
     builder.addCase(verifyOtp.fulfilled, (state) => {
       state.userProfile.user.isVerified = true;
     });
@@ -260,6 +309,7 @@ export const selectUserRole = (state: RootState) => state.authState.userRole;
 export const selectIsLogin = (state: RootState) => state.authState.isLogin;
 export const selectAuthLoading = (state: RootState) => state.authState.authLoading;
 export const selectOtpSendingStatus = (state: RootState) => state.authState.otpSendingStatus;
+export const selectForgetPswSendingStatus = (state: RootState) => state.authState.forgetPswSendingStatus;
 export const selectUserProfile = (state: RootState) =>
   state.authState.userProfile.user;
 export const {

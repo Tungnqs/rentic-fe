@@ -200,6 +200,7 @@ const EditProperty = ({ togglePopup, currentPostData }: IEditPropertyProps) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="border-2 border-black rounded-md p-2 w-full max-h-[200px] min-h-[80px]"
+            required
           ></textarea>
         </div>
         <div>

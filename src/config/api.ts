@@ -9,7 +9,9 @@ export const API_PATH_URL = {
     USER_PROFILE: "/api/user/profile/",
     SEND_VERIFICATION_OTP: "/api/auth/send-otp/",
     VERIFY_OTP: "/api/auth/verify-otp/",
-    CHANGE_PASSWORD: "/api/auth/changePassword/"
+    CHANGE_PASSWORD: "/api/auth/changePassword/",
+    FORGET_PASSWORD: "/api/auth/forgot-password/",
+    RESET_PASSWORD: "/api/auth/reset-password/"
   },
   POST: {
     GET_ALL_POSTS: "/api/post/getall/",
