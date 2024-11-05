@@ -18,6 +18,7 @@ module.exports = {
         'darkGray': '#403f3f',
         'bgDarkPrimary': '#2d3539',
         'bgLeftNavbar': '#22272a',
+        'bgLeftNavbarLighter': "#282e31",
         'bgDarkSecondary': '#4f5d64',
         'bgDarkPopupFooter': '#2b2d31',
         'bgDarkPopupBody': '#313338',

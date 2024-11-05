@@ -91,7 +91,7 @@ const DarkEditProfile = () => {
           </div>
           <div
             onClick={() => navigate("changePassword")}
-            className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-secondaryYellow cursor-pointer select-none text-black"
+            className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-secondaryYellow cursor-pointer select-none text-black rounded-sm"
           >
             Change password
           </div>

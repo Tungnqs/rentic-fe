@@ -16,6 +16,7 @@ import {
   BedIcon,
   EmailIcon,
   LocationIcon,
+  MessageIcon,
   PaymentIcon,
   PetIcon,
   PhoneIcon,
@@ -29,6 +30,7 @@ import { icon } from "leaflet";
 import mapMaker from "../../../../assets/images/map-marker.png";
 import unknownAvatar from "../../../../assets/images/anonymous-avatar.png";
 import { formatMoney } from "../../../../store/slices/app.slice";
+import { createConversation } from "../../../../store/slices/chat.slice";
 
 const PostDetail = () => {
   const postId = useParams().id;
@@ -53,6 +55,12 @@ const PostDetail = () => {
 
   const handleUnVerifyPost = () => {
     dispatch(unVerifyPost({ postId: postId as string }));
+  };
+
+  const handleGoToChat = async (userId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    await dispatch(createConversation(userId));
+    navigate("/conversations");
   };
 
   const modifyPostBtn = useMemo(() => {
@@ -93,7 +101,7 @@ const PostDetail = () => {
       {loadingStatus === "loading" ? (
         <Loader />
       ) : (
-        <div className="flex gap-2 max-md:flex-col max-md:items-center">
+        <div className="flex gap-2 max-md:gap-4 max-md:flex-col-reverse max-md:items-center">
           <div className="thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 w-[70%] max-md:w-full">
             <div className="flex flex-col gap-4  pb-1">
               <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
@@ -154,22 +162,36 @@ const PostDetail = () => {
               <MapBlock currentPostData={currentPostData} />
             </div>
           </div>
-          <div className="w-[28%] max-md:w-[50%] max-sm:w-[70%] h-fit thinBoxShadow rounded-md p-7 bg-bgLeftNavbar max-sm:p-2 flex flex-col gap-2">
-            <img
-              src={
-                currentPostData.user.avatar
-                  ? currentPostData.user.avatar
-                  : unknownAvatar
-              }
-              alt=""
-              className="w-full aspect-square object-cover"
-            />
-            <div className="flex flex-col gap-2">
-              <div className="text-[22px] font-semibold">
-                <span className="text-secondaryYellow">Author:</span>{" "}
-                {currentPostData.user.firstName}.{" "}
-                {currentPostData.user.lastName}
+          <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 flex flex-col gap-4 bg-bgLeftNavbar relative">
+            <div
+              onClick={(e) => handleGoToChat(currentPostData.user.id, e)}
+              className="p-2 border-2 rounded-md border-gray-500 cursor-pointer w-fit absolute bg-bgDarkSecondary top-7 right-7 hover:text-white"
+            >
+              <MessageIcon className="w-4 max-md:w-6" />
+            </div>
+            <div className="flex gap-3">
+              <div>
+                <img
+                  src={
+                    currentPostData.user.avatar
+                      ? currentPostData.user.avatar
+                      : unknownAvatar
+                  }
+                  alt=""
+                  className="w-[50px] aspect-square rounded-full object-cover"
+                />
               </div>
+              <div>
+                <div className="font-semibold">
+                  {currentPostData.user.firstName}.{" "}
+                  {currentPostData.user.lastName}
+                </div>
+                <div className="text-[14px] text-gray1">
+                  {currentPostData.user.username}
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
               <div>
                 <b className="text-secondaryYellow">Username:</b>{" "}
                 {currentPostData.user.username}

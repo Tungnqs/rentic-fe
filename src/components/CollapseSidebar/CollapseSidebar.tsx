@@ -32,7 +32,7 @@ const CollapseSidebar = ({
       )}
       <div
         id="drawer-navigation"
-        className={`fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-[330px] border-r-2 max-sm:text-[26px] max-md:text-[21px] ${
+        className={`fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-[330px] border-r-2 max-md:text-[21px] ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         role="dialog"
@@ -73,7 +73,7 @@ const CollapseSidebar = ({
                 </li>
               ))}
             <li>
-              <div onClick={handleLogout} className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <div onClick={handleLogout} className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer">
                 <LeaveIcon />
                 <span className="ml-3 whitespace-nowrap">Logout</span>
               </div>

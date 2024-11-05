@@ -95,7 +95,7 @@ const EditProfile = () => {
           <div className="font-semibold text-[24px] text-secondaryYellow">
             My profile
           </div>
-          <div onClick={()=>navigate("changePassword")} className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none">Change password</div>
+          <div onClick={()=>navigate("changePassword")} className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none rounded-sm">Change password</div>
         </div>
         <div>
           <div>Your avatar:</div>

@@ -22,9 +22,10 @@ import { formatDateTime } from "../Conversation";
 interface IMessagesProps {
   selectedConversation: IChat;
   myProfile: IUser;
+  isManager?: boolean;
 }
 
-const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
+const Messages = ({ selectedConversation, myProfile, isManager }: IMessagesProps) => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(readChat(selectedConversation?.id));
@@ -80,8 +81,8 @@ const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
   }, [socket, currentConversation]);
 
   return (
-    <div className="flex-1 p-7 max-sm:p-2 max-sm:pl-4 flex flex-col gap-4">
-      <div className="flex gap-2 items-center border-b-2 border-grayLight2 pb-2 h-fit">
+    <div className={`flex-1 p-7 max-sm:p-2  flex flex-col gap-4 ${isManager ? "bg-bgLeftNavbarLighter max-sm:pl-1 max-sm:pr-0" : "max-sm:pl-2"}`}>
+      <div className={`flex gap-2 items-center border-b-2 pb-2 h-fit ${isManager ? "border-bgDarkSecondary" : "border-grayLight2"}`}>
         <img
           className="w-[50px] aspect-square object-cover rounded-full"
           src={
@@ -119,12 +120,12 @@ const Messages = ({ selectedConversation, myProfile }: IMessagesProps) => {
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="w-full min-h-[48px] h-[48px] max-h-[100px] py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md"
+          className={`w-full min-h-[48px] h-[48px] max-h-[100px] py-[10px] px-[14px] rounded-md ${isManager ? "bg-darkInput" : "border-2 border-[#dcdce5]"}`}
           placeholder="Write something to partner ..."
         />
         <button
           type="submit"
-          className="w-fit cursor-pointer bg-lightYellow hover:bg-primaryYellow px-3 py-2 rounded-md text-white border-2 border-gray-400 hover:border-black"
+          className={`w-fit cursor-pointer  px-3 py-2 rounded-md border-2 ${isManager ? "text-black border-bgDarkSecondary hover:bg-secondaryYellow bg-primaryYellow" : "bg-lightYellow hover:bg-primaryYellow border-black"}`}
         >
           <SendIcon className="w-6" />
         </button>

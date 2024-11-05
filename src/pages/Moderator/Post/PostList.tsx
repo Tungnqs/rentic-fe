@@ -48,7 +48,7 @@ const PostList = () => {
   }, [allUserPosts, filteredPost, searchingKeyword]);
 
   return (
-    <div className="p-8 max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
+    <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
       {loadingStatus === "loading" && <LoadingScreen />}
       <div className="text-[24px] font-semibold">
         All User's Posts of Property

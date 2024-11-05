@@ -25,7 +25,11 @@ export const formatDateTime = (dateTimeString: string): string => {
     return `${day}/${month}/${year} at ${hours}:${minutes} ${ampm}`;
 };
 
-const Conversation = () => {
+interface IConversationProps{
+    isManager?: boolean;
+}
+
+const Conversation = ({isManager}:IConversationProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const {socket} = useContext(SocketContext);
     useEffect(()=>{
@@ -44,10 +48,10 @@ const Conversation = () => {
     }, [selectedConversation, socket, allConversations]);
 
   return (
-    <div className="flex justify-center pb-10 pt-2">
-      <div className="w-[90%] flex flex-col gap-5">
+    <div className={`flex justify-center pb-10 pt-2 min-h-screen ${isManager ? "bg-bgDarkPrimary text-grayLight2" : ""}`}>
+      <div className="w-[90%] max-[500px]:w-[97%] flex flex-col gap-5">
         <div className="thinBoxShadow rounded-md flex">
-            <div className="w-[25%] max-lg:w-[40%] bg-grayLight2 p-7 max-sm:p-2 flex flex-col gap-5">
+            <div className={`w-[25%] max-lg:w-[40%] max-[500px]:w-[30%] ${isManager ? "bg-bgLeftNavbar" : "bg-grayLight2"} p-7 max-sm:p-2 flex flex-col gap-5 rounded-l-md`}>
                 <div className="flex justify-center gap-2 items-center">
                     <img className="w-[75px] aspect-square object-cover rounded-full" src={myProfile.avatar ? myProfile.avatar : unknownAvatar} alt="" />
                     <div className="max-[500px]:hidden">
@@ -55,13 +59,13 @@ const Conversation = () => {
                         <div>{myProfile.username}</div>
                     </div>
                 </div>
-                <div className="text-[24px] font-semibold text-center text-secondaryYellow border-y-2 border-black py-2">
+                <div className={`text-[24px] font-semibold text-center text-secondaryYellow border-y-2 ${isManager ? "border-darkGray" : "border-black"} py-2`}>
                     People <span className="max-[500px]:hidden">In Conversation</span>
                 </div>
-                <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto overflow-x-hidden">
+                <div className={`flex flex-col gap-3 max-h-[330px] overflow-y-auto overflow-x-hidden ${isManager ? "darkScrollBar" : ""}`}>
                     {loadingSttOfGetChats === "loading" ? <Loader /> : allConversations.map((chat)=>(
-                            <div key={chat?.id} onClick={()=>{setSelectedConversation(chat)}} className={`flex w-full gap-2 items-center cursor-pointer p-2 border-2 rounded-lg hover:border-secondaryYellow hover:bg-grayLight1 ${selectedConversation?.id === chat?.id ? "border-secondaryYellow bg-grayLight1" : "bg-transparent"}`}>
-                                <img className="w-[50px] aspect-square object-cover rounded-full" src={chat?.receiver?.avatar ? chat?.receiver?.avatar : unknownAvatar} alt="" />
+                            <div key={chat?.id} onClick={()=>{setSelectedConversation(chat)}} className={`flex w-full gap-2 items-center cursor-pointer p-2 rounded-lg hover:border-secondaryYellow border-2 ${isManager ? "hover:bg-bgDarkPopupBody" : "hover:bg-grayLight1"} ${selectedConversation?.id === chat?.id ? `border-secondaryYellow ${isManager ? "bg-bgDarkPopupBody" : "bg-grayLight1"}` : `bg-transparent ${isManager ? "border-bgDarkSecondary" : ""}`}`}>
+                                <img className="w-[50px] aspect-square object-cover rounded-full max-[500px]:hidden" src={chat?.receiver?.avatar ? chat?.receiver?.avatar : unknownAvatar} alt="" />
                                 <div className="overflow-x-hidden">
                                     <div className="font-semibold overflow-x-hidden truncate">{chat?.receiver?.username}</div>
                                     <div className="text-[14px] overflow-x-hidden truncate"><b>{chat?.lastMessage?.userId === myProfile.id ? "Me" : chat?.receiver?.username}: </b>{chat?.lastMessage?.text}</div>
@@ -71,9 +75,9 @@ const Conversation = () => {
                 </div>
             </div>
             {selectedConversation ? 
-            <Messages myProfile={myProfile} selectedConversation={selectedConversation} /> 
-            : (<div className="flex-1 flex p-7 max-sm:p-2 max-sm:pl-4 flex-col justify-center items-center h-[590px]">
-                <EmptyInboxIcon className="text-black w-24" />
+                <Messages isManager={isManager} myProfile={myProfile} selectedConversation={selectedConversation} /> 
+            : (<div className={`flex-1 flex p-7 max-sm:p-2 max-sm:pl-4 flex-col justify-center items-center h-[590px] ${isManager ? "bg-bgLeftNavbarLighter": ""}`}>
+                <EmptyInboxIcon className="w-24" />
                 <div className="font-semibold">Inbox is empty, connect to a partner to have conversation!</div>
             </div>)}
         </div>

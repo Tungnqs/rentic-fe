@@ -13,6 +13,7 @@ import {
   BedIcon,
   EmailIcon,
   LocationIcon,
+  MessageIcon,
   PaymentIcon,
   PetIcon,
   PhoneIcon,
@@ -31,6 +32,7 @@ import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import unknownAvatar from "../../../assets/images/anonymous-avatar.png";
 import CreateAppointmentPopup from "../CreateAppointmentPopup/CreateAppointmentPopup";
 import { formatMoney } from "../../../store/slices/app.slice";
+import { createConversation } from "../../../store/slices/chat.slice";
 
 const PostDetail = () => {
   const postId = useParams().id;
@@ -50,116 +52,138 @@ const PostDetail = () => {
   }, [currentPostData.images]);
 
   const [isShowAppointmentPopup, setIsShowAppointmentPopup] = useState(false);
-  const toggleAppointmentPopup = ()=>{
+  const toggleAppointmentPopup = () => {
     setIsShowAppointmentPopup(!isShowAppointmentPopup);
-  }
+  };
+
+  const handleGoToChat = async (userId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    await dispatch(createConversation(userId));
+    navigate("/conversations");
+  };
 
   return (
-      <div className="p-10 max-md:p-2 max-lg:p-5 flex flex-col gap-4 z-10">
-        {isShowAppointmentPopup && <CreateAppointmentPopup postId={currentPostData.id} togglePopup={toggleAppointmentPopup} />}
-        <div className="flex justify-between items-center min-w-full">
-          <div
-            onClick={() => navigate(-1)}
-            className="flex gap-2 items-center cursor-pointer group"
-          >
-            <div className="w-[24px] text-secondaryYellow">
-              <BackIcon className="w-full" />
-            </div>
-            <div className="group-hover:underline text-[24px]">Return</div>
+    <div className="p-10 max-md:p-2 max-lg:p-5 flex flex-col gap-4 z-10">
+      {isShowAppointmentPopup && (
+        <CreateAppointmentPopup
+          postId={currentPostData.id}
+          togglePopup={toggleAppointmentPopup}
+        />
+      )}
+      <div className="flex justify-between items-center min-w-full">
+        <div
+          onClick={() => navigate(-1)}
+          className="flex gap-2 items-center cursor-pointer group"
+        >
+          <div className="w-[24px] text-secondaryYellow">
+            <BackIcon className="w-full" />
           </div>
-          <div onClick={toggleAppointmentPopup} className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 w-[200px] text-center font-medium cursor-pointer rounded-md text-black">
-            Get an appointment with owner
-          </div>
+          <div className="group-hover:underline text-[24px]">Return</div>
         </div>
-        {loadingStatus === "loading" ? (
-          <Loader />
-        ) : (
-          <div className="flex gap-2 max-md:flex-col max-md:items-center z-10">
-            <div className="thinBoxShadow rounded-md p-7 max-sm:p-2 w-[70%] max-md:w-full">
-              <div className="flex flex-col gap-4  pb-1">
-                <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
-                  <div>Property: {currentPostData.title}</div>
-                  <div>{formatMoney(currentPostData.price)} $</div>
-                </div>
-                <div className="border-b">
-                  <div className="flex gap-[2px]">
-                    <div className="w-[24px] text-secondaryYellow">
-                      <LocationIcon className="w-full" />
-                    </div>
-                    <div>
-                      <span className="text-secondaryYellow font-semibold">
-                        Address:{" "}
-                      </span>
-                      {currentPostData.address}, {currentPostData.commune},{" "}
-                      {currentPostData.district}, {currentPostData.city}
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-secondaryYellow font-semibold">
-                      Purpose:{" "}
-                    </span>
-                    For {currentPostData.type}ing
-                  </div>
-                  <div>
-                    <span className="text-secondaryYellow font-semibold">
-                      Property Type:{" "}
-                    </span>
-                    <span className="uppercase">
-                      {currentPostData.property}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-center">
-                  <div className="w-2/3 max-lg:w-full">
-                    <Carousel
-                      imageArray={imageToDisplay}
-                      expandedClassName="w-full aspect-video"
-                    />
-                  </div>
-                </div>
-                <FacilityBlock currentPostData={currentPostData} />
-                <div className="w-full p-[30px] rounded-md bg-grayLight2 shadow-md">
-                  <div className="text-[20px] font-semibold">Description</div>
-                  <div className="w-full">{currentPostData.desc}</div>
-                </div>
-                <MapBlock currentPostData={currentPostData} />
+        <div
+          onClick={toggleAppointmentPopup}
+          className="bg-primaryYellow hover:bg-lightYellow px-3 py-2 w-[200px] text-center font-medium cursor-pointer rounded-md text-black"
+        >
+          Get an appointment with owner
+        </div>
+      </div>
+      {loadingStatus === "loading" ? (
+        <Loader />
+      ) : (
+        <div className="flex gap-2 max-md:flex-col-reverse max-md:items-center z-10">
+          <div className="thinBoxShadow rounded-md p-7 max-sm:p-2 w-[70%] max-md:w-full">
+            <div className="flex flex-col gap-4  pb-1">
+              <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
+                <div>Property: {currentPostData.title}</div>
+                <div>{formatMoney(currentPostData.price)} $</div>
               </div>
+              <div className="border-b">
+                <div className="flex gap-[2px]">
+                  <div className="w-[24px] text-secondaryYellow">
+                    <LocationIcon className="w-full" />
+                  </div>
+                  <div>
+                    <span className="text-secondaryYellow font-semibold">
+                      Address:{" "}
+                    </span>
+                    {currentPostData.address}, {currentPostData.commune},{" "}
+                    {currentPostData.district}, {currentPostData.city}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-secondaryYellow font-semibold">
+                    Purpose:{" "}
+                  </span>
+                  For {currentPostData.type}ing
+                </div>
+                <div>
+                  <span className="text-secondaryYellow font-semibold">
+                    Property Type:{" "}
+                  </span>
+                  <span className="uppercase">{currentPostData.property}</span>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <div className="w-2/3 max-lg:w-full">
+                  <Carousel
+                    imageArray={imageToDisplay}
+                    expandedClassName="w-full aspect-video"
+                  />
+                </div>
+              </div>
+              <FacilityBlock currentPostData={currentPostData} />
+              <div className="w-full p-[30px] rounded-md bg-grayLight2 shadow-md">
+                <div className="text-[20px] font-semibold">Description</div>
+                <div className="w-full">{currentPostData.desc}</div>
+              </div>
+              <MapBlock currentPostData={currentPostData} />
             </div>
-            <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 max-sm:p-2 flex flex-col gap-2">
-              <img
-                src={
-                  currentPostData.user.avatar
-                    ? currentPostData.user.avatar
-                    : unknownAvatar
-                }
-                alt=""
-                className="w-full aspect-square"
-              />
-              <div className="flex flex-col gap-2">
-                <div className="text-[22px] font-semibold">
-                  <span className="text-secondaryYellow">Author:</span>{" "}
+          </div>
+          <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 flex flex-col gap-4 relative">
+            <div
+              onClick={(e) => handleGoToChat(currentPostData.user.id, e)}
+              className="p-2 border-2 rounded-md border-bgDarkSecondary hover:bg-grayLight2 hover:border-black cursor-pointer w-fit absolute bg-white top-7 right-7"
+            >
+              <MessageIcon className="w-4 max-md:w-6" />
+            </div>
+            <div className="flex gap-3">
+              <div>
+                <img
+                  src={
+                    currentPostData.user.avatar
+                      ? currentPostData.user.avatar
+                      : unknownAvatar
+                  }
+                  alt=""
+                  className="w-[50px] aspect-square rounded-full object-cover"
+                />
+              </div>
+              <div>
+                <div className="font-semibold">
                   {currentPostData.user.firstName}.{" "}
                   {currentPostData.user.lastName}
                 </div>
-                <div>
-                  <b className="text-secondaryYellow">Username:</b>{" "}
+                <div className="text-[14px] text-darkGray">
                   {currentPostData.user.username}
-                </div>
-                <div className="flex gap-2">
-                  <PhoneIcon className="w-6 text-secondaryYellow" />
-                  <div>{currentPostData.user.phonenumber}</div>
-                </div>
-                <div className="flex gap-2 break-all">
-                  <div className="w-6">
-                    <EmailIcon className="w-6 text-secondaryYellow" />
-                  </div>
-                  <div>{currentPostData.user.email}</div>
                 </div>
               </div>
             </div>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <PhoneIcon className="w-6 text-secondaryYellow" />
+                <div>{currentPostData.user.phonenumber}</div>
+              </div>
+              <div className="flex gap-2 break-all">
+                <div className="w-6">
+                  <EmailIcon className="w-6 text-secondaryYellow" />
+                </div>
+                <div>{currentPostData.user.email}</div>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
   );
 };
 
