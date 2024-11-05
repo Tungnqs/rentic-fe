@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Outlet } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
-import { AdsIcon, PropertyIcon, ReportIcon } from "../../assets/icon/icon";
+import { AdsIcon, MessageIcon, PropertyIcon, ReportIcon } from "../../assets/icon/icon";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllUserAds, getAllUserPosts } from "../../store/slices/post.slice";
@@ -24,6 +24,11 @@ export default function ModeratorLayout() {
       title: "Advertisement",
       path: "/ads",
       icon: <AdsIcon />,
+    },
+    {
+      path: "/conversations",
+      title: "Conversations",
+      icon: <MessageIcon className="w-full"/>
     },
   ];
 

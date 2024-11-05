@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { IUser } from "../../../interfaces/userProfile.interface";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Dropdown from "../../../components/Dropdown/Dropdown";
-import { SearchIcon } from "../../../assets/icon/icon";
+import { MessageIcon, SearchIcon } from "../../../assets/icon/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import {
@@ -15,22 +15,26 @@ import {
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 import Loader from "../../../components/Loader/Loader";
 import { formatMoney } from "../../../store/slices/app.slice";
+import { selectUserProfile } from "../../../store/slices/auth.slice";
+import { useNavigate } from "react-router";
+import { createConversation } from "../../../store/slices/chat.slice";
 
 const AccountList = () => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const myProfile = useSelector(selectUserProfile);
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllAccounts());
   }, []);
 
   const users = useSelector(selectAllUserAccounts);
-  console.log('users: ', users);
+  console.log("users: ", users);
 
   const [searchingKeyword, setSearchingKeyword] = useState("");
   const [filterType, setFilterType] = useState("");
 
   const usersToDisplay = useMemo(() => {
-    let accountsByBlockStt = users;
+    let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
     if (filterType === "Active") {
       accountsByBlockStt = users.filter((user) => user.isBlocked === false);
     } else if (filterType === "Inactive") {
@@ -56,8 +60,13 @@ const AccountList = () => {
 
   const loadingStatus = useSelector(selectAdminLoadingStatus);
 
+  const handleGoToChat = async (userId: string) => {
+    await dispatch(createConversation(userId));
+    navigate("/conversations");
+  };
+
   return (
-    <div className="p-8 max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
+    <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
       <div className="text-[24px] font-semibold">Account Management</div>
       <div className="flex justify-between items-center max-sm:flex-col max-sm:gap-3 max-sm:items-start">
         <SearchBar
@@ -93,7 +102,7 @@ const AccountList = () => {
             <thead className="text-xs  uppercase bg-gray-700 text-gray-400">
               <tr>
                 <th scope="col" className="px-2 py-3">
-                  Serial
+                  Contact
                 </th>
                 <th scope="col" className="px-2 py-3">
                   Role
@@ -133,9 +142,16 @@ const AccountList = () => {
                 >
                   <th
                     scope="row"
-                    className="px-2 py-4 max-w-[150px] overflow-hidden truncate border border-gray-700 text-center"
+                    className="px-2 py-4 max-w-[150px] overflow-hidden truncate border border-gray-700 flex justify-center"
                   >
-                    {index+1}
+                    <div
+                      onClick={(e) =>
+                        handleGoToChat(user.id)
+                      }
+                      className="p-2 border-2 rounded-md border-gray-500 cursor-pointer w-fit bg-darkInput text-white"
+                    >
+                      <MessageIcon className="w-4" />
+                    </div>
                   </th>
                   <td className="px-2 py-4 border border-gray-700">
                     {user.roles[0]}

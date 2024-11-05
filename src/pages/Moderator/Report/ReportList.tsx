@@ -37,7 +37,7 @@ const ReportList = () => {
   } 
 
   return (
-    <div className="p-8 max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
+    <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
       {loadingStatus === "loading" && <LoadingScreen />}
       <div className="text-[24px] font-semibold">Report Management</div>
       <div className="text-red-600 font-semibold hidden max-[550px]:block">*Recommend to use application in landscape view</div>

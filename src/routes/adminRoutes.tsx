@@ -5,6 +5,7 @@ import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
 import AccountList from "../pages/Admin/Account/AccountList";
 import PackageList from "../pages/Admin/Package/PackageList";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import Conversation from "../pages/Conversation/Conversation";
 
 export const adminRoutes: IRoute[] = [
   {
@@ -26,5 +27,9 @@ export const adminRoutes: IRoute[] = [
   {
     path: "/profile/changePassword",
     component: <ChangePassword isManager={true} />
-  }
+  },
+  {
+    path: "/conversations",
+    component: <Conversation isManager />
+  },
 ];

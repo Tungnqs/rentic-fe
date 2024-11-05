@@ -24,7 +24,7 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
   const userProfile = useSelector(selectUserProfile);
   
     return (
-        <div className={`z-50 fixed flex flex-col justify-between min-h-screen bg-bgLeftNavbar text-[color:var(--gray-light-2)] px-[14px] py-[8px] ease-in-out duration-200 ${isExpand ? "w-[280px]" : "w-[30px]"}`}>
+        <div className={`z-50 fixed flex flex-col justify-between min-h-screen bg-bgLeftNavbar text-[color:var(--gray-light-2)] px-[14px] py-[8px] ease-in-out duration-200 border-r border-gray-500 ${isExpand ? "w-[280px]" : "w-[30px]"}`}>
             {isExpand && (
                 <div>
                 <div className={`flex  items-center border-b border-gray-500 pb-3 ${!isExpand ? "justify-center" : "justify-between"}`}>

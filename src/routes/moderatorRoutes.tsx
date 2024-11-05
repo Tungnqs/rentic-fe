@@ -7,6 +7,7 @@ import ReportList from "../pages/Moderator/Report/ReportList";
 import DarkEditProfile from "../pages/DarkEditProfile/DarkEditProfile";
 import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import Conversation from "../pages/Conversation/Conversation";
 
 export const moderatorRoutes: IRoute[] = [
   {
@@ -36,5 +37,9 @@ export const moderatorRoutes: IRoute[] = [
   {
     path: "/profile/changePassword",
     component: <ChangePassword isManager={true} />,
+  },
+  {
+    path: "/conversations",
+    component: <Conversation isManager />
   },
 ];
