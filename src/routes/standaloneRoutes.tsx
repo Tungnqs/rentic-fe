@@ -3,8 +3,9 @@ import { IRoute } from "../interfaces";
 import Register from "../pages/Register/Register";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Login from "../pages/SignIn/Login";
-import { Navigate } from "react-router";
 import Homepage from "../pages/Homepage/Homepage";
+import ForgetPassword from "../pages/ResetPassword/ForgetPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 export const standaloneRoutes: IRoute[] = [
   {
@@ -17,10 +18,18 @@ export const standaloneRoutes: IRoute[] = [
   },
   {
     path: "/login",
-    component: <Login />
+    component: <Login />,
   },
   {
     path: "/register",
-    component: <Register />
+    component: <Register />,
+  },
+  {
+    path: "/forget-password",
+    component: <ForgetPassword />,
+  },
+  {
+    path: "/reset-password",
+    component: <ResetPassword />,
   },
 ];

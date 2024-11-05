@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store";
 import { createPost } from "../../../../store/slices/post.slice";
 import MapAutoComplete from "../../../../components/MapAutoComplete/MapAutoComplete";
+import { toast } from "react-toastify";
 
 interface IAddPropertyPopUpProps {
   togglePopup: () => void;
@@ -34,6 +35,26 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
 
   const handleAddProperty = async (e: FormEvent) => {
     e.preventDefault();
+    if(filesForUploading.length === 0){
+      toast.warning("You need to upload at least 1 image");
+      return;
+    }
+    if(priceField === 0){
+      toast.warning("You must enter price of property");
+      return;
+    }
+    if(size === 0){
+      toast.warning("You must enter size of property");
+      return;
+    }
+    if(bedroomNumber === 0){
+      toast.warning("You must enter the number of bed room of property");
+      return;
+    }
+    if(bathroom === 0){
+      toast.warning("You must enter the number of bath room of property");
+      return;
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", description);
@@ -126,6 +147,7 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="border-2 border-black rounded-md p-2 w-full max-h-[200px] min-h-[80px]"
+            required
           ></textarea>
         </div>
         <div>

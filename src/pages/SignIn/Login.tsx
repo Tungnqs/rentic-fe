@@ -28,11 +28,11 @@ const Login = () => {
   const isLoggedIn = useSelector(selectIsLogin);
   const authLoading = useSelector(selectAuthLoading);
 
-  useEffect(()=>{
-    if(isLoggedIn && authLoading === "loaded"){
+  useEffect(() => {
+    if (isLoggedIn && authLoading === "loaded") {
       navigate("/");
     }
-  }, [authLoading, isLoggedIn])
+  }, [authLoading, isLoggedIn]);
 
   const handleLogin = async () => {
     const loginData: ILogin = {
@@ -117,12 +117,8 @@ const Login = () => {
                 </div>
               </div>
             </div>
-            <div className="hover:text-[color:var(--yellow)] underline select-none">
-              <div className="my-4">Forgot your password?</div>
-            </div>
-            <div className="flex gap-2">
-              <input type="checkbox" className="w-[17px] bg-yellow-400" />
-              <div>Remember me</div>
+            <div onClick={()=>navigate("/forget-password")} className="hover:text-[color:var(--yellow)] underline select-none mt-4 cursor-pointer">
+              Forgot your password?
             </div>
             <button
               type="submit"
