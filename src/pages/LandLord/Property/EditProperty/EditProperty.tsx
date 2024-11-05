@@ -8,6 +8,7 @@ import { AppDispatch } from "../../../../store";
 import MapAutoComplete from "../../../../components/MapAutoComplete/MapAutoComplete";
 import { IPost } from "../../../../interfaces/post.interface";
 import { editPost } from "../../../../store/slices/post.slice";
+import { toast } from "react-toastify";
 
 interface IEditPropertyProps {
   togglePopup: () => void;
@@ -83,6 +84,26 @@ const EditProperty = ({ togglePopup, currentPostData }: IEditPropertyProps) => {
 
   const handleEditProperty = async (e: FormEvent) => {
     e.preventDefault();
+    if(filesForUploading.length === 0){
+      toast.warning("You need to upload at least 1 image");
+      return;
+    }
+    if(priceField === 0){
+      toast.warning("You must enter price of property");
+      return;
+    }
+    if(size === 0){
+      toast.warning("You must enter size of property");
+      return;
+    }
+    if(bedroomNumber === 0){
+      toast.warning("You must enter the number of bed room of property");
+      return;
+    }
+    if(bathroom === 0){
+      toast.warning("You must enter the number of bath room of property");
+      return;
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", description);
