@@ -83,9 +83,9 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-grayLight1">
       <div
-        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%]"
+        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] bg-white"
         style={{
           boxShadow:
             "rgba(125, 125, 125, 0.25) 0px 14px 28px, rgba(125, 125, 125, 0.25) 0px 10px 10px",
@@ -95,10 +95,14 @@ const EditProfile = () => {
           <div className="font-semibold text-[24px] text-secondaryYellow">
             My profile
           </div>
-          <div onClick={()=>navigate("changePassword")} className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none rounded-sm">Change password</div>
+          <div
+            onClick={() => navigate("changePassword")}
+            className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none rounded-sm"
+          >
+            Change password
+          </div>
         </div>
-        <div>
-          <div>Your avatar:</div>
+        <div className="border-y-2 py-2">
           <div className="flex items-center gap-5">
             <input
               onChange={handleSelectFile}
@@ -108,15 +112,40 @@ const EditProfile = () => {
             />
             <img
               src={avatarField ? avatarField : AnonymousAvatar}
-              className="aspect-square w-[100px] rounded-full object-cover"
+              className="aspect-square w-[100px] rounded-full object-cover border-2"
               alt=""
             />
-            <div
-              onClick={() => inputFileRef.current?.click()}
-              className="text-primaryYellow hover:text-secondaryYellow hover:underline font-semibold cursor-pointer"
-            >
-              Upload new avatar
+            <div>
+              <div
+                onClick={() => inputFileRef.current?.click()}
+                className="text-primaryYellow hover:text-secondaryYellow hover:underline font-semibold cursor-pointer"
+              >
+                Upload new avatar
+              </div>
+              <div className="text-darkGray text-[12px]">Click here to upload your new avatar</div>
             </div>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div className="w-[48%]">
+            <div>First name</div>
+            <input
+              onChange={(e) => setFirstNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+              placeholder="First name"
+              value={firstNameField}
+            />
+          </div>
+          <div className="w-[48%]">
+            <div>Last name</div>
+            <input
+              onChange={(e) => setLastNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+              placeholder="Last name"
+              value={lastNameField}
+            />
           </div>
         </div>
         <div className="">
@@ -124,7 +153,7 @@ const EditProfile = () => {
           <input
             onChange={(e) => setUsernameField(e.target.value)}
             type="text"
-            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
             placeholder="Enter your username"
             value={usernameField}
           />
@@ -140,26 +169,6 @@ const EditProfile = () => {
           <div className="select-none w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md cursor-not-allowed bg-gray-200">
             {userProfile.phonenumber}
           </div>
-        </div>
-        <div className="">
-          <div>First name</div>
-          <input
-            onChange={(e) => setFirstNameField(e.target.value)}
-            type="text"
-            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
-            placeholder="Enter your first name"
-            value={firstNameField}
-          />
-        </div>
-        <div className="">
-          <div>Last name</div>
-          <input
-            onChange={(e) => setLastNameField(e.target.value)}
-            type="text"
-            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
-            placeholder="Enter your last name"
-            value={lastNameField}
-          />
         </div>
       </div>
       {hasChanges && (

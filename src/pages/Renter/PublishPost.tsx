@@ -52,26 +52,27 @@ const PublishPost = () => {
 
     return allPosts;
   }, [allPublishPosts, filteredProperty, filteredPurpose, searchingKeyword]);
+  console.log('postToDisplay: ', postToDisplay);
 
   return (
-    <div className="flex justify-center">
-      <div className="w-[95%] max-md:w-full py-7 max-md:p-7 max-md:flex-col-reverse flex gap-4">
-        <div className="w-[60%] max-md:w-full flex flex-col gap-7 z-20">
-          <div className="flex flex-col gap-2">
-            <div className="text-[25px]">All Publish Property Posts</div>
-            <div>
-              <div className="text-[16px]">Search property by location</div>
+    <div className="flex justify-center bg-grayLight2">
+      <div className="w-[95%] max-w-[1280px] max-md:w-full py-7 max-md:p-7 max-lg:flex-col-reverse flex gap-4">
+        <div className="w-[60%] max-lg:w-full flex flex-col gap-7 z-20 p-5 rounded-md bg-white">
+          <div className="flex flex-col gap-4">
+            <div className="text-[25px] font-semibold text-center">All Publish Property Posts</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-[16px] font-semibold">Search property by location</div>
               <input
                 placeholder="Enter address..."
                 value={searchingKeyword}
                 onChange={(e) => setSearchingKeyword(e.target.value)}
                 type="text"
-                className="w-full py-[5px] px-[10px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[5px] px-[10px] border-2 border-[#dcdce5] rounded-md hover:border-black focus:border-secondaryYellow"
               />
             </div>
             <div className="flex gap-3">
               <div className="flex-1">
-                <div>Purpose</div>
+                <div className="text-[14px] font-semibold mb-2">Purpose</div>
                 <div>
                   <Dropdown
                     chooseValue={setFilteredPurpose}
@@ -80,7 +81,7 @@ const PublishPost = () => {
                 </div>
               </div>
               <div className="flex-1">
-                <div>Property</div>
+                <div className="text-[14px] font-semibold mb-2">Property</div>
                 <div>
                   <Dropdown
                     chooseValue={setFilteredProperty}
@@ -99,14 +100,9 @@ const PublishPost = () => {
           {loadingStatus === "loading" ? (
             <Loader />
           ) : postToDisplay.length > 0 ? (
-            <div className="flex gap-4 w-full flex-wrap">
+            <div className="flex gap-x-[2%] gap-y-4 w-full flex-wrap">
               {postToDisplay.map((post) => (
-                <div
-                  key={post.id}
-                  className="flex gap-2 border-2 p-3 rounded-lg hover:border-gray1 hover:shadow-xl cursor-pointer select-none w-[48%] max-lg:w-full relative text-[14px]"
-                >
                   <PublishPostItems post={post} />
-                </div>
               ))}
             </div>
           ) : <DataNotFound />}

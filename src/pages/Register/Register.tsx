@@ -39,38 +39,38 @@ const Register = () => {
       })
     );
     const isRegistered = registerAccount.fulfilled.match(registerResult);
-    if(isRegistered){
+    if (isRegistered) {
       navigate("/login");
     }
   };
 
   const isLoggedIn = useSelector(selectIsLogin);
 
-  useEffect(()=>{
-    if(isLoggedIn){
+  useEffect(() => {
+    if (isLoggedIn) {
       navigate("/");
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
     <>
       <Navbar />
-      <div className="layout flex justify-center">
-        <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
+      <div className="layout flex justify-center py-7">
+        <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%] max-sm:w-[85%]">
           <div className="top-block">
-            <div>
-              <div className="text-[32px] font-semibold">Sign up to Rentic</div>
+            <div className="flex flex-col gap-3">
+              <div className="text-[32px] font-bold text-center">Sign up to Rentic</div>
               <div>
                 <b className="font-medium">Already have an account?</b>{" "}
                 <Link
                   to={"/login"}
-                  className="hover:text-[color:var(--yellow)] underline"
+                  className="text-secondaryYellow hover:text-yellow-500 underline"
                 >
                   Login
                 </Link>
               </div>
             </div>
-            <div className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border-2 border-black rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
+            <div className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
               <GoogleIcon className="w-[30px]" />
               <div className="text-[18px] font-medium">Sign with google</div>
             </div>
@@ -84,32 +84,34 @@ const Register = () => {
             className="bottom-block flex flex-col gap-[10px]"
             onSubmit={handleRegister}
           >
-            <div className="account field">
-              <div className="text-lightGray">First Name</div>
-              <input
-                required
-                type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
-                placeholder="Enter your first name"
-                onChange={(e) => setFirstNameField(e.target.value)}
-              />
-            </div>
-            <div className="account field">
-              <div className="text-lightGray">Last Name</div>
-              <input
-                required
-                type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
-                placeholder="Enter your last name"
-                onChange={(e) => setLastNameField(e.target.value)}
-              />
+            <div className="flex gap-2">
+              <div className="account field">
+                <div className="text-lightGray">First Name</div>
+                <input
+                  required
+                  type="text"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                  placeholder="First name"
+                  onChange={(e) => setFirstNameField(e.target.value)}
+                />
+              </div>
+              <div className="account field">
+                <div className="text-lightGray">Last Name</div>
+                <input
+                  required
+                  type="text"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                  placeholder="Last name"
+                  onChange={(e) => setLastNameField(e.target.value)}
+                />
+              </div>
             </div>
             <div className="account field">
               <div className="text-lightGray">Username</div>
               <input
-              required
+                required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
                 placeholder="Enter your username"
                 onChange={(e) => setUsernameField(e.target.value)}
               />
@@ -117,9 +119,9 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Email</div>
               <input
-              required
+                required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
                 placeholder="Enter email"
                 onChange={(e) => setEmailField(e.target.value)}
               />
@@ -127,9 +129,9 @@ const Register = () => {
             <div className="account field">
               <div className="text-lightGray">Phone number</div>
               <input
-              required
+                required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
                 placeholder="Enter phone number"
                 onChange={(e) => setPhoneField(e.target.value)}
               />
@@ -171,7 +173,7 @@ const Register = () => {
             </div>
             <button
               type="submit"
-              className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"
+              className="my-4 login-btn hover:bg-yellow-500 bg-primaryYellow text-center w-full rounded-md font-medium py-[9px]"
             >
               Sign up
             </button>

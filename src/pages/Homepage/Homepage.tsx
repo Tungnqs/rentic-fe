@@ -43,7 +43,9 @@ const Homepage = () => {
         </div>
         <PublishedAdsBlock />
         <LatestPostsBlock />
-        <BottomBanner/>
+        <div className="flex justify-center">
+          <BottomBanner/>
+        </div>
       </div>
       {!isLoggedIn && <Footer/>}
     </div>

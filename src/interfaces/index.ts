@@ -34,16 +34,16 @@ export interface IRegister {
   role: string;
 }
 
-export interface IError{
-  errors:[
+export interface IError {
+  errors: [
     {
-      type: string,
+      type: string;
       value: number | string;
       msg: string;
       path: string;
-      location: string
+      location: string;
     }
-  ]
+  ];
 }
 
 export interface ILogin {
@@ -56,3 +56,11 @@ export interface IAuthState {
 }
 
 export const loadingStatus = "loading" || "loaded";
+
+export enum ResponsiveBreakPoint {
+  sm = "640px",
+  md = "768px",
+  lg = "1024px",
+  xl = "1280px",
+  xxl = "	1536px",
+}

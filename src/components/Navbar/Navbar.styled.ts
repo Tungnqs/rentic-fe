@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ResponsiveBreakPoint } from "../../interfaces";
 
 export const Layout = styled.div`
   position: sticky;
@@ -13,11 +14,12 @@ export const Layout = styled.div`
 `;
 
 export const Container = styled.div`
+  max-width: ${ResponsiveBreakPoint.xxl};
   width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 10px 24px;
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -50,8 +52,8 @@ export const Brand = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const LeftItem = styled.div`
@@ -82,11 +84,11 @@ export const Balance = styled.div`
 
 export const SubscribeBtn = styled.div`
   padding: 8px 16px;
-  border: 2px solid black;
   border-radius: 5px;
+  background-color: rgb(255, 186, 0);
   cursor: pointer;
   &:hover {
-    background-color: #e6e6e6;
+    background-color: #ce8236;
   }
   @media (max-width: 768px) {
     display: none;

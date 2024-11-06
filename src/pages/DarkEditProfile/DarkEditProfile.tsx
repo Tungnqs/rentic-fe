@@ -96,8 +96,7 @@ const DarkEditProfile = () => {
             Change password
           </div>
         </div>
-        <div>
-          <div>Your avatar:</div>
+        <div className="border-y-2 py-2 border-gray-500">
           <div className="flex items-center gap-5">
             <input
               onChange={handleSelectFile}
@@ -107,15 +106,40 @@ const DarkEditProfile = () => {
             />
             <img
               src={avatarField ? avatarField : AnonymousAvatar}
-              className="aspect-square w-[100px] rounded-full object-cover"
+              className="aspect-square w-[100px] rounded-full object-cover border-2 border-gray-400"
               alt=""
             />
-            <div
-              onClick={() => inputFileRef.current?.click()}
-              className="text-primaryYellow hover:text-secondaryYellow hover:underline font-semibold cursor-pointer"
-            >
-              Upload new avatar
+            <div>
+              <div
+                onClick={() => inputFileRef.current?.click()}
+                className="text-primaryYellow hover:text-secondaryYellow hover:underline font-semibold cursor-pointer"
+              >
+                Upload new avatar
+              </div>
+              <div className="text-gray1 text-[12px]">Click here to upload your new avatar</div>
             </div>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div className="w-[48%]">
+            <div>First name</div>
+            <input
+              onChange={(e) => setFirstNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] rounded-md bg-bgDarkPrimary"
+              placeholder="Enter your first name"
+              value={firstNameField}
+            />
+          </div>
+          <div className="w-[48%]">
+            <div>Last name</div>
+            <input
+              onChange={(e) => setLastNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] rounded-md bg-bgDarkPrimary"
+              placeholder="Enter your last name"
+              value={lastNameField}
+            />
           </div>
         </div>
         <div className="">
@@ -140,26 +164,7 @@ const DarkEditProfile = () => {
             {userProfile.phonenumber}
           </div>
         </div>
-        <div className="">
-          <div>First name</div>
-          <input
-            onChange={(e) => setFirstNameField(e.target.value)}
-            type="text"
-            className="w-full py-[10px] px-[14px] rounded-md bg-bgDarkPrimary"
-            placeholder="Enter your first name"
-            value={firstNameField}
-          />
-        </div>
-        <div className="">
-          <div>Last name</div>
-          <input
-            onChange={(e) => setLastNameField(e.target.value)}
-            type="text"
-            className="w-full py-[10px] px-[14px] rounded-md bg-bgDarkPrimary"
-            placeholder="Enter your last name"
-            value={lastNameField}
-          />
-        </div>
+        
       </div>
       {hasChanges && (
         <SaveCancelPopup

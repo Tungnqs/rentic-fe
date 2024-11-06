@@ -71,7 +71,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
         <div className="flex items-center gap-3">
           <div className={`flex ${hasManyNavItems ? "gap-3" : "max-md:gap-3"}`}>
             {isLogin && (
-              <div className={`${hasManyNavItems ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px] border-secondaryYellow rounded-md cursor-pointer`}>
+              <div className={`${hasManyNavItems ? "" : "max-md:block hidden"} text-secondaryYellow border-[3px]cursor-pointer flex items-center cursor-pointer`}>
                 <MenuIcon
                   onClick={toggleSidebar}
                   className={`${hasManyNavItems ? "w-[45px]" : "max-md:w-[45px] max-md:block hidden"}`}
@@ -104,7 +104,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
             <>
               <S.Balance>
-                <p className="w-fit">Balance: {formatMoney(userProfile.balance as number)} VND</p>
+                <p className="w-fit font-semibold">Balance: <span className="text-yellow-600">{formatMoney(userProfile.balance as number)}₫</span></p>
               </S.Balance>
               <S.SubscribeBtn onClick={()=>navigate("/deposit")}>Deposit</S.SubscribeBtn>
             </>
@@ -120,11 +120,11 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
               </div>
             </div>
           ) : (
-            <div className="flex gap-5">
+            <div className="flex gap-5 items-center">
               <Link to={"/login"} className="hover:underline cursor-pointer">
                 Login
               </Link>
-              <Link to={"/register"} className="hover:underline cursor-pointer">
+              <Link to={"/register"} className="cursor-pointer px-3 py-2 rounded-md bg-yellow-500 hover:bg-yellow-600 transition-colors">
                 Sign up
               </Link>
             </div>
