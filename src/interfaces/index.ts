@@ -55,8 +55,6 @@ export interface IAuthState {
   authStatus: boolean;
 }
 
-export const loadingStatus = "loading" || "loaded";
-
 export enum ResponsiveBreakPoint {
   sm = "640px",
   md = "768px",

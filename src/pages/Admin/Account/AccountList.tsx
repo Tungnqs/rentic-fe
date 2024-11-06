@@ -36,9 +36,9 @@ const AccountList = () => {
   const usersToDisplay = useMemo(() => {
     let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
     if (filterType === "Active") {
-      accountsByBlockStt = users.filter((user) => user.isBlocked === false);
+      accountsByBlockStt = users.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
     } else if (filterType === "Inactive") {
-      accountsByBlockStt = users.filter((user) => user.isBlocked);
+      accountsByBlockStt = users.filter((user) => user.isBlocked && user.id !== myProfile.id);
     }
 
     if (searchingKeyword.trim() !== "") {
@@ -97,9 +97,9 @@ const AccountList = () => {
         >
           <table
             style={{ transform: "rotateX(180deg)" }}
-            className="w-full text-[90%] text-left rtl:text-right text-gray-400"
+            className="w-full text-[90%] text-left rtl:text-right text-gray-300"
           >
-            <thead className="text-xs  uppercase bg-gray-700 text-gray-400">
+            <thead className="text-xs  uppercase bg-gray-700 text-gray-300">
               <tr>
                 <th scope="col" className="px-2 py-3">
                   Contact

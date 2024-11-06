@@ -100,9 +100,9 @@ const PackageList = () => {
         >
           <table
             style={{ transform: "rotateX(180deg)" }}
-            className="w-full text-[90%] text-left rtl:text-right text-gray-400"
+            className="w-full text-[90%] text-left rtl:text-right text-gray-300"
           >
-            <thead className="text-xs  uppercase bg-gray-700 text-gray-400">
+            <thead className="text-xs uppercase bg-gray-700 text-gray-300">
               <tr>
                 <th scope="col" className="px-2 py-3">
                   Serial
