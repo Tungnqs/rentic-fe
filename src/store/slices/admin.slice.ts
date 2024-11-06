@@ -6,17 +6,22 @@ import { checkErr } from "../../utils/notification.utils";
 import { IUser } from "../../interfaces/userProfile.interface";
 import { RootState } from "..";
 import { IPackage } from "../../interfaces/ads.interface";
+import { ITransaction } from "../../interfaces/transaction";
 
 interface IAdminState {
-  allPackages: IPackage[],
+  allPackages: IPackage[];
   allAccounts: IUser[];
   loadingStatus: "loading" | "loaded" | "fail";
+  allTransactions: ITransaction[];
+  fetchTransactionLoading: "loading" | "loaded" | "fail";
 }
 
 const initialState: IAdminState = {
   allPackages: [],
   allAccounts: [],
   loadingStatus: "loading",
+  allTransactions: [],
+  fetchTransactionLoading: "loading",
 };
 
 export const getAllPackages = createAsyncThunk(
@@ -34,7 +39,7 @@ export const getAllPackages = createAsyncThunk(
   }
 );
 
-export interface IPackageReqBody{
+export interface IPackageReqBody {
   name: string;
   dailyRate: number;
   description: string;
@@ -58,7 +63,10 @@ export const addNewPackage = createAsyncThunk(
 
 export const editPackageById = createAsyncThunk(
   "admin/editPackageById",
-  async ({data, packageId} : {data:IPackageReqBody, packageId: string}, { rejectWithValue }) => {
+  async (
+    { data, packageId }: { data: IPackageReqBody; packageId: string },
+    { rejectWithValue }
+  ) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
       const res = await axiosInstance.put(url, data);
@@ -79,9 +87,24 @@ export const deletePackageById = createAsyncThunk(
       const url = API_BASE_URL + API_PATH_URL.ADMIN.MODIFY_PACKAGE + packageId;
       const res = await axiosInstance.delete(url);
       toast.success(res.data.message);
-      if(res.data.error === 0){
+      if (res.data.error === 0) {
         return packageId;
       }
+    } catch (err) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const fetchAllTransactions = createAsyncThunk(
+  "admin/getAllTransactions",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.TRANSACTION.FETCH_ALL_TRANSACTIONS;
+      const res = await axiosInstance.get(url);
+      return res.data.data;
     } catch (err) {
       console.log("err: ", err);
       checkErr(err);
@@ -158,16 +181,16 @@ export const adminSlice = createSlice({
     builder.addCase(blockUserById.fulfilled, (state, action) => {
       const blockedAccountIdx = state.allAccounts.findIndex(
         (account) => account.id === action.payload.user.id
-      )
-      if(blockedAccountIdx !== -1){
-        state.allAccounts[blockedAccountIdx].isBlocked = true
+      );
+      if (blockedAccountIdx !== -1) {
+        state.allAccounts[blockedAccountIdx].isBlocked = true;
       }
     });
     builder.addCase(unBlockUserById.fulfilled, (state, action) => {
       const unblockedAccountIdx = state.allAccounts.findIndex(
         (account) => account.id === action.payload.user.id
-      )
-      if(unblockedAccountIdx !== -1){
+      );
+      if (unblockedAccountIdx !== -1) {
         state.allAccounts[unblockedAccountIdx].isBlocked = false;
       }
     });
@@ -185,24 +208,39 @@ export const adminSlice = createSlice({
       state.allPackages.push(action.payload);
     });
     builder.addCase(deletePackageById.fulfilled, (state, action) => {
-      const newPackages = state.allPackages.filter((pack)=>{
-        return pack.id !== action.payload
-      })
+      const newPackages = state.allPackages.filter((pack) => {
+        return pack.id !== action.payload;
+      });
       state.allPackages = newPackages;
     });
     builder.addCase(editPackageById.fulfilled, (state, action) => {
       const editedPackageIndex = state.allPackages.findIndex(
         (pack) => pack.id === action.payload.id
-      )
-      if(editedPackageIndex !== -1){
+      );
+      if (editedPackageIndex !== -1) {
         state.allPackages[editedPackageIndex] = action.payload;
       }
+    });
+    builder.addCase(fetchAllTransactions.pending, (state) => {
+      state.fetchTransactionLoading = "loading";
+    });
+    builder.addCase(fetchAllTransactions.fulfilled, (state, action) => {
+      state.fetchTransactionLoading = "loaded";
+      state.allTransactions = action.payload;
+    });
+    builder.addCase(fetchAllTransactions.rejected, (state) => {
+      state.fetchTransactionLoading = "fail";
     });
   },
 });
 
-export const selectAdminLoadingStatus = (state: RootState) => state.adminState.loadingStatus;
-export const selectAllUserAccounts = (state: RootState) => state.adminState.allAccounts;
-export const selectAllPackages = (state: RootState) => state.adminState.allPackages;
+export const selectAdminLoadingStatus = (state: RootState) =>
+  state.adminState.loadingStatus;
+export const selectAllUserAccounts = (state: RootState) =>
+  state.adminState.allAccounts;
+export const selectAllPackages = (state: RootState) =>
+  state.adminState.allPackages;
+export const selectAllUserTransactions = (state: RootState) => state.adminState.allTransactions
+export const selectFetchAllTransactionsLoading = (state: RootState) => state.adminState.fetchTransactionLoading;
 
 export default adminSlice.reducer;

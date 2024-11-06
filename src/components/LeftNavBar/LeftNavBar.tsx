@@ -42,13 +42,13 @@ const LeftNavBar = ({navbarItems} : ILeftNavBarProps) => {
                 </div>
                 <div className='flex mt-5 w-full border-b border-gray-500 pb-5 justify-center'>
                     <Link to={'/profile'} className='w-full flex items-center gap-2 justify-center'>
-                        <ProfileIcon className='w-[30px] text-white' />{ isExpand && <div onClick={()=> setIsExpand(!isExpand)} className='font-medium text-[20px] flex-1'>Your profile</div>}
+                        <ProfileIcon className='w-[30px] text-secondaryYellow' />{ isExpand && <div onClick={()=> setIsExpand(!isExpand)} className='font-medium text-[20px] flex-1'>Your profile</div>}
                     </Link>
                 </div> 
                 <div className='flex flex-col gap-4 mt-5'>
                     {navbarItems && navbarItems.map((item, index)=>(
                         <Link to={item.path as string} key={index} className='item flex items-center gap-3 justify-center'>
-                            <div className='w-5'>{item.icon}</div>
+                            <div className='w-5 text-secondaryYellow'>{item.icon}</div>
                             {isExpand && <div className='flex-1 font-medium text-[20px]' onClick={()=> setIsExpand(!isExpand)}>{item.title}</div> }
                         </Link>
                     ))}

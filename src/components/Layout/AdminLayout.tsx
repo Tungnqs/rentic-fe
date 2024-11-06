@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
-import { AccountIcon, ChartIcon, MessageIcon, PackageIcon } from "../../assets/icon/icon";
+import { AccountIcon, ChartIcon, MessageIcon, PackageIcon, TransactionIcon } from "../../assets/icon/icon";
 import { INavbarItems } from "../Navbar/Navbar";
 import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
@@ -21,6 +21,11 @@ export default function AdminLayout() {
       title: "Package Management",
       path: "/packages",
       icon: <PackageIcon />,
+    },
+    {
+      path: "/transactions",
+      title: "User Transactions",
+      icon: <TransactionIcon className="w-full"/>
     },
     {
       path: "/conversations",

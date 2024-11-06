@@ -21,6 +21,7 @@ export const API_PATH_URL = {
     MODIFY_POST_BY_ID: "/api/post/",
     GET_PUBLISH_POST: "/api/post/public/",
     GET_10_LATEST_POSTS: "/api/post/latest/",
+    SAVE_POST_BY_ID: "/api/user/savePost/"
   },
   PAYMENT: {
     CREATE_PAYMENT_LINK: "/api/order/createPaymentLink/",
@@ -58,4 +59,7 @@ export const API_PATH_URL = {
   BOT: {
     GET_CHAT_SESSION: "/api/bot/session",
   },
+  TRANSACTION: {
+    FETCH_ALL_TRANSACTIONS: "/api/order/transactions/all"
+  }
 };

@@ -56,22 +56,22 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="layout flex justify-center flex-1">
+      <div className="layout flex justify-center flex-1 pt-7">
         <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%]">
           <div className="top-block">
             <div>
-              <div className="text-[32px] font-semibold">Login</div>
+              <div className="text-[32px] font-bold text-center">Welcome back</div>
               <div>
                 Sign up as{" "}
                 <Link
                   to={"/register"}
-                  className="hover:text-[color:var(--yellow)] underline"
+                  className="text-secondaryYellow hover:text-yellow-500 underline"
                 >
                   Rentic user
                 </Link>
               </div>
             </div>
-            <div className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border-2 border-black rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
+            <div className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
               <GoogleIcon className="w-[30px]" />
               <div className="text-[18px] font-medium">Sign with google</div>
             </div>
@@ -87,7 +87,7 @@ const Login = () => {
               <input
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
                 placeholder="Enter email or phone number"
                 onChange={(e) => setInputAccount(e.target.value)}
               />
@@ -122,7 +122,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="my-4 login-btn border-2 border-black bg-[color:var(--yellow)] hover:bg-[#ffcf4d] text-center w-full rounded-md font-medium py-[9px]"
+              className="my-4 login-btn hover:bg-yellow-500 bg-primaryYellow text-center w-full rounded-md font-medium py-[9px]"
             >
               Login
             </button>
