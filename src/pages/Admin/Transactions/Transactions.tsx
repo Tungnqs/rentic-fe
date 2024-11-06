@@ -50,7 +50,7 @@ const Transactions = () => {
           icon={<SearchIcon className="text-primaryYellow w-8" />}
           searchingKeyword={searchingKeyword}
           setSearchingKeyword={setSearchingKeyword}
-          searchPlaceholder="Search user by their Username"
+          searchPlaceholder="Search for transaction by client email"
         />
         <div className="flex gap-2 items-center">
           <div>Filter by Activation:</div>
