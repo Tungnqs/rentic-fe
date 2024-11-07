@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { selectLatestPosts } from "../../store/slices/post.slice";
 import { formatMoney } from "../../store/slices/app.slice";
 import DemoProperty from "../../assets/images/demo-property.jpg";
-import { ResponsiveBreakPoint } from "../../interfaces";
+import { BreakPoint } from "../../interfaces";
 
 const LatestPostsBlock = () => {
   const latestPosts = useSelector(selectLatestPosts);
   return (
     <div className="block2 max-md:px-6 flex justify-center">
-      <div className={`w-[85%] max-md:w-full flex flex-col gap-5 max-w-[${ResponsiveBreakPoint.xl}]`}>
+      <div className={`w-[85%] max-md:w-full flex flex-col gap-5 max-w-[${BreakPoint.xl}]`}>
         <div className="text-[24px] font-bold">Latest Properties</div>
         <div>
           <div className="flex w-full gap-[1%] xl:flex-wrap xl:gap-y-4 max-w-full overflow-x-scroll">

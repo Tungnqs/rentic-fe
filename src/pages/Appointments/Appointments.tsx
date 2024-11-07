@@ -15,6 +15,7 @@ import Loader from "../../components/Loader/Loader";
 import { createConversation } from "../../store/slices/chat.slice";
 import { formatMoney } from "../../store/slices/app.slice";
 import { formatDate } from "../Moderator/Report/ReportList";
+import { BreakPoint } from "../../interfaces";
 
 interface IAppointmentsProps {
   isLandLord: boolean;
@@ -50,7 +51,7 @@ const Appointments = ({ isLandLord }: IAppointmentsProps) => {
 
   return (
     <div className="flex justify-center py-10">
-      <div className="w-[90%] flex flex-col gap-5">
+      <div className={`w-[90%] flex flex-col gap-5 max-w-[${BreakPoint.xl}]`}>
         <div
           onClick={() => navigate("/")}
           className="flex gap-2 items-center cursor-pointer group"

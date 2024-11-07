@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ResponsiveBreakPoint } from "../../interfaces";
+import { BreakPoint } from "../../interfaces";
 
 export const Layout = styled.div`
   position: sticky;
@@ -14,7 +14,7 @@ export const Layout = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: ${ResponsiveBreakPoint.xxl};
+  max-width: ${BreakPoint.xxl};
   width: 95%;
   display: flex;
   justify-content: space-between;
@@ -107,7 +107,7 @@ export const RightIcon = styled.div`
 
 export const UserAvatar = styled.img`
   aspect-ratio: 1/1;
-  width: 50px;
+  width: 45px;
   border-radius: 999px;
   border: 3px solid #ce8236;
   object-fit: cover;

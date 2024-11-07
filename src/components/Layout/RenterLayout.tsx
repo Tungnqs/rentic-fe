@@ -8,6 +8,7 @@ import {
   ProfileIcon,
   PropertyIcon,
   RoommateIcon,
+  TransactionIcon,
 } from "../../assets/icon/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -37,6 +38,11 @@ export default function RenterLayout() {
       path: "/conversations",
       title: "Conversations",
       icon: <MessageIcon className="w-full"/>
+    },
+    {
+      path: "/my-transactions",
+      title: "My Transactions",
+      icon: <TransactionIcon className="w-full"/>
     },
   ];
 

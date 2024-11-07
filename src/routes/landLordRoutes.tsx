@@ -13,6 +13,7 @@ import Conversation from "../pages/Conversation/Conversation";
 import Advertisements from "../pages/LandLord/Advertisements/Advertisements";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import MyTransactions from "../pages/MyTransactions/MyTransactions";
 
 export const landLordRoutes: IRoute[] = [
   {
@@ -66,5 +67,9 @@ export const landLordRoutes: IRoute[] = [
   {
     path: "/profile/changePassword",
     component: <ChangePassword />
+  },
+  {
+    path: "/my-transactions",
+    component: <MyTransactions />
   }
 ];

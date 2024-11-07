@@ -705,11 +705,12 @@ export function ProfileIcon(props: React.HTMLAttributes<SVGElement>) {
 export function LeaveIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
     <svg
-      className="flex-shrink-0 w-5 h-5"
+      className="flex-shrink-0"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 18 16"
+      {...props}
     >
       <path
         stroke="currentColor"

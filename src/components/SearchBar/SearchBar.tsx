@@ -6,11 +6,12 @@ interface ISearchBarProps{
     setSearchingKeyword: (value: string) => void,
     searchPlaceholder: string;
     icon: React.JSX.Element;
+    customWidth?: string;
 }
 
-const SearchBar = ({searchingKeyword, setSearchingKeyword, searchPlaceholder, icon} : ISearchBarProps) => {
+const SearchBar = ({searchingKeyword, setSearchingKeyword, searchPlaceholder, icon, customWidth} : ISearchBarProps) => {
     return (
-        <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:min-w-[250px] justify-between">
+        <div className={`flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] max-md:min-w-[250px] justify-between ${customWidth ? `${customWidth}` : "w-[50%]"}`}>
         <div className="w-fit">
           {icon}
         </div>
