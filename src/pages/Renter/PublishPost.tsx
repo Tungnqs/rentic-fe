@@ -52,7 +52,6 @@ const PublishPost = () => {
 
     return allPosts;
   }, [allPublishPosts, filteredProperty, filteredPurpose, searchingKeyword]);
-  console.log('postToDisplay: ', postToDisplay);
 
   return (
     <div className="flex justify-center bg-grayLight2">

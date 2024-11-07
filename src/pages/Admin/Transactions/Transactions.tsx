@@ -53,7 +53,7 @@ const Transactions = () => {
           searchPlaceholder="Search for transaction by client email"
         />
         <div className="flex gap-2 items-center">
-          <div>Filter by Activation:</div>
+          <div>Filter by Status:</div>
           <div>
             <Dropdown
               dropdownValues={["All", "Pending", "Paid", "Canceled", "Refunded"]}

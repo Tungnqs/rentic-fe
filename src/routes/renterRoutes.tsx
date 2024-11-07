@@ -9,6 +9,7 @@ import Appointments from "../pages/Appointments/Appointments";
 import Conversation from "../pages/Conversation/Conversation";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import MyTransactions from "../pages/MyTransactions/MyTransactions";
 
 export const renterRoutes: IRoute[] = [
   {
@@ -50,5 +51,9 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/profile/changePassword",
     component: <ChangePassword />
+  },
+  {
+    path: "/my-transactions",
+    component: <MyTransactions />
   }
 ];

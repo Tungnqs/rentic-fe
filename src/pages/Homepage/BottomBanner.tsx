@@ -1,10 +1,10 @@
 import React from 'react';
 import LeaderImg from "../../assets/images/homepage1.png"
 import LocalInfo from "../../assets/images/homepage2.png"
-import { ResponsiveBreakPoint } from '../../interfaces';
+import { BreakPoint } from '../../interfaces';
 const BottomBanner = () => {
     return (
-        <div className={`block4 max-md:hidden max-w-[${ResponsiveBreakPoint.xl}]`}>
+        <div className={`block4 max-md:hidden max-w-[${BreakPoint.xl}]`}>
           <div className="flex h-[500px]">
             <img src={LeaderImg} alt="" className="w-1/2 h-full object-cover" />
             <div className="w-1/2 flex items-center bg-grayLight2">

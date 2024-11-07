@@ -60,6 +60,7 @@ export const API_PATH_URL = {
     GET_CHAT_SESSION: "/api/bot/session",
   },
   TRANSACTION: {
-    FETCH_ALL_TRANSACTIONS: "/api/order/transactions/all"
+    FETCH_ALL_TRANSACTIONS: "/api/order/transactions/all/",
+    FETCH_MY_TRANSACTIONS: "/api/order/transactions/user/",
   }
 };

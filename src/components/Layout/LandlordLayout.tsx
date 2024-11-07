@@ -4,7 +4,7 @@ import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllMyAds, getAllMyPosts } from "../../store/slices/post.slice";
-import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon } from "../../assets/icon/icon";
+import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon, TransactionIcon } from "../../assets/icon/icon";
 import Footer from "../Footer/Footer";
 import { selectUserProfile } from "../../store/slices/auth.slice";
 import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
@@ -35,6 +35,11 @@ export default function LandlordLayout() {
       path: "/conversations",
       title: "Conversations",
       icon: <MessageIcon className="w-full"/>
+    },
+    {
+      path: "/my-transactions",
+      title: "My Transactions",
+      icon: <TransactionIcon className="w-full"/>
     },
   ]
   const dispatch = useDispatch<AppDispatch>();
