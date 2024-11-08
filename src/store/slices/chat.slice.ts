@@ -24,21 +24,23 @@ export interface IChat {
   lastMessage?: IMessage;
 }
 
+export interface IConversation{
+  chatId: string;
+  sender: IUser;
+  currentUser: IUser;
+  createdAt?: string;
+  seenBy: {
+    id: string;
+  }[];
+  lastMessage?: IMessage;
+  messages: IMessage[];
+};
+
 interface IChatState {
   loadingStatusOfGetAllChats: "loading" | "loaded" | "fail";
   loadingStatusOfViewChat: "loading" | "loaded" | "fail";
   chats: IChat[];
-  currentChat: {
-    chatId: string;
-    sender: IUser;
-    currentUser: IUser;
-    createdAt?: string;
-    seenBy: {
-      id: string;
-    }[];
-    lastMessage?: IMessage;
-    messages: IMessage[];
-  };
+  currentChat: IConversation;
 }
 
 const initialState: IChatState = {
