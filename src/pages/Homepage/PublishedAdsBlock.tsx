@@ -13,8 +13,8 @@ const PublishedAdsBlock = () => {
     {publishedAds.length > 0 && (<div className="block2 max-md:px-6 flex justify-center">
       <div className={`w-[85%] max-md:w-full flex flex-col gap-5 max-w-[${BreakPoint.xl}]`}>
         <div className="text-[24px] font-bold">Top Properties</div>
-        <div>
-          <div className="flex w-full gap-[1%] xl:flex-wrap xl:gap-y-4 max-w-full overflow-x-scroll">
+        <div className="p-3">
+        <div className="flex w-full gap-[1%] xl:flex-wrap xl:gap-y-3 max-w-full max-xl:overflow-x-scroll">
             {publishedAds.slice(0,10).map((item) => (
               <div className="max-xl:w-[248px] w-[24.2%] relative border-2 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:bg-grayLight1 duration-100">
               <div className={`absolute top-4 right-4 ${item.post.type === "buy" ? "bg-primaryYellow" : "bg-green-500 text-white" }  text-[14px] font-medium rounded-2xl px-2 py-[2px]`}>{item.post.type === "buy" ? "For Sale" : "For Rent"}</div>
