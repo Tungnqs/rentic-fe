@@ -7,7 +7,6 @@ import { BreakPoint } from "../../interfaces";
 
 const PublishedAdsBlock = () => {
   const publishedAds = useSelector(selectFetchedAds);
-  console.log('publishedAds: ', publishedAds);
   return (
     <>
     {publishedAds.length > 0 && (<div className="block2 max-md:px-6 flex justify-center">
@@ -22,8 +21,8 @@ const PublishedAdsBlock = () => {
               <div className="p-4 flex flex-col gap-3 w-full">
                 <div className="text-[20px] font-bold">{item.post.title}</div>
                 <div className="text-darkGray truncate">{item.post.commune}, {item.post.district}, {item.post.city}</div>
-                <div className="flex justify-between items-center">
-                  <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.post.price)}</div>
+                <div className="flex justify-between items-center gap-2 truncate">
+                  <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.post.price)}₫</div>
                   <div className="max-xl:hidden">View Details →</div>
                 </div>
               </div>

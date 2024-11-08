@@ -20,8 +20,8 @@ const LatestPostsBlock = () => {
                 <div className="p-4 flex flex-col gap-3 w-full">
                   <div className="text-[20px] font-bold">{item.title}</div>
                   <div className="text-darkGray truncate">{item.commune}, {item.district}, {item.city}</div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.price)}</div>
+                  <div className="flex justify-between items-center gap-2 truncate">
+                    <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.price)}₫</div>
                     <div className="max-xl:hidden">View Details →</div>
                   </div>
                 </div>
