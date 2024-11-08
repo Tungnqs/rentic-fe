@@ -34,7 +34,7 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
   const navigate = useNavigate();
 
   const directToPostDetail = () => {
-    navigate(post.id);
+    navigate("/publish-posts/"+post.id);
   };
 
   const togglePopup = () => {

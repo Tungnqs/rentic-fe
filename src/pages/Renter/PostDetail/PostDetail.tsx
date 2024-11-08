@@ -23,12 +23,10 @@ import Loader from "../../../components/Loader/Loader";
 import Carousel from "../../../components/Carousel/Carousel";
 import { IPost } from "../../../interfaces/post.interface";
 import {
-  deletePostById,
   getPostById,
   selectCurrentPost,
   selectLoadingStatus,
 } from "../../../store/slices/post.slice";
-import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import unknownAvatar from "../../../assets/images/anonymous-avatar.png";
 import CreateAppointmentPopup from "../CreateAppointmentPopup/CreateAppointmentPopup";
 import { formatMoney } from "../../../store/slices/app.slice";

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { getChatbotSession, resetChatbotState, selectChatbotError, selectChatbotLoading, selectChatbotUrl } from '../../store/slices/chatbot.slice';
+import { AIIcon } from '../../assets/icon/icon';
 
 const ChatBotWidget: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,7 +41,9 @@ const ChatBotWidget: React.FC = () => {
           className="chat-bot-open" 
           disabled={isLoading}
         >
-          {isLoading ? 'Loading...' : 'Chat with us'}
+          {isLoading ? 'Loading...' : (
+            <AIIcon className='w-8'/>
+          )}
         </button>
       ) : (
         <div className="chat-bot-iframe">

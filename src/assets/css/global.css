@@ -195,13 +195,13 @@
 
 .chat-bot-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 5px;
+  right: 5px;
   z-index: 1000;
 }
 .chat-bot-open {
-  padding: 10px 20px;
-  background-color: #007bff;
+  padding: 5px 10px;
+  background-color: rgb(255 186 0);
   color: white;
   border: none;
   border-radius: 5px;
