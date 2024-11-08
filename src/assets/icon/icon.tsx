@@ -1322,8 +1322,8 @@ export function LoadingIcon(props: React.HTMLAttributes<SVGElement>) {
 export function SaveIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      fill="none"
+      fill="currentColor"
+      viewBox="0 0 1920 1920"
       xmlns="http://www.w3.org/2000/svg"
       className=""
       {...props}
@@ -1337,10 +1337,34 @@ export function SaveIcon(props: React.HTMLAttributes<SVGElement>) {
       <g id="SVGRepo_iconCarrier">
         {" "}
         <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M6.75 6L7.5 5.25H16.5L17.25 6V19.3162L12 16.2051L6.75 19.3162V6ZM8.25 6.75V16.6838L12 14.4615L15.75 16.6838V6.75H8.25Z"
-          fill="currentColor"
+          d="m960.481 1412.11 511.758 307.054V170.586c0-31.274-25.588-56.862-56.862-56.862H505.586c-31.274 0-56.862 25.588-56.862 56.862v1548.578l511.757-307.055ZM1585.963 1920 960.48 1544.711 335 1920V170.586C335 76.536 411.536 0 505.586 0h909.79c94.05 0 170.587 76.536 170.587 170.586V1920Z"
+          fill-rule="evenodd"
+        ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function SaveIconFilled(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 1920 1920"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path
+          d="M1585.963 1920 960.48 1544.711 335 1920V170.586C335 76.536 411.536 0 505.586 0h909.79c94.05 0 170.587 76.536 170.587 170.586V1920Z"
+          fill-rule="evenodd"
         ></path>{" "}
       </g>
     </svg>

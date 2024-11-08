@@ -21,7 +21,8 @@ export const API_PATH_URL = {
     MODIFY_POST_BY_ID: "/api/post/",
     GET_PUBLISH_POST: "/api/post/public/",
     GET_10_LATEST_POSTS: "/api/post/latest/",
-    SAVE_POST_BY_ID: "/api/user/savePost/"
+    SAVE_POST_BY_ID: "/api/user/savePost/",
+    UNSAVED_POST_BY_ID: "/api/user/UnSavePost/"
   },
   PAYMENT: {
     CREATE_PAYMENT_LINK: "/api/order/createPaymentLink/",

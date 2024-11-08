@@ -346,6 +346,39 @@ export const unVerifyPost = createAsyncThunk(
   }
 );
 
+export const savePostById = createAsyncThunk(
+  "renter/savePostById",
+  async (postId: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.SAVE_POST_BY_ID;
+      const response = await axiosInstance.post(url, {postId: postId});
+      toast.success(response.data.message);
+      console.log('response.data.savedPost: ', response.data.savedPost);
+      return response.data.savedPost;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const unSavePostById = createAsyncThunk(
+  "renter/unSavePostById",
+  async (postId: string, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.UNSAVED_POST_BY_ID;
+      const response = await axiosInstance.post(url, {postId: postId});
+      toast.success(response.data.message);
+      return postId;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "postState",
   initialState,
