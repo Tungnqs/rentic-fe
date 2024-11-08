@@ -20,6 +20,7 @@ import {
 import { useNavigate } from "react-router";
 import { formatMoney } from "../../../store/slices/app.slice";
 import { createConversation } from "../../../store/slices/chat.slice";
+import { savePostById } from "../../../store/slices/post.slice";
 
 interface IPublishPostItemsProps {
   post: IPost;
@@ -56,6 +57,11 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
     navigate("/conversations");
   };
 
+  const handleSavePost = (e: React.MouseEvent)=>{
+    e.stopPropagation();
+    dispatch(savePostById(post.id));
+  }
+
   return (
     <>
       {showReportPopup && (
@@ -82,12 +88,12 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
         </div>
         <div
           onClick={togglePopup}
-          className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute top-4 right-4 p-[6px] bg-white rounded-lg border shadow-md hover:bg-gray-100 transition-colors"
         >
           <ReportIcon className="w-4 text-red-500" />
         </div>
-        <div className="absolute top-4 right-[60px] w-fit bg-white rounded-full p-1 cursor-pointer shadow-md hover:text-yellow-700">
-          <SaveIcon className="w-6" />
+        <div onClick={(e)=>handleSavePost(e)} className="absolute top-4 right-[60px] w-fit bg-white rounded-lg border p-[6px] cursor-pointer shadow-md hover:text-yellow-700">
+          <SaveIcon className="w-4" />
         </div>
         <div>
           <img
