@@ -167,15 +167,41 @@
   border-radius: 10px;
 }
 
+.darkChatScrollBar{
+
+}
+
+.darkChatScrollBar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+.darkChatScrollBar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(37, 37, 37); 
+  border-radius: 10px;
+  background: #505050;
+}
+ 
+/* Handle */
+.darkChatScrollBar::-webkit-scrollbar-thumb {
+  background: #252525; 
+  border-radius: 10px;
+}
+
+.darkChatScrollBar::-webkit-scrollbar-thumb:hover {
+  background: #181b24; 
+}
+
 .chat-bot-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 5px;
+  right: 5px;
   z-index: 1000;
 }
 .chat-bot-open {
-  padding: 10px 20px;
-  background-color: #007bff;
+  padding: 5px 10px;
+  background-color: rgb(255 186 0);
   color: white;
   border: none;
   border-radius: 5px;
