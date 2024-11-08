@@ -73,8 +73,8 @@ const CollapseSidebar = ({
                 </li>
               ))}
             <li>
-              <div onClick={handleLogout} className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer">
-                <LeaveIcon className="w-[24px] text-secondaryYellow" />
+              <div onClick={handleLogout} className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer text-red-500">
+                <LeaveIcon className="w-[24px]" />
                 <span className="ml-3 whitespace-nowrap">Logout</span>
               </div>
             </li>

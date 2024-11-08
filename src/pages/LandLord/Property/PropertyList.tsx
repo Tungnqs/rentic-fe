@@ -12,6 +12,7 @@ import Loader from "../../../components/Loader/Loader";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 import { formatMoney } from "../../../store/slices/app.slice";
 import DemoProperty from "../../../assets/images/demo-property.jpg";
+import { BreakPoint } from "../../../interfaces";
 
 const PropertyList = () => {
   const [isOpenAddPopup, setIsOpenAddPopup] = useState(false);
@@ -36,7 +37,7 @@ const PropertyList = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[80%] max-xl:w-[90%] max-lg:w-[95%] max-md:w-full p-7 max-lg:px-0 flex flex-col gap-10 relative">
+      <div className={`w-[80%] max-xl:w-[90%] max-lg:w-[95%] p-7 max-lg:px-0 flex flex-col gap-10 relative max-w-[${BreakPoint.xl}]`}>
         <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
           <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:w-2/3 max-md:min-w-[230px] justify-between">
             <div className="w-fit">
@@ -83,31 +84,16 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
       ) : (
         <div className="flex w-full gap-[1%] flex-wrap gap-y-4">
           {postToDisplay.map((item) => (
-            <div
-              onClick={() => navigate(item.id)}
-              key={item.id}
-              className="w-[19%] max-lg:w-[24%] max-md:w-[32%] max-sm:w-[49%] max-[500px]:w-full p-4 cursor-pointer bg-grayLight1 flex flex-col gap-[10px] hover:bg-grayLight2 rounded-xl hover:-translate-y-1 hover:shadow-xl duration-100 border"
-            >
-              <img
-                style={{ aspectRatio: "3/2" }}
-                className="w-full object-cover rounded-md"
-                src={
-                  item.images.length > 0
-                    ? item.images[0].path
-                    : DemoProperty
-                }
-                alt=""
-              />
-              <div className="text-[19px]">
-                {formatMoney(item.price)}{" "}
-                <span className="text-green-700 font-semibold">₫</span>
-              </div>
-              <div className="text-secondaryYellow text-[24px] font-bold truncate">
-                {item.title}
-              </div>
-              <div className="flex justify-between items-center flex-wrap font-semibold">
-                <div className="text-[11px]">{item.city}</div>
-                <div className="text-[14px]">{item.isVerified ? <span className="text-green-600">Published</span> : <span className="text-red-600">Not Published</span>}</div>
+            <div onClick={()=>navigate(item.id)} className="cursor-pointer w-[24%] max-lg:w-[32%] max-md:w-[49%] max-[550px]:w-full relative border-2 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:bg-grayLight1 duration-100">
+              <div className={`absolute top-4 right-4 ${item.type === "buy" ? "bg-primaryYellow" : "bg-green-500 text-white" }  text-[14px] font-medium rounded-2xl px-2 py-[2px]`}>{item.type === "buy" ? "For Sale" : "For Rent"}</div>
+              <img src={item.images.length > 0 ? item.images[0].path : DemoProperty} className="xl:h-48 object-cover rounded-t-2xl max-xl:max-w-none w-full aspectPostImg" alt="" />
+              <div className="p-4 flex flex-col gap-2 w-full">
+                <div className="text-[20px] font-bold">{item.title}</div>
+                <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.price)}₫</div>
+                <div className="flex justify-between">
+                  <div className="text-darkGray truncate font-semibold text-[12px]">{item.city}</div>
+                  <div className="text-[14px] font-bold">{item.isVerified ? <span className="text-green-600">Published</span> : <span className="text-red-600">Not Published</span>}</div>
+                </div>
               </div>
             </div>
           ))}
