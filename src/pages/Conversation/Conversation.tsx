@@ -52,7 +52,7 @@ const Conversation = ({isManager}:IConversationProps) => {
     }, [selectedConversation, socket, allConversations]);
 
   return (
-    <div className={`flex justify-center pb-10 pt-2 min-h-screen ${isManager ? "bg-bgDarkPrimary text-grayLight2" : "bg-grayLight1"}`}>
+    <div className={`flex justify-center pb-10 pt-2 ${isManager ? "bg-bgDarkPrimary text-grayLight2" : "bg-grayLight1"}`}>
       <div className={`w-[90%] max-[500px]:w-[97%] flex flex-col gap-5 ${isManager ? "" : "bg-white"}`}>
         <div className={`shadow-md rounded-md flex border ${isManager ? "border-gray-600" : ""}`}>
             <div className={`min-h-[calc(100vh_-_90px)] w-[35%] max-lg:w-full p-7 max-sm:p-5 flex-col gap-5 rounded-l-md border-r ${isManager ? "bg-bgLeftNavbar" : ""} ${selectedConversation ? "hidden lg:flex" : "flex"}`}>
