@@ -90,7 +90,7 @@ const Register = () => {
                 <input
                   required
                   type="text"
-                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                   placeholder="First name"
                   onChange={(e) => setFirstNameField(e.target.value)}
                 />
@@ -100,7 +100,7 @@ const Register = () => {
                 <input
                   required
                   type="text"
-                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                   placeholder="Last name"
                   onChange={(e) => setLastNameField(e.target.value)}
                 />
@@ -111,7 +111,7 @@ const Register = () => {
               <input
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter your username"
                 onChange={(e) => setUsernameField(e.target.value)}
               />
@@ -121,7 +121,7 @@ const Register = () => {
               <input
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter email"
                 onChange={(e) => setEmailField(e.target.value)}
               />
@@ -131,23 +131,23 @@ const Register = () => {
               <input
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter phone number"
                 onChange={(e) => setPhoneField(e.target.value)}
               />
             </div>
             <div className="psw field">
               <div>Password</div>
-              <div className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black flex gap-2">
+              <div className="relative">
                 <input
                   required
-                  className="flex-1"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow flex gap-2"
                   type={isShowPassword ? "text" : "password"}
                   placeholder="Enter password"
                   onChange={(e) => setPswField(e.target.value)}
                 />
                 <div
-                  className="cursor-pointer"
+                  className="absolute cursor-pointer right-[10px] top-[11.6px]"
                   onClick={() => {
                     setIsShowPassword(!isShowPassword);
                   }}

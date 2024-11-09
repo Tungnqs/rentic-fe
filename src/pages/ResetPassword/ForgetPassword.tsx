@@ -40,14 +40,17 @@ const ForgetPassword = () => {
     <>
       <Navbar />
       <div className="flex justify-center select-none">
-        <div className="w-fit mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-[30px] max-lg:w-[65%] max-sm:w-[80%] mediumBoxShadow">
+        <div className="w-fit mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-[30px] max-lg:w-[65%] max-sm:w-[90%] mediumBoxShadow">
           <div className="text-center flex flex-col gap-3">
-            <div className="relative">
-              <BackIcon
-                onClick={() => navigate(-1)}
-                className="w-4 absolute left-0 top-[10px] cursor-pointer"
-              />
+            <div className="flex justify-between items-center">
+              <div className="cursor-pointer p-2 bg-primaryYellow text-white hover:bg-yellow-600 rounded-md">
+                <BackIcon
+                  onClick={() => navigate(-1)}
+                  className="w-4"
+                />
+              </div>
               <div className="text-[24px] font-bold">Recover Your Password</div>
+              <div />
             </div>
             <div>We will send you and email to reset your password</div>
           </div>
@@ -59,12 +62,12 @@ const ForgetPassword = () => {
                 onChange={(e)=>setEmail(e.target.value)}
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter your email"
               />
             </div>
             <div className="min-h-8 flex items-center">{notification}</div>
-            <div onClick={handleSendForgetPasswordRequest} className="cursor-pointer bg-black hover:bg-secondaryYellow duration-100 text-white rounded-md w-full text-center py-2">Email me</div>
+            <div onClick={handleSendForgetPasswordRequest} className="cursor-pointer bg-black hover:bg-yellow-600 duration-100 text-white rounded-md w-full text-center py-2">Email me</div>
           </div>
         </div>
       </div>

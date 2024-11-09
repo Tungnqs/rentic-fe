@@ -132,7 +132,7 @@ const EditProfile = () => {
             <input
               onChange={(e) => setFirstNameField(e.target.value)}
               type="text"
-              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
               placeholder="First name"
               value={firstNameField}
             />
@@ -142,7 +142,7 @@ const EditProfile = () => {
             <input
               onChange={(e) => setLastNameField(e.target.value)}
               type="text"
-              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
               placeholder="Last name"
               value={lastNameField}
             />
@@ -153,7 +153,7 @@ const EditProfile = () => {
           <input
             onChange={(e) => setUsernameField(e.target.value)}
             type="text"
-            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
             placeholder="Enter your username"
             value={usernameField}
           />
