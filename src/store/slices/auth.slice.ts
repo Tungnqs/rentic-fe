@@ -174,6 +174,22 @@ export const normalLogin = createAsyncThunk(
   }
 );
 
+export const googleAuth = createAsyncThunk(
+  "auth/googleAuth",
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.AUTH.GOOGLE_AUTH;
+      const response = await axiosInstance.get(url);
+      console.log('response: ', response.data);
+      return response.data;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const forgetPassword = createAsyncThunk(
   "auth/forgetPassword",
   async (email: string, { rejectWithValue }) => {

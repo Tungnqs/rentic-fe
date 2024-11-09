@@ -104,6 +104,14 @@ const EditProperty = ({ togglePopup, currentPostData }: IEditPropertyProps) => {
       toast.warning("You must enter the number of bath room of property");
       return;
     }
+
+    filesForUploading.forEach((file)=>{
+      if(!file.type.includes("image")){
+        toast.warning("Only support image file uploading!");
+        return;
+      }
+    })
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", description);
@@ -125,10 +133,13 @@ const EditProperty = ({ togglePopup, currentPostData }: IEditPropertyProps) => {
     formData.append("property", propertyType);
     formData.append("district", district);
     formData.append("commune", commune);
-    await dispatch(
+    const editPostResult = await dispatch(
       editPost({ formData: formData, postId: currentPostData.id })
     );
-    togglePopup();
+    const isEditSuccessful = editPost.fulfilled.match(editPostResult)
+    if(isEditSuccessful){
+      togglePopup();
+    }
   };
 
   return (

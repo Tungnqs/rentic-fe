@@ -167,7 +167,7 @@ const EditProfile = () => {
         <div className="">
           <div>Phone number</div>
           <div className="select-none w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md cursor-not-allowed bg-gray-200">
-            {userProfile.phonenumber}
+            {userProfile.phonenumber ? userProfile.phonenumber : <span className="text-gray-400 font-semibold">Not included</span>}
           </div>
         </div>
       </div>
