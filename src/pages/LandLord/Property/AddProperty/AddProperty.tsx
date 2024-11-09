@@ -55,6 +55,14 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
       toast.warning("You must enter the number of bath room of property");
       return;
     }
+
+    filesForUploading.forEach((file)=>{
+      if(!file.type.includes("image")){
+        toast.warning("Only support image file uploading!");
+        return;
+      }
+    })
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", description);
@@ -74,8 +82,11 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
     formData.append("property", propertyType);
     formData.append("district", district);
     formData.append("commune", commune);
-    await dispatch(createPost({ formData: formData }));
-    togglePopup();
+    const createPostResult = await dispatch(createPost({ formData: formData }));
+    const isCreatePostSuccessful = createPost.fulfilled.match(createPostResult);
+    if(isCreatePostSuccessful){
+      togglePopup();
+    }
   };
 
   return (

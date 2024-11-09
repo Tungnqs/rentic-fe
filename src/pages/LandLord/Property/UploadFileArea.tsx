@@ -56,6 +56,7 @@ const UploadFileArea = ({
         </div>
         <input
           type="file"
+          accept="image/*"
           multiple
           hidden
           onChange={handleFileChange}

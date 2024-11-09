@@ -11,7 +11,8 @@ export const API_PATH_URL = {
     VERIFY_OTP: "/api/auth/verify-otp/",
     CHANGE_PASSWORD: "/api/auth/changePassword/",
     FORGET_PASSWORD: "/api/auth/forgot-password/",
-    RESET_PASSWORD: "/api/auth/reset-password/"
+    RESET_PASSWORD: "/api/auth/reset-password/",
+    GOOGLE_AUTH: "/api/auth/google",
   },
   POST: {
     GET_ALL_POSTS: "/api/post/getall/",

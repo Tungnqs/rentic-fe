@@ -84,7 +84,7 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
       ) : (
         <div className="flex w-full gap-[1%] flex-wrap gap-y-4">
           {postToDisplay.map((item) => (
-            <div onClick={()=>navigate(item.id)} className="cursor-pointer w-[24%] max-lg:w-[32%] max-md:w-[49%] max-[550px]:w-full relative border-2 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:bg-grayLight1 duration-100">
+            <div onClick={()=>navigate(item.id)} key={item.id} className="cursor-pointer w-[24%] max-lg:w-[32%] max-md:w-[49%] max-[550px]:w-full relative border-2 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:bg-grayLight1 duration-100">
               <div className={`absolute top-4 right-4 ${item.type === "buy" ? "bg-primaryYellow" : "bg-green-500 text-white" }  text-[14px] font-medium rounded-2xl px-2 py-[2px]`}>{item.type === "buy" ? "For Sale" : "For Rent"}</div>
               <img src={item.images.length > 0 ? item.images[0].path : DemoProperty} className="xl:h-48 object-cover rounded-t-2xl max-xl:max-w-none w-full aspectPostImg" alt="" />
               <div className="p-4 flex flex-col gap-2 w-full">

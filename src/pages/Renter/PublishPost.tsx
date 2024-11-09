@@ -101,7 +101,7 @@ const PublishPost = () => {
           ) : postToDisplay.length > 0 ? (
             <div className="flex gap-x-[2%] gap-y-4 w-full flex-wrap">
               {postToDisplay.map((post) => (
-                  <PublishPostItems post={post} />
+                  <PublishPostItems key={post.id} post={post} />
               ))}
             </div>
           ) : <DataNotFound />}

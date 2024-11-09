@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ILogin } from "../../interfaces";
 import {
+  googleAuth,
   normalLogin,
   selectAuthLoading,
   selectIsLogin,
@@ -18,6 +19,7 @@ import {
 } from "../../store/slices/auth.slice";
 import Navbar from "../../components/Navbar/Navbar";
 import { useAppRole } from "../../utils/useAppRole.utils";
+import { setCookie } from "../../utils/cookies.utils";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -53,6 +55,20 @@ const Login = () => {
     handleLogin();
   };
 
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=https%3A%2F%2Fapi.rentic.click%2Fapi%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=643109067686-kch3limvdcqcjmio6kh6r4v890djc3ms.apps.googleusercontent.com`;
+    window.location.href = googleAuthUrl;
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenParam = urlParams.get("token") || "";
+    if(tokenParam){
+      setCookie("token", tokenParam);
+      navigate("/");
+    }
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -71,7 +87,7 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <div className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
+            <div onClick={handleGoogleLogin} className="cursor-pointer btn-group flex items-center w-full justify-center mt-[16px] border-solid border rounded-lg gap-[5px] px-[24px] py-[9px] LightGrayBackGround">
               <GoogleIcon className="w-[30px]" />
               <div className="text-[18px] font-medium">Sign with google</div>
             </div>
