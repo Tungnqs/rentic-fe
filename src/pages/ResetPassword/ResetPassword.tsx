@@ -81,7 +81,7 @@ const ResetPassword = () => {
                   value={newPasswordField}
                   onChange={(e) => setNewPasswordField(e.target.value)}
                   type={isShowNewPsw ? "text" : "password"}
-                  className={`w-full py-[10px] px-[14px] rounded-md border-2 border-[#dcdce5] hover:border-black`}
+                  className={`w-full py-[10px] px-[14px] rounded-md border-2 border-[#dcdce5] focus:border-secondaryYellow`}
                   placeholder="New Password"
                 />
                 {isShowNewPsw ? (
@@ -104,7 +104,7 @@ const ResetPassword = () => {
                   value={newPasswordConfirmField}
                   onChange={(e) => setNewPasswordConfirmField(e.target.value)}
                   type={isShowConfirmPsw ? "text" : "password"}
-                  className={`w-full py-[10px] px-[14px] rounded-md border-2 border-[#dcdce5] hover:border-black`}
+                  className={`w-full py-[10px] px-[14px] rounded-md border-2 border-[#dcdce5] focus:border-secondaryYellow`}
                   placeholder="Confirm new Password"
                 />
                 {isShowConfirmPsw ? (

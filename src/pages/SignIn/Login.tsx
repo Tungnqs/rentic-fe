@@ -103,23 +103,23 @@ const Login = () => {
               <input
                 required
                 type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-black"
+                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter email or phone number"
                 onChange={(e) => setInputAccount(e.target.value)}
               />
             </div>
             <div className="psw field">
               <div>Password</div>
-              <div className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md hover:border-black flex gap-2">
+              <div className="relative">
                 <input
                   required
-                  className="flex-1"
+                  className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow flex gap-2"
                   type={isShowPassword ? "text" : "password"}
                   placeholder="Enter password"
                   onChange={(e) => setInputPsw(e.target.value)}
                 />
                 <div
-                  className="cursor-pointer"
+                  className="absolute cursor-pointer right-[10px] top-[11.6px]"
                   onClick={(e) => {
                     setIsShowPassword(!isShowPassword);
                     e.preventDefault();

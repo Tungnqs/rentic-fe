@@ -31,14 +31,25 @@ const AccountList = () => {
   console.log("users: ", users);
 
   const [searchingKeyword, setSearchingKeyword] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const [activationFiltered, setActivationFiltered] = useState("");
+  const [roleFiltered, setRoleFiltered] = useState("");
 
   const usersToDisplay = useMemo(() => {
     let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
-    if (filterType === "Active") {
+    if (activationFiltered === "Active") {
       accountsByBlockStt = users.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
-    } else if (filterType === "Inactive") {
+    } else if (activationFiltered === "Inactive") {
       accountsByBlockStt = users.filter((user) => user.isBlocked && user.id !== myProfile.id);
+    }
+
+    if (roleFiltered === "Renter") {
+      accountsByBlockStt = users.filter((user) => user.roles[0] === "RENTER");
+    } else if (roleFiltered === "Landlord") {
+      accountsByBlockStt = users.filter((user) => user.roles[0] === "LANDLORD");
+    }else if (roleFiltered === "Moderator") {
+      accountsByBlockStt = users.filter((user) => user.roles[0] === "MODERATOR");
+    }else if (roleFiltered === "Admin") {
+      accountsByBlockStt = users.filter((user) => user.roles[0] === "ADMIN");
     }
 
     if (searchingKeyword.trim() !== "") {
@@ -48,7 +59,7 @@ const AccountList = () => {
       return filteredBySearch.length > 0 ? filteredBySearch : [];
     }
     return accountsByBlockStt;
-  }, [filterType, searchingKeyword, users]);
+  }, [activationFiltered, myProfile.id, roleFiltered, searchingKeyword, users]);
 
   const handleDisableAccount = async (userId: string) => {
     await dispatch(blockUserById(userId));
@@ -68,20 +79,32 @@ const AccountList = () => {
   return (
     <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
       <div className="text-[24px] font-semibold">Account Management</div>
-      <div className="flex justify-between items-center max-sm:flex-col max-sm:gap-3 max-sm:items-start">
+      <div className="flex flex-wrap justify-between items-center max-sm:flex-col gap-3 max-sm:items-start">
         <SearchBar
           icon={<SearchIcon className="text-primaryYellow w-8" />}
           searchingKeyword={searchingKeyword}
           setSearchingKeyword={setSearchingKeyword}
           searchPlaceholder="Search user by their Username"
+          customWidth="w-[60%] max-md:w-full"
         />
-        <div className="flex gap-2 items-center">
-          <div>Filter by Activation:</div>
-          <div>
-            <Dropdown
-              dropdownValues={["All", "Active", "Inactive"]}
-              chooseValue={setFilterType}
-            />
+        <div className="flex gap-4 flex-wrap">
+          <div className="flex gap-2 items-center">
+              <div>Role:</div>
+              <div>
+                <Dropdown
+                  dropdownValues={["All", "Renter", "Landlord", "Moderator", "Admin"]}
+                  chooseValue={setRoleFiltered}
+                />
+              </div>
+            </div>
+          <div className="flex gap-2 items-center">
+            <div>Activation:</div>
+            <div>
+              <Dropdown
+                dropdownValues={["All", "Active", "Inactive"]}
+                chooseValue={setActivationFiltered}
+              />
+            </div>
           </div>
         </div>
       </div>
