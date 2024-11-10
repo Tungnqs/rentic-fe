@@ -7,8 +7,9 @@ import { AppDispatch } from "../../store";
 import { getAllConversations, IChat, IMessage, selectAllChatsLoading, selectAllConversation } from "../../store/slices/chat.slice";
 import { SocketContext } from "../../context/SocketContext";
 import Loader from "../../components/Loader/Loader";
-import { EmptyInboxIcon } from "../../assets/icon/icon";
+import { BackIcon, EmptyInboxIcon } from "../../assets/icon/icon";
 import { BreakPoint } from "../../interfaces";
+import { useNavigate } from "react-router";
 
 export const formatDateTime = (dateTimeString: string): string => {
     const date = new Date(dateTimeString);
@@ -32,6 +33,7 @@ interface IConversationProps{
 
 const Conversation = ({isManager}:IConversationProps) => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const {socket} = useContext(SocketContext);
     useEffect(()=>{
         dispatch(getAllConversations());
@@ -55,9 +57,10 @@ const Conversation = ({isManager}:IConversationProps) => {
   return (
     <div className={`min-h-screen ${isManager ? "bg-bgDarkPrimary text-grayLight2" : "bg-grayLight1"}`}>
         <div className={`flex justify-center pb-10 pt-2`}>
-      <div className={`w-[90%] max-[500px]:w-[97%] max-w-[${BreakPoint.xl}] flex flex-col gap-5 ${isManager ? "" : "bg-white"}`}>
-        <div className={`shadow-md rounded-md flex border ${isManager ? "border-gray-600" : ""}`}>
-            <div className={`h-[calc(100vh_-_90px)] w-[35%] max-lg:w-full p-7 max-sm:p-5 flex-col gap-5 rounded-l-md border-r ${isManager ? "bg-bgLeftNavbar" : ""} ${selectedConversation ? "hidden lg:flex" : "flex"}`}>
+      <div className={`w-[90%] max-[500px]:w-[97%] max-w-[${BreakPoint.xl}] flex flex-col gap-3`}>
+        <div onClick={()=>navigate("/")} className="text-secondaryYellow flex gap-2 text-[24px] hover:underline cursor-pointer"><BackIcon className="w-6"/> <div>Return</div></div>
+        <div className={`shadow-md rounded-md flex border ${isManager ? "border-gray-600" : "bg-white"}`}>
+            <div className={`h-[calc(100vh_-_138px)] w-[35%] max-lg:w-full p-7 max-sm:p-5 flex-col gap-5 rounded-l-md border-r ${isManager ? "bg-bgLeftNavbar" : ""} ${selectedConversation ? "hidden lg:flex" : "flex"}`}>
                 <div className={`flex gap-2 items-center border-b pb-3 ${isManager ? "border-gray-600" : ""}`}>
                     <img className="w-[60px] aspect-square object-cover rounded-full" src={myProfile.avatar ? myProfile.avatar : unknownAvatar} alt="" />
                     <div>

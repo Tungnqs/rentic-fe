@@ -57,7 +57,7 @@ export default function RenterLayout() {
   return (
     <div className="block">
       <Navbar navbarItems={navbarItems} />
-      <div className="z-10">
+      <div className="z-10 min-h-screen">
         {!myProfile.isVerified && (
           <div className="bg-yellow-100 w-full py-2 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>
         )}

@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   GoogleIcon,
   HidePasswordIcon,
@@ -10,6 +10,7 @@ import { AppDispatch } from "../../store";
 import { registerAccount, selectIsLogin } from "../../store/slices/auth.slice";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Navbar from "../../components/Navbar/Navbar";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,13 +28,25 @@ const Register = () => {
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
+
+    if(phoneField.length !== 10){
+      toast.warning("Phone number must be 10 character!")
+      return
+    };
+    if(!phoneField.startsWith("0")){
+      toast.warning("Phone number must start with 0 (Vietnam phone number)")
+      return;
+    }
+
+    const submitPhoneData = phoneField.replace(/^0/, "+84");
+
     const registerResult = await dispatch(
       registerAccount({
         firstName: firstNameField,
         lastName: lastNameField,
         email: emailField,
         password: pswField,
-        phonenumber: phoneField,
+        phonenumber: submitPhoneData,
         username: usernameField,
         role: roleField,
       })
@@ -59,7 +72,9 @@ const Register = () => {
         <div className="w-[26%] max-lg:w-[50%] max-md:w-[70%] max-sm:w-[85%]">
           <div className="top-block">
             <div className="flex flex-col gap-3">
-              <div className="text-[32px] font-bold text-center">Sign up to Rentic</div>
+              <div className="text-[32px] font-bold text-center">
+                Sign up to Rentic
+              </div>
               <div>
                 <b className="font-medium">Already have an account?</b>{" "}
                 <Link
@@ -85,7 +100,7 @@ const Register = () => {
             onSubmit={handleRegister}
           >
             <div className="flex gap-2">
-              <div className="account field">
+              <div className="account field flex-1">
                 <div className="text-lightGray">First Name</div>
                 <input
                   required
@@ -95,7 +110,7 @@ const Register = () => {
                   onChange={(e) => setFirstNameField(e.target.value)}
                 />
               </div>
-              <div className="account field">
+              <div className="account field flex-1">
                 <div className="text-lightGray">Last Name</div>
                 <input
                   required
@@ -128,13 +143,8 @@ const Register = () => {
             </div>
             <div className="account field">
               <div className="text-lightGray">Phone number</div>
-              <input
-                required
-                type="text"
-                className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
-                placeholder="Enter phone number"
-                onChange={(e) => setPhoneField(e.target.value)}
-              />
+              <PhoneNumberField phoneField={phoneField} setPhoneField={setPhoneField} />
+              <div></div>
             </div>
             <div className="psw field">
               <div>Password</div>
@@ -187,6 +197,38 @@ const Register = () => {
         </div>
       </div>
     </>
+  );
+};
+
+interface IPhoneNumberFieldProps {
+  phoneField: string;
+  setPhoneField: (value: string) => void;
+}
+
+const PhoneNumberField = ({
+  phoneField,
+  setPhoneField,
+}: IPhoneNumberFieldProps) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length >10) {
+      return;
+    }
+    if (/^\d*$/.test(value) || value === "") {
+      setPhoneField(value);
+    }
+  };
+
+  return (
+    <input
+      type="text"
+      value={phoneField}
+      onChange={handleChange}
+      aria-describedby="helper-text-explanation"
+      className={`w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow`}
+      placeholder="Enter phone number"
+      required
+    />
   );
 };
 
