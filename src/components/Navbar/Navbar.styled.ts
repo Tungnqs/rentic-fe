@@ -77,7 +77,7 @@ export const Balance = styled.div`
   p {
     margin: 0;
   }
-  @media (max-width: 550px) {
+  @media (max-width: 640px) {
     display: none;
   }
 `;

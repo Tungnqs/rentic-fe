@@ -10,13 +10,15 @@ import {
 } from "../../store/slices/auth.slice";
 import { AppDispatch } from "../../store";
 import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
-import { MenuIcon } from "../../assets/icon/icon";
+import { BellIcon, CloseIcon, MenuIcon } from "../../assets/icon/icon";
 import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
 import {
   createPaymentLink,
   IDataForCreatePaymentLink,
 } from "../../store/slices/payment.slice";
 import { formatMoney } from "../../store/slices/app.slice";
+import { getAllNotifications, INotificationItem, readNotification, selectAllNotification, selectNotificationCount, selectNotificationLoading } from "../../store/slices/notification.slice";
+import { formatDate } from "../../pages/Moderator/Report/ReportList";
 
 export interface INavbarItems {
   title: string;
@@ -32,6 +34,26 @@ interface INavbarItemsProps {
 const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(()=>{
+    dispatch(getAllNotifications())
+  }, [])
+
+  const notifications = useSelector(selectAllNotification);
+  const notificationLoading = useSelector(selectNotificationLoading);
+  const notificationCount = useSelector(selectNotificationCount);
+
+  const handleReadNotification = (notificationId: string)=>{
+    dispatch(readNotification(notificationId));
+  }
+
+  const handleReadAllNotifications = ()=>{
+    notifications.forEach((item)=>{
+      if(item.isRead === false){
+        handleReadNotification(item.id);
+      }
+    })
+  }
 
   const navigate = useNavigate();
   const userProfile = useSelector(selectUserProfile);
@@ -59,6 +81,11 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
     return navbarItems && navbarItems?.length >= 4;
   }, [navbarItems])
 
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
+  const toggleNotification = () =>{
+    setIsOpenNotification(!isOpenNotification);
+  }
+
   return (
     <S.Layout>
       <CollapseSidebar
@@ -84,7 +111,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
               }}
             >
               <S.Logo src={Logo} />
-              <S.LeftItem>Rentic</S.LeftItem>
+              <div className="max-sm:hidden"><S.LeftItem>Rentic</S.LeftItem></div>
             </S.LogoGroup>
           </div>
           <div className="flex items-center gap-3 max-md:hidden">
@@ -102,9 +129,32 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
         </div>
         <S.RightNavbar>
           {isLogin && (
+              <>
+                <div className="relative select-none">
+                  <div className="absolute right-[-4px] top-[-2px] bg-red-600 text-white text-[11px] min-w-5 w-fit aspect-square flex justify-center items-center rounded-full">{notificationCount}</div>
+                  <div onClick={toggleNotification} className="w-fit bg-primaryYellow text-white p-2 rounded-full cursor-pointer hover:bg-yellow-500">
+                    <BellIcon className="w-6" /> 
+                  </div>
+                  {isOpenNotification &&(<div className="absolute shadow-md bottom-[-420px] left-[-360px] max-md:left-[-194px] max-sm:left-[-151px] max-lg:left-[-300px] border-2 rounded-md w-[400px] max-sm:w-[300px] text-[14px]">
+                    <div className="p-4 bg-white text-[20px] font-bold rounded-t-md border-b flex items-center justify-between">
+                      <div>Notifications</div>
+                      <CloseIcon onClick={toggleNotification} className="w-5 hover:text-yellow-600 cursor-pointer" />
+                    </div>
+                    <div className="bg-white h-[300px] overflow-y-scroll flex flex-col">
+                      {notifications.map((item)=>(
+                        <NotificationItem handleReadNotification={handleReadNotification} notificationItem={item} />
+                      ))}
+                    </div>
+                    <div className="rounded-b-md p-4 bg-white border-t "><div onClick={handleReadAllNotifications} className="font-semibold cursor-pointer hover:underline">Mark all as read</div></div>
+                  </div>)}
+                </div>
+              </>
+            )
+          }
+          {isLogin && (
             <>
               <S.Balance>
-                <p className="w-fit font-semibold">Balance: <span className="text-yellow-600">{formatMoney(userProfile.balance as number)}₫</span></p>
+                <p className="w-fit font-semibold select-none">Balance: <span className="text-yellow-600">{formatMoney(userProfile.balance as number)}₫</span></p>
               </S.Balance>
               <S.SubscribeBtn onClick={()=>navigate("/deposit")}>Deposit</S.SubscribeBtn>
             </>
@@ -132,6 +182,24 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
         </S.RightNavbar>
       </S.Container>
     </S.Layout>
+  );
+};
+
+interface INotificationItemProps{
+  notificationItem: INotificationItem;
+  handleReadNotification:(notiId: string) => void; 
+}
+
+const NotificationItem = ({notificationItem, handleReadNotification}: INotificationItemProps) => {
+  return (
+    <div>
+      <div onClick={()=>handleReadNotification(notificationItem.id)} className="p-2 pl-8 flex flex-col gap-1 relative group hover:bg-yellow-50 cursor-pointer">
+        {!notificationItem.isRead && <div className="absolute w-[10px] h-[10px] top-[14px] left-3 bg-yellow-600 rounded-full" />}
+        <div className="group-hover:underline"><span className="font-semibold break-words">{notificationItem.type}:</span> {notificationItem.message}</div>
+        <div className="text-[12px] text-gray-500">{formatDate(notificationItem.createdAt)}</div>
+      </div>
+      <div className="border-b ml-8 mr-2"/>
+    </div>
   );
 };
 
