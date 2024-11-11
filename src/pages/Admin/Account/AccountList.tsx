@@ -37,19 +37,19 @@ const AccountList = () => {
   const usersToDisplay = useMemo(() => {
     let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
     if (activationFiltered === "Active") {
-      accountsByBlockStt = users.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
     } else if (activationFiltered === "Inactive") {
-      accountsByBlockStt = users.filter((user) => user.isBlocked && user.id !== myProfile.id);
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked && user.id !== myProfile.id);
     }
 
     if (roleFiltered === "Renter") {
-      accountsByBlockStt = users.filter((user) => user.roles[0] === "RENTER");
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "RENTER");
     } else if (roleFiltered === "Landlord") {
-      accountsByBlockStt = users.filter((user) => user.roles[0] === "LANDLORD");
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "LANDLORD");
     }else if (roleFiltered === "Moderator") {
-      accountsByBlockStt = users.filter((user) => user.roles[0] === "MODERATOR");
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "MODERATOR");
     }else if (roleFiltered === "Admin") {
-      accountsByBlockStt = users.filter((user) => user.roles[0] === "ADMIN");
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "ADMIN");
     }
 
     if (searchingKeyword.trim() !== "") {
