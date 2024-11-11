@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import * as S from "./Navbar.styled";
 import Logo from "./../../assets/images/rentic-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -12,13 +12,11 @@ import { AppDispatch } from "../../store";
 import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
 import { BellIcon, CloseIcon, MenuIcon } from "../../assets/icon/icon";
 import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
-import {
-  createPaymentLink,
-  IDataForCreatePaymentLink,
-} from "../../store/slices/payment.slice";
 import { formatMoney } from "../../store/slices/app.slice";
-import { getAllNotifications, INotificationItem, readNotification, selectAllNotification, selectNotificationCount, selectNotificationLoading } from "../../store/slices/notification.slice";
+import { getAllNotifications, INotificationItem, pushNewNotification, readNotification, selectAllNotification, selectNotificationCount, selectNotificationLoading } from "../../store/slices/notification.slice";
 import { formatDate } from "../../pages/Moderator/Report/ReportList";
+import { SocketContext } from "../../context/SocketContext";
+import Loader from "../Loader/Loader";
 
 export interface INavbarItems {
   title: string;
@@ -34,23 +32,40 @@ interface INavbarItemsProps {
 const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
+  const { socket } = useContext(SocketContext);
 
   useEffect(()=>{
-    dispatch(getAllNotifications())
+    if(isLogin){
+      dispatch(getAllNotifications())
+    }
   }, [])
+
+  useEffect(()=>{
+    if(socket && isLogin){
+      socket.on("notification", (notification: INotificationItem) =>{
+        dispatch(pushNewNotification(notification));
+      })
+      return () => {
+        socket.off("notification");
+      };
+    }
+
+  }, [isLogin, socket])
 
   const notifications = useSelector(selectAllNotification);
   const notificationLoading = useSelector(selectNotificationLoading);
   const notificationCount = useSelector(selectNotificationCount);
 
-  const handleReadNotification = (notificationId: string)=>{
-    dispatch(readNotification(notificationId));
+  const handleReadNotification = (notification: INotificationItem)=>{
+    if(!notification.isRead){
+      dispatch(readNotification(notification.id));
+    }
   }
 
   const handleReadAllNotifications = ()=>{
     notifications.forEach((item)=>{
       if(item.isRead === false){
-        handleReadNotification(item.id);
+        handleReadNotification(item);
       }
     })
   }
@@ -131,7 +146,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
           {isLogin && (
               <>
                 <div className="relative select-none">
-                  <div className="absolute right-[-4px] top-[-2px] bg-red-600 text-white text-[11px] min-w-5 w-fit aspect-square flex justify-center items-center rounded-full">{notificationCount}</div>
+                  <div className="absolute right-[-4px] top-[-2px] bg-red-600 text-white text-[11px] min-w-5 w-fit aspect-square flex justify-center items-center rounded-full font-semibold">{notificationLoading === "loading" ? "•" : (notificationCount >= 100 ? "99+" : notificationCount)}</div>
                   <div onClick={toggleNotification} className="w-fit bg-primaryYellow text-white p-2 rounded-full cursor-pointer hover:bg-yellow-500">
                     <BellIcon className="w-6" /> 
                   </div>
@@ -141,9 +156,11 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
                       <CloseIcon onClick={toggleNotification} className="w-5 hover:text-yellow-600 cursor-pointer" />
                     </div>
                     <div className="bg-white h-[300px] overflow-y-scroll flex flex-col">
-                      {notifications.map((item)=>(
-                        <NotificationItem handleReadNotification={handleReadNotification} notificationItem={item} />
-                      ))}
+                      {notificationLoading === "loading" ? (<Loader />) :
+                        notifications.map((item)=>(
+                          <NotificationItem key={item.id} handleReadNotification={handleReadNotification} notificationItem={item} />
+                        ))
+                      }
                     </div>
                     <div className="rounded-b-md p-4 bg-white border-t "><div onClick={handleReadAllNotifications} className="font-semibold cursor-pointer hover:underline">Mark all as read</div></div>
                   </div>)}
@@ -187,13 +204,13 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
 
 interface INotificationItemProps{
   notificationItem: INotificationItem;
-  handleReadNotification:(notiId: string) => void; 
+  handleReadNotification:(notification: INotificationItem) => void; 
 }
 
 const NotificationItem = ({notificationItem, handleReadNotification}: INotificationItemProps) => {
   return (
     <div>
-      <div onClick={()=>handleReadNotification(notificationItem.id)} className="p-2 pl-8 flex flex-col gap-1 relative group hover:bg-yellow-50 cursor-pointer">
+      <div onClick={()=>handleReadNotification(notificationItem)} className={`p-2 pl-8 flex flex-col gap-1 relative group cursor-pointer hover:bg-gray-100 ${!notificationItem.isRead ? "bg-yellow-50" : ""}`}>
         {!notificationItem.isRead && <div className="absolute w-[10px] h-[10px] top-[14px] left-3 bg-yellow-600 rounded-full" />}
         <div className="group-hover:underline"><span className="font-semibold break-words">{notificationItem.type}:</span> {notificationItem.message}</div>
         <div className="text-[12px] text-gray-500">{formatDate(notificationItem.createdAt)}</div>
