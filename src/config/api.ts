@@ -64,5 +64,8 @@ export const API_PATH_URL = {
   TRANSACTION: {
     FETCH_ALL_TRANSACTIONS: "/api/order/transactions/all/",
     FETCH_MY_TRANSACTIONS: "/api/order/transactions/user/",
+  },
+  NOTIFICATION: {
+    NOTIFICATION_MODIFY: "/api/user/notifications/"
   }
 };

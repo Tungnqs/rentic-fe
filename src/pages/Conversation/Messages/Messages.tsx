@@ -104,7 +104,7 @@ const Messages = ({ selectedConversation, myProfile, isManager, handleReturnToCh
       </div>
       <div
         ref={messageContainerRef}
-        className={`h-[calc(100vh_-_282px)] overflow-y-auto flex flex-col gap-2 ${isManager ? "darkChatScrollBar" : ""}`}
+        className={`h-[calc(100vh_-_330px)] overflow-y-auto flex flex-col gap-2 ${isManager ? "darkChatScrollBar" : ""}`}
       >
         {loadingSttOfGetMsgs === "loading" ? <Loader /> : msgArr &&
           msgArr.map((msg) => (

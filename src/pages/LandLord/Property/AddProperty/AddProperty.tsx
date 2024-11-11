@@ -98,7 +98,7 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
         className="fixed inset-0 bg-black opacity-80"
         onClick={togglePopup}
       />
-      <div className="relative bg-white z-10 w-[70%] max-md:w-full max-h-[95vh] max-md:max-h-screen overflow-y-scroll p-4 flex flex-col gap-5 rounded-md max-md:rounded-none select-none">
+      <div className="relative bg-white z-10 w-[70%] max-lg:w-full max-h-[95vh] max-lg:max-h-screen overflow-y-scroll p-4 flex flex-col gap-5 rounded-md max-md:rounded-none select-none">
         <div className="flex justify-between">
           <div className="text-[24px] font-semibold text-secondaryYellow">
             Add a new property
