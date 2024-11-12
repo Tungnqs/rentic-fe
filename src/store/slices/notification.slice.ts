@@ -62,7 +62,7 @@ export const notificationSlice = createSlice({
   initialState,
   reducers: {
     pushNewNotification: (state, action)=>{
-      state.allNotifications = [...state.allNotifications, action.payload];
+      state.allNotifications = [action.payload, ...state.allNotifications];
       state.notificationCount += 1;
     }
   },
