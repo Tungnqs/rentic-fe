@@ -4,63 +4,102 @@ import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { getAllMyAds, getAllMyPosts } from "../../store/slices/post.slice";
-import { AdsIcon, AppointmentIcon, MessageIcon, ProfileIcon, PropertyIcon, TransactionIcon } from "../../assets/icon/icon";
+import { 
+  AdsIcon, 
+  AppointmentIcon, 
+  MessageIcon, 
+  ProfileIcon, 
+  PropertyIcon, 
+  TransactionIcon 
+} from "../../assets/icon/icon";
 import Footer from "../Footer/Footer";
 import { selectUserProfile } from "../../store/slices/auth.slice";
 import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
 
 export default function LandlordLayout() {
-  const navbarItems:INavbarItems[] = [
+  const navbarItems: INavbarItems[] = [
     {
       path: "/properties",
-      title: "Your Property",
-      icon: <PropertyIcon className="w-full"/>
+      title: "Properties",
+      icon: <PropertyIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600"/>
     },
     {
       path: "/profile",
-      title: "Your Profile",
-      icon: <ProfileIcon className="w-full"/>
+      title: "Profile",
+      icon: <ProfileIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600"/>
     },
     {
       path: "/appointments",
       title: "Appointments",
-      icon: <AppointmentIcon className="w-full"/>
+      icon: <AppointmentIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600"/>
     },
     {
-      title: "Advertisement",
+      title: "Ads",
       path: "/ads",
-      icon: <AdsIcon />,
+      icon: <AdsIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600" />,
     },
     {
       path: "/conversations",
-      title: "Conversations",
-      icon: <MessageIcon className="w-full"/>
+      title: "Messages",
+      icon: <MessageIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600"/>
     },
     {
       path: "/my-transactions",
-      title: "My Transactions",
-      icon: <TransactionIcon className="w-full"/>
+      title: "Transactions",
+      icon: <TransactionIcon className="w-5 h-5 text-gray-500 group-hover:text-amber-600"/>
     },
-  ]
+  ];
+
   const dispatch = useDispatch<AppDispatch>();
+  const myProfile = useSelector(selectUserProfile);
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getAllMyPosts());
     dispatch(getAllMyAds());
   }, []);
 
-  const myProfile = useSelector(selectUserProfile);
-  const navigate = useNavigate();
-
   return (
-    <div className="block">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Header */}
       <Navbar navbarItems={navbarItems}/>
-      <div className="min-h-screen">
+
+      {/* Main Content */}
+      <div className="flex-1 w-full">
+        {/* Verification Banner */}
         {!myProfile.isVerified && (
-          <div className=" bg-yellow-100 w-full py-3 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>
+          <div className="bg-amber-50 border-b border-amber-200">
+            <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-center gap-x-3">
+                <p className="text-sm text-amber-800">
+                  This account hasn't been verified. Please{" "}
+                  <button 
+                    onClick={() => navigate("/verifyAccount")} 
+                    className="font-medium text-amber-900 hover:text-amber-700 underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2 rounded"
+                  >
+                    verify it
+                  </button>
+                  {" "}to use our services!
+                </p>
+              </div>
+            </div>
+          </div>
         )}
-        <Outlet />
+
+        {/* Page Content */}
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+            <Outlet />
+          </div>
+        </main>
       </div>
-      <ChatBotWidget />
+
+      {/* Chat Widget */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <ChatBotWidget />
+      </div>
+
+      {/* Footer */}
       <Footer/>
     </div>
   );

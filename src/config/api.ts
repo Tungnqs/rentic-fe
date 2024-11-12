@@ -1,3 +1,5 @@
+import io from 'socket.io-client';
+
 export const API_BASE_URL = "https://www.api.rentic.click";
 // export const API_BASE_URL = "http://localhost:3000";
 
@@ -33,10 +35,10 @@ export const API_PATH_URL = {
     MODIFY_POST: "/api/moderator/posts/",
     REPORT_ACTION: "/api/moderator/reports/",
   },
-  REPORT:{
+  REPORT: {
     REPORT_POST_BY_ID: "/api/user/report/",
   },
-  ADMIN:{
+  ADMIN: {
     GET_ALL_ACCOUNTS: "/api/admin/getallusers/",
     BLOCK_ACCOUNT_BY_ID: "/api/admin/block/",
     UNBLOCK_ACCOUNT_BY_ID: "/api/admin/unblock/",
@@ -47,7 +49,7 @@ export const API_PATH_URL = {
     GET_LANDLORD_APPOINTMENT: "/api/appointment/landlord/appointments/",
     MODIFY_APPOINTMENT: "/api/appointment/"
   },
-  CHAT:{
+  CHAT: {
     GET_ALL_CHATS: "/api/chat/all/",
     READ_CHAT: "/api/chat/",
     SEND_MESSAGE: "/api/chat/send/",
@@ -66,6 +68,24 @@ export const API_PATH_URL = {
     FETCH_MY_TRANSACTIONS: "/api/order/transactions/user/",
   },
   NOTIFICATION: {
-    NOTIFICATION_MODIFY: "/api/user/notifications/"
+    NOTIFICATION_MODIFY: "/api/user/notifications/",
+    NOTIFICATION_READ_ALL: "/api/user/notifications/read-all"
   }
 };
+
+export const socket = io(API_BASE_URL, {
+  autoConnect: false,
+  withCredentials: true,
+});
+
+socket.on("connect", () => {
+  console.log("Socket connected successfully");
+});
+
+socket.on("disconnect", () => {
+  console.log("Socket disconnected");
+});
+
+socket.on("error", (error) => {
+  console.error("Socket error:", error);
+});

@@ -33,41 +33,104 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleAddProperty = async (e: FormEvent) => {
-    e.preventDefault();
-    if(filesForUploading.length === 0){
-      toast.warning("You need to upload at least 1 image");
-      return;
-    }
-    if(priceField === 0){
-      toast.warning("You must enter price of property");
-      return;
-    }
-    if(size === 0){
-      toast.warning("You must enter size of property");
-      return;
-    }
-    if(bedroomNumber === 0){
-      toast.warning("You must enter the number of bed room of property");
-      return;
-    }
-    if(bathroom === 0){
-      toast.warning("You must enter the number of bath room of property");
-      return;
+  const validatePropertyForm = (
+    propertyType: string,
+    title: string,
+    priceField: number,
+    size: number,
+    bedroomNumber: number,
+    bathroom: number,
+    description: string,
+    address: string,
+    city: string,
+    district: string,
+    commune: string,
+    filesForUploading: File[]
+  ) => {
+    if (!propertyType) {
+      toast.error("Please select a property type");
+      return false;
     }
 
-    filesForUploading.forEach((file)=>{
-      if(!file.type.includes("image")){
-        toast.warning("Only support image file uploading!");
-        return;
-      }
-    })
+    if (!title.trim()) {
+      toast.error("Property name is required");
+      return false;
+    }
+
+    if (priceField <= 0) {
+      toast.error("Price must be greater than 0");
+      return false;
+    }
+
+    if (size <= 0) {
+      toast.error("Acreage must be greater than 0");
+      return false;
+    }
+
+    if (bedroomNumber < 0) {
+      toast.error("Number of bedrooms cannot be negative");
+      return false;
+    }
+
+    if (bathroom < 0) {
+      toast.error("Number of bathrooms cannot be negative");
+      return false;
+    }
+
+    if (!description.trim()) {
+      toast.error("Property description is required");
+      return false;
+    }
+
+    if (!address.trim()) {
+      toast.error("Property address is required");
+      return false;
+    }
+
+    if (!city || !district || !commune) {
+      toast.error("Please select a complete location (City, District, and Commune)");
+      return false;
+    }
+
+    if (filesForUploading.length === 0) {
+      toast.error("Please upload at least one image");
+      return false;
+    }
+
+    const invalidImages = filesForUploading.some(file => !file.type.includes("image"));
+    if (invalidImages) {
+      toast.error("Only image files are allowed");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleAddProperty = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const isValid = validatePropertyForm(
+      propertyType,
+      title,
+      priceField,
+      size,
+      bedroomNumber,
+      bathroom,
+      description,
+      address,
+      city,
+      district,
+      commune,
+      filesForUploading
+    );
+
+    if (!isValid) return;
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("desc", description);
     formData.append("price", priceField.toString());
-    filesForUploading.map((file) => {
+    filesForUploading.forEach((file) => {
       formData.append("images", file);
     });
     formData.append("address", address);
@@ -82,100 +145,143 @@ const AddPropertyPopUp = ({ togglePopup }: IAddPropertyPopUpProps) => {
     formData.append("property", propertyType);
     formData.append("district", district);
     formData.append("commune", commune);
-    const createPostResult = await dispatch(createPost({ formData: formData }));
-    const isCreatePostSuccessful = createPost.fulfilled.match(createPostResult);
-    if(isCreatePostSuccessful){
-      togglePopup();
+
+    try {
+      const createPostResult = await dispatch(createPost({ formData: formData }));
+      const isCreatePostSuccessful = createPost.fulfilled.match(createPostResult);
+      if (isCreatePostSuccessful) {
+        toast.success("Property added successfully");
+        togglePopup();
+      }
+    } catch (error) {
+      toast.error("Failed to add property. Please try again.");
     }
   };
 
   return (
     <form
-      className="fixed inset-0 flex items-center justify-center z-50"
+      className="fixed inset-0 flex items-center justify-center z-50 bg-black/60 backdrop-blur-sm"
       onSubmit={handleAddProperty}
     >
       <div
-        className="fixed inset-0 bg-black opacity-80"
+        className="absolute inset-0"
         onClick={togglePopup}
       />
-      <div className="relative bg-white z-10 w-[70%] max-lg:w-full max-h-[95vh] max-lg:max-h-screen overflow-y-scroll p-4 flex flex-col gap-5 rounded-md max-md:rounded-none select-none">
-        <div className="flex justify-between">
-          <div className="text-[24px] font-semibold text-secondaryYellow">
-            Add a new property
-          </div>
-          <div
+      <div className="relative bg-white z-10 w-[80%] max-lg:w-[95%] max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl">
+        {/* Header */}
+        <div className="sticky top-0 bg-white px-8 py-6 border-b flex justify-between items-center z-20">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            Add New Property
+          </h2>
+          <button
+            type="button"
             onClick={togglePopup}
-            className="w-[35px] cursor-pointer hover:text-secondaryYellow"
+            className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200"
           >
-            <SquareCloseIcon className="w-full" />
+            <SquareCloseIcon className="w-6 h-6 text-gray-400 hover:text-gray-600" />
+          </button>
+        </div>
+
+        <div className="px-8 py-6 space-y-8">
+          {/* Location Section */}
+          <div className="bg-gradient-to-r from-gray-50 to-white p-6 rounded-xl border shadow-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="space-y-1">
+                <h3 className="text-lg font-semibold text-gray-800">Location Details</h3>
+                <p className="text-sm text-gray-500">Select the property location on the map</p>
+              </div>
+              <MapAutoComplete
+                setCity={setCity}
+                setCommune={setCommune}
+                setDistrict={setDistrict}
+                setLatitude={setLatitude}
+                setLongitude={setLongitude}
+              />
+            </div>
+          </div>
+
+          {/* Main Form Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-xl border shadow-sm">
+              <LeftBlock
+                priceField={priceField}
+                purpose={purpose}
+                setPriceField={setPriceField}
+                setPurpose={setPurpose}
+                title={title}
+                setTitle={setTitle}
+                district={district}
+              />
+            </div>
+            <div className="bg-white p-6 rounded-xl border shadow-sm">
+              <MiddleBlock
+                city={city}
+                setPropertyType={setPropertyType}
+                setSize={setSize}
+                commune={commune}
+                propertyType={propertyType}
+                size={size}
+              />
+            </div>
+            <div className="bg-white p-6 rounded-xl border shadow-sm">
+              <RightBlock
+                address={address}
+                setAddress={setAddress}
+                setAllowPet={setAllowPet}
+                setBathroom={setBathroom}
+                allowPet={allowPet}
+                setBedroomNumber={setBedroomNumber}
+                latitude={latitude}
+                longitude={longitude}
+                bathroom={bathroom}
+                bedroomNumber={bedroomNumber}
+              />
+            </div>
+          </div>
+
+          {/* Description Section */}
+          <div className="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+            <label className="block">
+              <span className="text-lg font-semibold text-gray-800">Property Description</span>
+              <p className="text-sm text-gray-500 mt-1">Provide a detailed description of your property</p>
+            </label>
+            <textarea
+              rows={5}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full border border-gray-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+              placeholder="Describe your property..."
+              required
+            />
+          </div>
+
+          {/* Upload Section */}
+          <div className="bg-white p-6 rounded-xl border shadow-sm">
+            <div className="space-y-2 mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">Property Images</h3>
+              <p className="text-sm text-gray-500">Upload high-quality images of your property</p>
+            </div>
+            <UploadFileArea
+              filesForUploading={filesForUploading}
+              setFilesForUploading={setFilesForUploading}
+            />
           </div>
         </div>
-        <div className="flex justify-center gap-3 items-center">
-          <div>Add your property location:</div>
-          <MapAutoComplete
-            setCity={setCity}
-            setCommune={setCommune}
-            setDistrict={setDistrict}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-          />
-        </div>
-        <div className="middle-part flex gap-[2%] max-sm:flex-col max-sm:gap-4">
-          <LeftBlock
-            priceField={priceField}
-            purpose={purpose}
-            setPriceField={setPriceField}
-            setPurpose={setPurpose}
-            title={title}
-            setTitle={setTitle}
-            district={district}
-          />
-          <MiddleBlock
-            city={city}
-            setPropertyType={setPropertyType}
-            setSize={setSize}
-            commune={commune}
-            propertyType={propertyType}
-            size={size}
-          />
-          <RightBlock
-            address={address}
-            setAddress={setAddress}
-            setAllowPet={setAllowPet}
-            setBathroom={setBathroom}
-            allowPet={allowPet}
-            setBedroomNumber={setBedroomNumber}
-            latitude={latitude}
-            longitude={longitude}
-            bathroom={bathroom}
-            bedroomNumber={bedroomNumber}
-          />
-        </div>
-        <div>
-          <div>Description</div>
-          <textarea
-            rows={5}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="border-2 border-black rounded-md p-2 w-full max-h-[200px] min-h-[80px]"
-            required
-          ></textarea>
-        </div>
-        <div>
-          <UploadFileArea filesForUploading={filesForUploading} setFilesForUploading={setFilesForUploading} />
-        </div>
-        <div className="flex justify-between">
-          <div
+
+        {/* Footer */}
+        <div className="sticky bottom-0 bg-white px-8 py-6 border-t flex justify-between items-center gap-4">
+          <button
+            type="button"
             onClick={togglePopup}
-            className="hover:underline cursor-pointer w-fit"
+            className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200 font-medium"
           >
             Cancel
-          </div>
+          </button>
           <button
             type="submit"
-            className="px-3 py-1 bg-primaryYellow hover:bg-lightYellow select-none cursor-pointer rounded-lg font-semibold"
+            className="px-8 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 font-medium shadow-sm"
           >
-            Add new Property
+            Add Property
           </button>
         </div>
       </div>
@@ -200,55 +306,53 @@ const LeftBlock = ({
   title,
   setTitle,
   district,
-  priceField
+  priceField,
 }: ILeftBlockProps) => {
   return (
-    <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="h-[100px] max-sm:h-fit flex flex-col gap-1">
-        <div>Do you want it to be rented or purchased?</div>
-        <div>
-          <div className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="transactionType"
-              value="rent"
-              checked={purpose === "rent"}
-              onChange={(e) => setPurpose(e.target.value)}
-            />
-            <div>Rent</div>
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="transactionType"
-              value="buy"
-              checked={purpose === "buy"}
-              onChange={(e) => setPurpose(e.target.value)}
-            />
-            <div>Buy</div>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-6">
       <div>
-        <div>Property name:</div>
-        <input
-          value={title}
-          className="border-2 border-black rounded-md w-full p-2"
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-4 max-sm:flex-row">
-        <div className="flex-1">
-          <div>District:</div>
-          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
-            {district}
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Basic Details</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Property name</label>
+            <input
+              value={title}
+              className="w-full border border-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-gray-400"
+              type="text"
+              placeholder="Enter property name"
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
           </div>
-        </div>
-        <div className="flex-1">
-          <div>Price (in VND):</div>
-          <Counter defaultValue={priceField} setValue={setPriceField} noNeedBtn={true} />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">District</label>
+              <div className="flex items-center border border-gray-200 rounded-lg p-3 bg-gray-50">
+                <span className="text-gray-500">{district || 'Not selected'}</span>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Price
+                <span className="text-gray-400 text-xs ml-1">(VND)</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={priceField}
+                  onChange={(e) => setPriceField(Number(e.target.value))}
+                  className="w-full border border-gray-200 rounded-lg p-3 pr-12 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter price"
+                  min="0"
+                  required
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">
+                  VND
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -270,42 +374,85 @@ const MiddleBlock = ({
   city,
   commune,
   propertyType,
-  size
+  size,
 }: IMiddleBlockProps) => {
   const dropdownValues = ["apartment", "house", "condo", "land"];
+  
   return (
-    <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="h-[100px] max-sm:h-fit flex flex-col gap-1">
-        <div>
-          <div>Property Type</div>
-          <Dropdown
-            chooseValue={setPropertyType}
-            dropdownValues={dropdownValues}
-          />
+    <div className="space-y-6">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Property Details</h3>
+      
+      {/* Property Type section */}
+      <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+        <label className="block text-sm font-medium text-gray-700">
+          Property Type
+          <span className="text-red-500 ml-1">*</span>
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          {dropdownValues.map((value) => (
+            <label 
+              key={value} 
+              className={`flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-100 rounded-md transition-colors
+                ${propertyType === value ? 'bg-blue-50 border border-blue-200' : ''}
+              `}
+            >
+              <input
+                type="radio"
+                name="propertyType"
+                value={value}
+                checked={propertyType === value}
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                required
+              />
+              <span className="text-gray-600 capitalize">{value}</span>
+            </label>
+          ))}
         </div>
         {!propertyType && (
-          <div className="text-[13px] font-semibold text-red-600">
-            *You have to choose property type
-          </div>
+          <p className="text-sm text-red-500 mt-1">
+            Please select a property type
+          </p>
         )}
       </div>
-      <div className="flex flex-col gap-4 max-sm:flex-row">
-        <div className="flex-1">
-          <div>City:</div>
-          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
-            {city}
+
+      {/* Location Details */}
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+            <div className="flex items-center border border-gray-200 rounded-lg p-3 bg-gray-50">
+              <span className="text-gray-500">{city || 'Not selected'}</span>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Commune</label>
+            <div className="flex items-center border border-gray-200 rounded-lg p-3 bg-gray-50">
+              <span className="text-gray-500">{commune || 'Not selected'}</span>
+            </div>
           </div>
         </div>
-        <div className="flex-1">
-          <div>Commune:</div>
-          <div className="border-2 border-black rounded-md w-full p-2 bg-grayLight2 min-h-[43px] cursor-not-allowed">
-            {commune}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Acreage
+            <span className="text-gray-400 text-xs ml-1">(m²)</span>
+          </label>
+          <div className="relative">
+            <input
+              type="number"
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              className="w-full border border-gray-200 rounded-lg p-3 pr-12 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter size"
+              min="0"
+              required
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">
+              m²
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div>Acreage (in m²):</div>
-        <Counter defaultValue={size} setValue={setSize} noNeedBtn={true} />
       </div>
     </div>
   );
@@ -334,71 +481,113 @@ const RightBlock = ({
   longitude,
   latitude,
   bedroomNumber,
-  bathroom
+  bathroom,
 }: IRightBlockProps) => {
   return (
-    <div className="block1 flex-1 flex flex-col gap-4">
-      <div className="flex flex-col gap-4 max-sm:flex-row">
-        <div className="h-[100px] max-sm:h-fit flex flex-col gap-1 flex-1">
-          <div>Do you allow renter to have pets in the property?</div>
-          <div>
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="petAllowed"
-                className="text-secondaryYellow"
-                checked={allowPet}
-                onChange={() => setAllowPet(true)}
-              />
-              <div>Yes</div>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="petAllowed"
-                checked={!allowPet}
-                onChange={() => setAllowPet(false)}
-              />
-              <div>No</div>
-            </div>
-          </div>
-        </div>
-        <div className="flex-1">
-          <div>Address:</div>
-          <input
-            className="border-2 border-black rounded-md w-full p-2"
-            type="text"
-            required
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
+    <div className="space-y-6">
+      <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+        <label className="text-gray-700 font-medium">Pet Policy</label>
+        <div className="space-y-2">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio"
+              name="petAllowed"
+              checked={allowPet}
+              onChange={() => setAllowPet(true)}
+              className="w-4 h-4 text-primaryYellow focus:ring-primaryYellow"
+            />
+            <span className="text-gray-600">Pets Allowed</span>
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="radio"
+              name="petAllowed"
+              checked={!allowPet}
+              onChange={() => setAllowPet(false)}
+              className="w-4 h-4 text-primaryYellow focus:ring-primaryYellow"
+            />
+            <span className="text-gray-600">No Pets</span>
+          </label>
         </div>
       </div>
-      <div className="flex gap-5">
+
+      <div>
+        <label className="text-gray-700 font-medium">Address</label>
+        <input
+          className="mt-1 w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primaryYellow focus:border-transparent transition-all"
+          type="text"
+          required
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         <div>
-          <div>Bathroom:</div>
-          <div className="w-[130px]">
-            <Counter defaultValue={bathroom} setValue={setBathroom} />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Bathroom</label>
+          <div className="flex items-center border border-gray-200 rounded-lg">
+            <button
+              type="button"
+              onClick={() => bathroom > 0 && setBathroom(bathroom - 1)}
+              className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-l-lg transition-colors"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              value={bathroom}
+              onChange={(e) => setBathroom(Number(e.target.value))}
+              className="w-full text-center border-x border-gray-200 py-2 focus:outline-none"
+              min="0"
+            />
+            <button
+              type="button"
+              onClick={() => setBathroom(bathroom + 1)}
+              className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-r-lg transition-colors"
+            >
+              +
+            </button>
           </div>
         </div>
-        <div className="flex-1">
-          <div>Longitude:</div>
-          <div className="border-2 border-black rounded-md p-2 cursor-not-allowed bg-grayLight2">
-            {longitude}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+          <div className="flex items-center border border-gray-200 rounded-lg p-3 bg-gray-50">
+            <span className="text-gray-500">{longitude}</span>
           </div>
         </div>
       </div>
-      <div className="flex gap-5">
+
+      <div className="grid grid-cols-2 gap-4">
         <div>
-          <div>Bedroom:</div>
-          <div className="w-[130px]">
-            <Counter defaultValue={bedroomNumber} setValue={setBedroomNumber} />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Bedroom</label>
+          <div className="flex items-center border border-gray-200 rounded-lg">
+            <button
+              type="button"
+              onClick={() => bedroomNumber > 0 && setBedroomNumber(bedroomNumber - 1)}
+              className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-l-lg transition-colors"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              value={bedroomNumber}
+              onChange={(e) => setBedroomNumber(Number(e.target.value))}
+              className="w-full text-center border-x border-gray-200 py-2 focus:outline-none"
+              min="0"
+            />
+            <button
+              type="button"
+              onClick={() => setBedroomNumber(bedroomNumber + 1)}
+              className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-r-lg transition-colors"
+            >
+              +
+            </button>
           </div>
         </div>
-        <div className="flex-1">
-          <div>Latitude:</div>
-          <div className="border-2 border-black rounded-md p-2 cursor-not-allowed bg-grayLight2">
-            {latitude}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+          <div className="flex items-center border border-gray-200 rounded-lg p-3 bg-gray-50">
+            <span className="text-gray-500">{latitude}</span>
           </div>
         </div>
       </div>

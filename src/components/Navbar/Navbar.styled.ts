@@ -6,113 +6,99 @@ export const Layout = styled.div`
   top: 0;
   z-index: 50;
   background-color: white;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #e6e6e6;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
 `;
 
 export const Container = styled.div`
   max-width: ${BreakPoint.xxl};
-  width: 95%;
+  margin: 0 auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 24px;
+  padding: 0.75rem 1.5rem;
+  
   @media (max-width: 768px) {
-    width: 100%;
+    padding: 0.75rem 1rem;
   }
 `;
 
 export const LogoGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 0.75rem;
   cursor: pointer;
-`;
-
-export const Brand = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  p {
-    margin: 0;
-    font-size: 30px;
-    font-weight: 600;
-    font-family: "Playwrite ES", cursive;
-    color: #c79237;
-    b {
-      font-family: "Playwrite ES", cursive;
-      color: black;
-      font-size: 30px;
-      font-weight: 600;
-    }
+  transition: opacity 150ms;
+  
+  &:hover {
+    opacity: 0.9;
   }
 `;
 
 export const Logo = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
 `;
 
 export const LeftItem = styled.div`
-  font-size: 25px;
+  font-size: 1.25rem;
   font-weight: 600;
+  color: #111827;
 `;
 
 export const RightNavbar = styled.div`
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 1.5rem;
 `;
 
 export const Balance = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-  i {
-    font-size: 22px;
-  }
-  p {
-    margin: 0;
-  }
-  @media (max-width: 640px) {
-    display: none;
-  }
-`;
-
-export const SubscribeBtn = styled.div`
-  padding: 8px 16px;
-  border-radius: 5px;
-  background-color: rgb(255, 186, 0);
-  cursor: pointer;
-  &:hover {
-    background-color: #ce8236;
-  }
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+  
   @media (max-width: 768px) {
     display: none;
   }
 `;
 
-export const RightIcon = styled.div`
-  font-size: 22px;
-  i {
-    cursor: pointer;
-    &:hover {
-      color: #d13d76;
-    }
+export const SubscribeBtn = styled.button`
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #f59e0b;
+  color: white;
+  font-weight: 500;
+  transition: all 150ms;
+  
+  &:hover {
+    background-color: #d97706;
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
 export const UserAvatar = styled.img`
-  aspect-ratio: 1/1;
-  width: 45px;
-  border-radius: 999px;
-  border: 3px solid #ce8236;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
   object-fit: cover;
   cursor: pointer;
-  &:hover{
-    border: 3px solid #ff9900;
+  border: 2px solid #f59e0b;
+  transition: all 150ms;
+  
+  &:hover {
+    transform: scale(1.05);
+    border-color: #d97706;
   }
 `;

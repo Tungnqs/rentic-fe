@@ -3,11 +3,9 @@ import { Outlet, useNavigate } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import {
   AppointmentIcon,
-  FindRoommateIcon,
   MessageIcon,
   ProfileIcon,
   PropertyIcon,
-  RoommateIcon,
   TransactionIcon,
 } from "../../assets/icon/icon";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,47 +19,60 @@ export default function RenterLayout() {
   const navbarItems: INavbarItems[] = [
     {
       path: "/publish-posts",
-      title: "Published Property",
-      icon: <PropertyIcon className="w-full" />,
+      title: "Properties",
+      icon: <PropertyIcon className="w-5 h-5" />,
     },
     {
       path: "/appointments",
       title: "Appointments",
-      icon: <AppointmentIcon className="w-full"/>
+      icon: <AppointmentIcon className="w-5 h-5"/>
     },
     {
       path: "/profile",
-      title: "Your Profile",
-      icon: <ProfileIcon className="w-full" />,
+      title: "Profile",
+      icon: <ProfileIcon className="w-5 h-5" />,
     },
     {
       path: "/conversations",
-      title: "Conversations",
-      icon: <MessageIcon className="w-full"/>
+      title: "Messages",
+      icon: <MessageIcon className="w-5 h-5"/>
     },
     {
       path: "/my-transactions",
-      title: "My Transactions",
-      icon: <TransactionIcon className="w-full"/>
+      title: "Transactions",
+      icon: <TransactionIcon className="w-5 h-5"/>
     },
   ];
 
   const dispatch = useDispatch<AppDispatch>();
+  const myProfile = useSelector(selectUserProfile);
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getAllPublishPosts());
   }, []);
 
-  const myProfile = useSelector(selectUserProfile);
-  const navigate = useNavigate();
-
   return (
-    <div className="block">
+    <div className="min-h-screen flex flex-col">
       <Navbar navbarItems={navbarItems} />
-      <div className="z-10 min-h-screen">
+      <div className="flex-1">
         {!myProfile.isVerified && (
-          <div className="bg-yellow-100 w-full py-2 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>
+          <div className="bg-amber-50 border-b border-amber-200">
+            <div className="max-w-7xl mx-auto px-4 py-3 text-center text-amber-800">
+              This account hasn't been verified. Please{" "}
+              <button 
+                onClick={() => navigate("/verifyAccount")} 
+                className="font-medium text-amber-900 hover:text-amber-700 underline underline-offset-2"
+              >
+                verify it
+              </button>
+              {" "}to use our services!
+            </div>
+          </div>
         )}
-        <Outlet />
+        <main className="flex-1 bg-gray-50">
+          <Outlet />
+        </main>
       </div>
       <ChatBotWidget />
       <Footer />

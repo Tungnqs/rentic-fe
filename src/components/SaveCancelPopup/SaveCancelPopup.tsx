@@ -1,37 +1,81 @@
 import React from "react";
 
+
+
 interface ISaveCancelPopupProps {
+
   handleSave: () => void;
+
   handleCancel: () => void;
+
 }
 
-const SaveCancelPopup = ({
-  handleSave,
-  handleCancel,
-}: ISaveCancelPopupProps) => {
+
+
+const SaveCancelPopup = ({ handleSave, handleCancel }: ISaveCancelPopupProps) => {
+
   return (
-    <div
-      style={{
-        boxShadow:
-          "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
-      }}
-      className="select-none fixed z-10 bg-white bottom-3 w-fit border-2 border-secondaryYellow rounded-md flex gap-4 px-4 py-3 items-center"
-    >
-      <div className="max-sm:text-[12px]">Unsaved changes, do you want to save it ?</div>
-      <div
-        onClick={handleCancel}
-        className="bg-white hover:bg-grayLight2 border-2 border-gray-400 p-1 rounded-md cursor-pointer"
-      >
-        Cancel
+
+    <div className="fixed inset-x-0 bottom-0 z-50 pb-4">
+
+      <div className="mx-auto max-w-sm">
+
+        <div className="mx-4 flex items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5">
+
+          <p className="text-sm text-gray-900">
+
+            Save your changes?
+
+          </p>
+
+          
+
+          <div className="flex items-center gap-2 ml-auto">
+
+            <button
+
+              onClick={handleCancel}
+
+              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+
+            >
+
+              Cancel
+
+            </button>
+
+            
+
+            <button
+
+              onClick={handleSave}
+
+              className="rounded-md bg-amber-600 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+
+            >
+
+              Save
+
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
-      <div
-        onClick={handleSave}
-        className="bg-green-600 hover:bg-green-700 border-2 border-green-900 py-1 px-3 rounded-md cursor-pointer text-white"
-      >
-        Save
-      </div>
+
     </div>
+
   );
+
 };
 
+
+
 export default SaveCancelPopup;
+
+
+
+
+
+
