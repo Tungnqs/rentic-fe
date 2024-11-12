@@ -53,7 +53,7 @@ export default function LandlordLayout() {
 
   return (
     <div className="block">
-      <Navbar navbarItems={navbarItems}/>
+      <Navbar isLandLord navbarItems={navbarItems}/>
       <div className="min-h-screen">
         {!myProfile.isVerified && (
           <div className=" bg-yellow-100 w-full py-3 text-center">This account hasn't been verified. Please <span onClick={()=>navigate("/verifyAccount")} className="font-bold hover:underline cursor-pointer">verify it</span> to use our services!</div>

@@ -13,7 +13,7 @@ import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
 import { BellIcon, CloseIcon, MenuIcon } from "../../assets/icon/icon";
 import CollapseSidebar from "../CollapseSidebar/CollapseSidebar";
 import { formatMoney } from "../../store/slices/app.slice";
-import { getAllNotifications, INotificationItem, pushNewNotification, readNotification, selectAllNotification, selectNotificationCount, selectNotificationLoading } from "../../store/slices/notification.slice";
+import { getAllNotifications, INotificationItem, pushNewNotification, readAllNotifications, readNotification, selectAllNotification, selectNotificationCount, selectNotificationLoading } from "../../store/slices/notification.slice";
 import { formatDate } from "../../pages/Moderator/Report/ReportList";
 import { SocketContext } from "../../context/SocketContext";
 import Loader from "../Loader/Loader";
@@ -27,9 +27,10 @@ export interface INavbarItems {
 
 interface INavbarItemsProps {
   navbarItems?: INavbarItems[];
+  isLandLord?: boolean;
 }
 
-const Navbar = ({ navbarItems }: INavbarItemsProps) => {
+const Navbar = ({ navbarItems, isLandLord }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const { socket } = useContext(SocketContext);
@@ -63,11 +64,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
   }
 
   const handleReadAllNotifications = ()=>{
-    notifications.forEach((item)=>{
-      if(item.isRead === false){
-        handleReadNotification(item);
-      }
-    })
+    dispatch(readAllNotifications())
   }
 
   const navigate = useNavigate();
@@ -108,6 +105,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
         menuItems={navbarItems}
+        isLandLord={isLandLord}
       />
       <S.Container>
         <div className="flex items-center gap-3">
@@ -150,7 +148,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
                   <div onClick={toggleNotification} className="w-fit bg-primaryYellow text-white p-2 rounded-full cursor-pointer hover:bg-yellow-500">
                     <BellIcon className="w-6" /> 
                   </div>
-                  {isOpenNotification &&(<div className="absolute shadow-md bottom-[-420px] left-[-360px] max-md:left-[-194px] max-sm:left-[-151px] max-lg:left-[-300px] border-2 rounded-md w-[400px] max-sm:w-[300px] text-[14px]">
+                  {isOpenNotification &&(<div className={`absolute shadow-md bottom-[-420px] left-[-360px] ${isLandLord ? "max-md:left-[-194px]" : ""} max-sm:left-[-151px] max-lg:left-[-300px] border-2 rounded-md w-[400px] max-sm:w-[300px] text-[14px]`}>
                     <div className="p-4 bg-white text-[20px] font-bold rounded-t-md border-b flex items-center justify-between">
                       <div>Notifications</div>
                       <CloseIcon onClick={toggleNotification} className="w-5 hover:text-yellow-600 cursor-pointer" />
@@ -168,7 +166,7 @@ const Navbar = ({ navbarItems }: INavbarItemsProps) => {
               </>
             )
           }
-          {isLogin && (
+          {isLandLord && isLogin && (
             <>
               <S.Balance>
                 <p className="w-fit font-semibold select-none">Balance: <span className="text-yellow-600">{formatMoney(userProfile.balance as number)}₫</span></p>

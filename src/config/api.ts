@@ -23,7 +23,7 @@ export const API_PATH_URL = {
     GET_PUBLISH_POST: "/api/post/public/",
     GET_10_LATEST_POSTS: "/api/post/latest/",
     SAVE_POST_BY_ID: "/api/user/savePost/",
-    UNSAVED_POST_BY_ID: "/api/user/UnSavePost/"
+    UNSAVED_POST_BY_ID: "/api/user/UnSavePost/",
   },
   PAYMENT: {
     CREATE_PAYMENT_LINK: "/api/order/createPaymentLink/",
@@ -33,10 +33,10 @@ export const API_PATH_URL = {
     MODIFY_POST: "/api/moderator/posts/",
     REPORT_ACTION: "/api/moderator/reports/",
   },
-  REPORT:{
+  REPORT: {
     REPORT_POST_BY_ID: "/api/user/report/",
   },
-  ADMIN:{
+  ADMIN: {
     GET_ALL_ACCOUNTS: "/api/admin/getallusers/",
     BLOCK_ACCOUNT_BY_ID: "/api/admin/block/",
     UNBLOCK_ACCOUNT_BY_ID: "/api/admin/unblock/",
@@ -45,9 +45,9 @@ export const API_PATH_URL = {
   APPOINTMENT: {
     GET_RENTER_APPOINTMENT: "/api/appointment/user/appointments/",
     GET_LANDLORD_APPOINTMENT: "/api/appointment/landlord/appointments/",
-    MODIFY_APPOINTMENT: "/api/appointment/"
+    MODIFY_APPOINTMENT: "/api/appointment/",
   },
-  CHAT:{
+  CHAT: {
     GET_ALL_CHATS: "/api/chat/all/",
     READ_CHAT: "/api/chat/",
     SEND_MESSAGE: "/api/chat/send/",
@@ -56,7 +56,7 @@ export const API_PATH_URL = {
   ADVERTISEMENT: {
     ADS_MODIFY: "/api/ads/",
     GET_ALL_MY_ADS: "/api/ads/user/",
-    GET_PUBLISHED_ADS: "/api/ads/public/"
+    GET_PUBLISHED_ADS: "/api/ads/public/",
   },
   BOT: {
     GET_CHAT_SESSION: "/api/bot/session",
@@ -66,6 +66,7 @@ export const API_PATH_URL = {
     FETCH_MY_TRANSACTIONS: "/api/order/transactions/user/",
   },
   NOTIFICATION: {
-    NOTIFICATION_MODIFY: "/api/user/notifications/"
-  }
+    NOTIFICATION_MODIFY: "/api/user/notifications/",
+    READ_ALL_NOTIFICATIONS: "/api/user/notifications/read-all/",
+  },
 };

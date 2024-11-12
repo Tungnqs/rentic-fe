@@ -57,6 +57,24 @@ export const readNotification = createAsyncThunk(
     }
   );
 
+export const readAllNotifications = createAsyncThunk(
+  "notification/readAllNotifications",
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.NOTIFICATION.READ_ALL_NOTIFICATIONS;
+      const response = await axiosInstance.put(url);
+      if(response.data.message){
+        dispatch(getAllNotifications());
+      };
+    } catch (err: any) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+
 export const notificationSlice = createSlice({
   name: "notificationState",
   initialState,
