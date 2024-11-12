@@ -1,33 +1,20 @@
 import React from "react";
-
 import * as S from "./Loader.styled";
 
-
-
-interface LoaderProps {
-
-  text?: string;
-
-}
-
-
-
-const Loader = ({ text = "Loading..." }: LoaderProps) => {
-
+const Loader = () => {
   return (
-
     <S.LoaderContainer>
-
-      <S.Spinner />
-
-      <S.LoadingText>{text}</S.LoadingText>
-
+      <S.SpinnerContainer>
+        <S.Loader>
+          <S.Spinner>
+            <S.FirstCircle />
+            <S.SecondCircle />
+            <S.ThirdCircle />
+          </S.Spinner>
+        </S.Loader>
+      </S.SpinnerContainer>
     </S.LoaderContainer>
-
   );
-
 };
-
-
 
 export default Loader;

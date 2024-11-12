@@ -37,31 +37,19 @@ const AccountList = () => {
   const usersToDisplay = useMemo(() => {
     let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
     if (activationFiltered === "Active") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.isBlocked === false && user.id !== myProfile.id
-      );
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
     } else if (activationFiltered === "Inactive") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.isBlocked && user.id !== myProfile.id
-      );
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked && user.id !== myProfile.id);
     }
 
     if (roleFiltered === "Renter") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.roles[0] === "RENTER"
-      );
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "RENTER");
     } else if (roleFiltered === "Landlord") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.roles[0] === "LANDLORD"
-      );
-    } else if (roleFiltered === "Moderator") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.roles[0] === "MODERATOR"
-      );
-    } else if (roleFiltered === "Admin") {
-      accountsByBlockStt = accountsByBlockStt.filter(
-        (user) => user.roles[0] === "ADMIN"
-      );
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "LANDLORD");
+    }else if (roleFiltered === "Moderator") {
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "MODERATOR");
+    }else if (roleFiltered === "Admin") {
+      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "ADMIN");
     }
 
     if (searchingKeyword.trim() !== "") {
@@ -101,20 +89,14 @@ const AccountList = () => {
         />
         <div className="flex gap-4 flex-wrap">
           <div className="flex gap-2 items-center">
-            <div>Role:</div>
-            <div>
-              <Dropdown
-                dropdownValues={[
-                  "All",
-                  "Renter",
-                  "Landlord",
-                  "Moderator",
-                  "Admin",
-                ]}
-                chooseValue={setRoleFiltered}
-              />
+              <div>Role:</div>
+              <div>
+                <Dropdown
+                  dropdownValues={["All", "Renter", "Landlord", "Moderator", "Admin"]}
+                  chooseValue={setRoleFiltered}
+                />
+              </div>
             </div>
-          </div>
           <div className="flex gap-2 items-center">
             <div>Activation:</div>
             <div>
@@ -186,7 +168,9 @@ const AccountList = () => {
                     className="px-2 py-4 max-w-[150px] overflow-hidden truncate border border-gray-700 flex justify-center"
                   >
                     <div
-                      onClick={(e) => handleGoToChat(user.id)}
+                      onClick={(e) =>
+                        handleGoToChat(user.id)
+                      }
                       className="p-2 border-2 rounded-md border-gray-500 cursor-pointer w-fit bg-darkInput text-white"
                     >
                       <MessageIcon className="w-4" />

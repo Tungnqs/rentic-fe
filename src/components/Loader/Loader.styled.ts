@@ -1,83 +1,71 @@
 import styled, { keyframes } from "styled-components";
-
-
-
-const spin = keyframes`
-
-  0% {
-
-    transform: rotate(0deg);
-
-  }
-
-  100% {
-
-    transform: rotate(360deg);
-
-  }
-
+export const rotate = keyframes`
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
 `;
 
-
-
-const pulse = keyframes`
-
-  0%, 100% {
-
-    opacity: 1;
-
-  }
-
-  50% {
-
-    opacity: 0.5;
-
-  }
-
+export const SpinnerContainer = styled.div`
+  width: var(--s-15);
+  height: var(--s-15);
+  display: inline-block;
+  overflow: hidden;
 `;
 
-
-
-export const LoaderContainer = styled.div`
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex-direction: column;
-
-  gap: 1rem;
-
+export const Loader = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
 `;
-
-
 
 export const Spinner = styled.div`
-
-  width: 2.5rem;
-
-  height: 2.5rem;
-
-  border-radius: 50%;
-
-  border: 3px solid #f3f4f6;
-
-  border-top-color: #f59e0b;
-
-  animation: ${spin} 1s linear infinite;
-
+  animation: ${rotate} 1s infinite linear;
+  transform-origin: var(--s-13) var(--s-13);
 `;
 
+export const Circle = styled.div`
+  position: absolute;
+`;
 
+export const FirstCircle = styled(Circle)`
+  width: var(--s-14);
+  height: var(--s-14);
+  border: var(--s-6) solid;
+  border-radius: 50%;
+  border-color: transparent var(--yellow-2) var(--yellow-2) var(--yellow-2);
+  box-sizing: border-box;
+  transform: rotate(45deg);
+  transform-origin: var(--s-13) var(--s-13);
 
-export const LoadingText = styled.div`
+  transform: rotate(45deg) translate(var(--s-4-larger), var(--s-4-larger));
+`;
 
-  color: #6b7280;
+export const SecondCircle = styled(Circle)`
+  width: var(--s-14);
+  height: var(--s-14);
+  border: var(--s-6) solid;
+  border-radius: 50%;
+  border-color: transparent var(--yellow-2) var(--yellow-2) var(--yellow-2);
+  box-sizing: border-box;
+  transform: rotate(0deg);
+  transform-origin: var(--s-13) var(--s-13);
 
-  font-size: 0.875rem;
+  transform: rotate(0deg) translate(var(--s-4-larger), var(--s-4-larger));
+`;
 
-  animation: ${pulse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+export const ThirdCircle = styled(Circle)`
+  width: 0;
+  height: 0;
+  border: var(--s-6) solid;
+  border-color: transparent transparent transparent #ce8236;
+  transform: translate(var(--s-13), var(--s-1-larger));
+`;
 
+export const LoaderContainer = styled.div`
+  width: 100%;
+  height: var(--s-16);
+  display: grid;
+  place-items: center;
 `;

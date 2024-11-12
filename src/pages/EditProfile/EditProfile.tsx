@@ -1,7 +1,11 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import AnonymousAvatar from "../../assets/images/anonymous-avatar.png";
 import { useDispatch, useSelector } from "react-redux";
-import { editUserProfile, IEditProfileReq, selectUserProfile } from "../../store/slices/auth.slice";
+import {
+  editUserProfile,
+  IEditProfileReq,
+  selectUserProfile,
+} from "../../store/slices/auth.slice";
 import SaveCancelPopup from "../../components/SaveCancelPopup/SaveCancelPopup";
 import { AppDispatch } from "../../store";
 import { handleUploadFile } from "../../store/slices/app.slice";
@@ -13,20 +17,23 @@ const EditProfile = () => {
   const userProfile = useSelector(selectUserProfile);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [avatarField, setAvatarField] = useState(userProfile.avatar);
   const [usernameField, setUsernameField] = useState(userProfile.username);
   const [firstNameField, setFirstNameField] = useState(userProfile.firstName);
   const [lastNameField, setLastNameField] = useState(userProfile.lastName);
+
   const [hasChanges, setHasChanges] = useState(false);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleSelectFile = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const formData = new FormData();
       formData.append("image", e.target.files[0]);
       try {
-        const resultAction = await dispatch(handleUploadFile({ formData }));
+        const resultAction = await dispatch(
+          handleUploadFile({ formData: formData })
+        );
         const image: IUploadedImage = unwrapResult(resultAction);
         setAvatarField(image.url);
         e.target.value = "";
@@ -37,13 +44,24 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    const hasChanges = 
+    const computeHasChanges =
       usernameField !== userProfile.username ||
       firstNameField !== userProfile.firstName ||
       lastNameField !== userProfile.lastName ||
       avatarField !== userProfile.avatar;
-    setHasChanges(hasChanges);
-  }, [avatarField, firstNameField, lastNameField, usernameField, userProfile]);
+    if (computeHasChanges) {
+      setHasChanges(true);
+    }
+  }, [
+    avatarField,
+    firstNameField,
+    lastNameField,
+    userProfile.avatar,
+    userProfile.firstName,
+    userProfile.lastName,
+    userProfile.username,
+    usernameField,
+  ]);
 
   const handleCancelChanges = () => {
     setUsernameField(userProfile.username);
@@ -64,113 +82,95 @@ const EditProfile = () => {
     setHasChanges(false);
   };
 
-  const InputField = ({ label, value, onChange, placeholder, disabled = false }: any) => (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-      </label>
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={`
-          block w-full rounded-md border-0 py-1.5 px-3
-          ${disabled 
-            ? 'bg-gray-50 text-gray-500 cursor-not-allowed' 
-            : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-amber-600'
-          }
-          placeholder:text-gray-400
-          sm:text-sm sm:leading-6
-        `}
-      />
-    </div>
-  );
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
-            <h3 className="text-2xl font-semibold leading-6 text-gray-900">
-              Profile Settings
-            </h3>
-            <button
-              onClick={() => navigate("changePassword")}
-              className="px-4 py-2 text-sm font-medium text-white bg-amber-600 rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-            >
-              Change Password
-            </button>
+    <div className="flex justify-center bg-grayLight1">
+      <div
+        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] bg-white"
+        style={{
+          boxShadow:
+            "rgba(125, 125, 125, 0.25) 0px 14px 28px, rgba(125, 125, 125, 0.25) 0px 10px 10px",
+        }}
+      >
+        <div className="flex justify-between items-center">
+          <div className="font-semibold text-[24px] text-secondaryYellow">
+            My profile
           </div>
-
-          <div className="px-4 py-5 sm:p-6 space-y-6">
-            {/* Avatar Section */}
-            <div className="flex items-center gap-6 pb-6 border-b border-gray-200">
-              <input
-                onChange={handleSelectFile}
-                type="file"
-                ref={inputFileRef}
-                hidden
-                accept="image/*"
-              />
-              <img
-                src={avatarField || AnonymousAvatar}
-                className="h-20 w-20 rounded-full object-cover ring-2 ring-amber-600"
-                alt="Profile"
-              />
-              <div>
-                <button
-                  onClick={() => inputFileRef.current?.click()}
-                  className="text-sm font-medium text-amber-600 hover:text-amber-700"
-                >
-                  Change avatar
-                </button>
-                <p className="mt-1 text-xs text-gray-500">
-                  JPG, PNG or GIF. Maximum size of 2MB.
-                </p>
+          <div
+            onClick={() => navigate("changePassword")}
+            className="font-semibold px-3 py-2 bg-primaryYellow hover:bg-yellow-500 cursor-pointer select-none rounded-sm"
+          >
+            Change password
+          </div>
+        </div>
+        <div className="border-y-2 py-2">
+          <div className="flex items-center gap-5">
+            <input
+              onChange={handleSelectFile}
+              type="file"
+              ref={inputFileRef}
+              hidden
+            />
+            <img
+              src={avatarField ? avatarField : AnonymousAvatar}
+              className="aspect-square w-[100px] rounded-full object-cover border-2"
+              alt=""
+            />
+            <div>
+              <div
+                onClick={() => inputFileRef.current?.click()}
+                className="text-primaryYellow hover:text-secondaryYellow hover:underline font-semibold cursor-pointer"
+              >
+                Upload new avatar
               </div>
-            </div>
-
-            {/* Form Fields */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <InputField
-                label="First Name"
-                value={firstNameField}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFirstNameField(e.target.value)}
-                placeholder="Enter first name"
-              />
-              
-              <InputField
-                label="Last Name"
-                value={lastNameField}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLastNameField(e.target.value)}
-                placeholder="Enter last name"
-              />
-              
-              <InputField
-                label="Username"
-                value={usernameField}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsernameField(e.target.value)}
-                placeholder="Enter username"
-              />
-              
-              <InputField
-                label="Email"
-                value={userProfile.email}
-                disabled={true}
-              />
-              
-              <InputField
-                label="Phone Number"
-                value={userProfile.phonenumber || "Not provided"}
-                disabled={true}
-              />
+              <div className="text-darkGray text-[12px]">Click here to upload your new avatar</div>
             </div>
           </div>
         </div>
+        <div className="flex justify-between">
+          <div className="w-[48%]">
+            <div>First name</div>
+            <input
+              onChange={(e) => setFirstNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
+              placeholder="First name"
+              value={firstNameField}
+            />
+          </div>
+          <div className="w-[48%]">
+            <div>Last name</div>
+            <input
+              onChange={(e) => setLastNameField(e.target.value)}
+              type="text"
+              className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
+              placeholder="Last name"
+              value={lastNameField}
+            />
+          </div>
+        </div>
+        <div className="">
+          <div>Username</div>
+          <input
+            onChange={(e) => setUsernameField(e.target.value)}
+            type="text"
+            className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
+            placeholder="Enter your username"
+            value={usernameField}
+          />
+        </div>
+        <div className="">
+          <div>Email</div>
+          <div className="select-none w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md cursor-not-allowed bg-gray-200">
+            {userProfile.email}
+          </div>
+        </div>
+        <div className="">
+          <div>Phone number</div>
+          <div className="select-none w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md cursor-not-allowed bg-gray-200">
+            {userProfile.phonenumber ? userProfile.phonenumber : <span className="text-gray-400 font-semibold">Not included</span>}
+          </div>
+        </div>
       </div>
-
       {hasChanges && (
         <SaveCancelPopup
           handleCancel={handleCancelChanges}
