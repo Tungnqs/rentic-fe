@@ -37,10 +37,12 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
     navigate("/publish-posts/"+post.id);
   };
 
-  const togglePopup = () => {
+  const togglePopup = (e: React.MouseEvent)=>{
+    e.stopPropagation();
     setShowReportPopup(!showReportPopup);
   };
 
+  
   const reportPost = async () => {
     const body: IReportPostBody = {
       postId: post.id,
@@ -48,7 +50,7 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
     };
     await dispatch(reportPostById(body));
     setReasonInput("");
-    togglePopup();
+    setShowReportPopup(!showReportPopup);
   };
 
   const handleGoToChat = async (userId: string, e: React.MouseEvent) => {
@@ -72,7 +74,7 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
           confirmBtnTitle="Report"
           popupContent={`Tell us the reason why you decide to report this post: "${post.title}"`}
           popupTitle="Report post"
-          togglePopup={togglePopup}
+          togglePopup={()=>setShowReportPopup(!showReportPopup)}
           confirmBtnClass="bg-red-600 hover:bg-red-800 text-white"
         />
       )}
@@ -87,7 +89,7 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
           {post.type === "rent" ? "For Rent" : "For Sale"}
         </div>
         <div
-          onClick={togglePopup}
+          onClick={(e)=>togglePopup(e)}
           className="absolute top-4 right-4 p-[6px] bg-white rounded-lg border shadow-md hover:bg-gray-100 transition-colors"
         >
           <ReportIcon className="w-4 text-red-500" />
