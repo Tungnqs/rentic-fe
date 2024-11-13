@@ -147,7 +147,7 @@ const MessageLines = ({msg, isMe, myProfile, currentConversation, isManager}: IM
               <div className={`h-fit font-semibold ${isMe ? "text-secondaryYellow" : ""}`}>{isMe ? "Me" : currentConversation.sender.username}</div>
               <div className="text-[11px] h-fit">{formatDateTime(msg.createdAt as string)}</div>
             </div>
-            <div className={`break-all w-fit px-4 py-2 rounded-2xl max-w-[400px] max-md:max-w-[300px] max-[500px]:max-w-[220px] ${isMe ? "bg-primaryYellow text-white" : `${isManager ? "bg-darkInput" : "bg-grayLight2"}`}`}>{msg.text}</div>
+            <div className={`break-words w-fit px-4 py-2 rounded-2xl max-w-[400px] max-md:max-w-[300px] max-[500px]:max-w-[220px] ${isMe ? "bg-primaryYellow text-white" : `${isManager ? "bg-darkInput" : "bg-grayLight2"}`}`}>{msg.text}</div>
           </div>
         </div>
       </div>
