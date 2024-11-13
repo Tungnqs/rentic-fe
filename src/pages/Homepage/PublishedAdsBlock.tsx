@@ -5,9 +5,11 @@ import { formatMoney } from "../../store/slices/app.slice";
 import DemoProperty from "../../assets/images/demo-property.jpg";
 import { BreakPoint } from "../../interfaces";
 import { BathIcon, BedIcon, HeartFillIcon, ResizeIcon } from "../../assets/icon/icon";
+import { useNavigate } from "react-router";
 
 const PublishedAdsBlock = () => {
   const publishedAds = useSelector(selectFetchedAds);
+  const navigate = useNavigate();
   return (
     <>
     {publishedAds.length > 0 && (<div className="block2 max-md:px-6 flex justify-center">
@@ -35,10 +37,6 @@ const PublishedAdsBlock = () => {
                   <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded">
                     <ResizeIcon className="w-4 h-4 text-gray-600" />
                     <span className="text-sm">{item.post.size}m²</span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
-                    <HeartFillIcon className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm">{item.post.savedPosts?.length}</span>
                   </div>
                 </div>
                 <div className="flex justify-between items-center gap-2 truncate">

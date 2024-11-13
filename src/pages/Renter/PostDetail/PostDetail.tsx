@@ -24,6 +24,7 @@ import Carousel from "../../../components/Carousel/Carousel";
 import { IPost } from "../../../interfaces/post.interface";
 import {
   getPostById,
+  getPublishedPostDetailById,
   selectCurrentPost,
   selectLoadingStatus,
 } from "../../../store/slices/post.slice";
@@ -31,12 +32,20 @@ import unknownAvatar from "../../../assets/images/anonymous-avatar.png";
 import CreateAppointmentPopup from "../CreateAppointmentPopup/CreateAppointmentPopup";
 import { formatMoney } from "../../../store/slices/app.slice";
 import { createConversation } from "../../../store/slices/chat.slice";
+import { selectIsLogin } from "../../../store/slices/auth.slice";
+import Navbar from "../../../components/Navbar/Navbar";
+import Footer from "../../../components/Footer/Footer";
 
 const PostDetail = () => {
   const postId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
+  const isLogin = useSelector(selectIsLogin);
   useEffect(() => {
-    dispatch(getPostById({ postId: postId as string }));
+    if(isLogin){
+      dispatch(getPostById({ postId: postId as string }));
+    }else{
+      dispatch(getPublishedPostDetailById({ postId: postId as string }));
+    }
   }, []);
   const currentPostData = useSelector(selectCurrentPost);
   const loadingStatus = useSelector(selectLoadingStatus);
@@ -61,7 +70,9 @@ const PostDetail = () => {
   };
 
   return (
-    <div className="z-10 flex justify-center">
+    <>
+      {!isLogin && <Navbar />}
+      <div className="z-10 flex justify-center">
       {isShowAppointmentPopup && (
         <CreateAppointmentPopup
           postId={currentPostData.id}
@@ -79,12 +90,14 @@ const PostDetail = () => {
             </div>
             <div className="group-hover:underline text-[24px]">Return</div>
           </div>
-          <div
-            onClick={toggleAppointmentPopup}
-            className="bg-primaryYellow hover:bg-lightYellow px-4 py-2 w-fit text-center font-medium cursor-pointer rounded-md text-black"
-          >
-            Schedule a Visit
-          </div>
+          {isLogin && (
+            <div
+              onClick={toggleAppointmentPopup}
+              className="bg-primaryYellow hover:bg-lightYellow px-4 py-2 w-fit text-center font-medium cursor-pointer rounded-md text-black"
+            >
+              Schedule a Visit
+            </div>
+          )}
         </div>
         {loadingStatus === "loading" ? (
           <Loader />
@@ -141,12 +154,14 @@ const PostDetail = () => {
               </div>
             </div>
             <div className="w-[28%] max-md:w-[70%] max-sm:w-full h-fit thinBoxShadow rounded-md p-7 flex flex-col gap-4 relative">
-              <div
-                onClick={(e) => handleGoToChat(currentPostData.user.id, e)}
-                className="p-2 border-2 rounded-md border-bgDarkSecondary hover:bg-grayLight2 hover:border-black cursor-pointer w-fit absolute bg-white top-7 right-7"
-              >
-                <MessageIcon className="w-4 max-md:w-6" />
-              </div>
+              {isLogin && (
+                <div
+                  onClick={(e) => handleGoToChat(currentPostData.user.id, e)}
+                  className="p-2 border-2 rounded-md border-bgDarkSecondary hover:bg-grayLight2 hover:border-black cursor-pointer w-fit absolute bg-white top-7 right-7"
+                >
+                  <MessageIcon className="w-4 max-md:w-6" />
+                </div>
+              )}
               <div className="flex gap-3">
                 <div>
                   <img
@@ -186,6 +201,8 @@ const PostDetail = () => {
         )}
       </div>
     </div>
+    {!isLogin && <Footer />}
+    </>
   );
 };
 

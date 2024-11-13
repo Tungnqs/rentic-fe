@@ -306,6 +306,21 @@ export const getPostById = createAsyncThunk(
   }
 );
 
+export const getPublishedPostDetailById = createAsyncThunk(
+  "landlord/getPostById",
+  async ({ postId }: { postId: string }, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.GET_PUBLISHED_POST_BY_ID + postId;
+      const response = await axiosInstance.get(url);
+      return response.data.data;
+    } catch (err: any) {
+      console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const verifyPost = createAsyncThunk(
   "moderator/verifyPost",
   async ({ postId }: { postId: string }, { rejectWithValue, dispatch }) => {
