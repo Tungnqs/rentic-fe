@@ -107,6 +107,7 @@ const Register = () => {
                   type="text"
                   className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                   placeholder="First name"
+                  value={firstNameField}
                   onChange={(e) => setFirstNameField(e.target.value)}
                 />
               </div>
@@ -117,6 +118,7 @@ const Register = () => {
                   type="text"
                   className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                   placeholder="Last name"
+                  value={lastNameField}
                   onChange={(e) => setLastNameField(e.target.value)}
                 />
               </div>
@@ -128,6 +130,7 @@ const Register = () => {
                 type="text"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter your username"
+                value={usernameField}
                 onChange={(e) => setUsernameField(e.target.value)}
               />
             </div>
@@ -135,9 +138,10 @@ const Register = () => {
               <div className="text-lightGray">Email</div>
               <input
                 required
-                type="text"
+                type="email"
                 className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow"
                 placeholder="Enter email"
+                value={emailField}
                 onChange={(e) => setEmailField(e.target.value)}
               />
             </div>
@@ -154,6 +158,7 @@ const Register = () => {
                   className="w-full py-[10px] px-[14px] border-2 border-[#dcdce5] rounded-md focus:border-secondaryYellow flex gap-2"
                   type={isShowPassword ? "text" : "password"}
                   placeholder="Enter password"
+                  value={pswField}
                   onChange={(e) => setPswField(e.target.value)}
                 />
                 <div

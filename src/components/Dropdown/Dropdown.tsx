@@ -45,7 +45,7 @@ const Dropdown = ({
           className="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-full border border-[#c4c4c4]"
         >
           <ul
-            className="py-2 text-sm text-gray-700"
+            className="py-2 text-sm text-gray-700 max-h-[200px] overflow-y-scroll"
             aria-labelledby="dropdownDefaultButton"
           >
             {dropdownValues.map((value, index) => (

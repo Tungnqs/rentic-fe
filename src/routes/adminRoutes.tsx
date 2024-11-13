@@ -7,6 +7,7 @@ import PackageList from "../pages/Admin/Package/PackageList";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import Conversation from "../pages/Conversation/Conversation";
 import Transactions from "../pages/Admin/Transactions/Transactions";
+import Statistics from "../pages/Admin/Statistics/Statistics";
 
 export const adminRoutes: IRoute[] = [
   {
@@ -37,4 +38,8 @@ export const adminRoutes: IRoute[] = [
     path: "/transactions",
     component: <Transactions />
   },
+  {
+    path: "/statistics",
+    component: <Statistics />
+  }
 ];

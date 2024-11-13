@@ -11,11 +11,6 @@ import { formatMoney } from "../../../store/slices/app.slice";
 import { formatDateTime } from "../../Conversation/Conversation";
 
 const Transactions = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(fetchAllTransactions());
-  }, []);
-
   const [searchingKeyword, setSearchingKeyword] = useState("");
   const [filteredStatus, setFilteredStatus] = useState("")
   const allTransactions = useSelector(selectAllUserTransactions);

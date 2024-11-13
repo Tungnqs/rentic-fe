@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { IUser } from "../../../interfaces/userProfile.interface";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import { MessageIcon, SearchIcon } from "../../../assets/icon/icon";
@@ -7,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import {
   blockUserById,
-  getAllAccounts,
   selectAdminLoadingStatus,
   selectAllUserAccounts,
   unBlockUserById,
@@ -18,17 +16,14 @@ import { formatMoney } from "../../../store/slices/app.slice";
 import { selectUserProfile } from "../../../store/slices/auth.slice";
 import { useNavigate } from "react-router";
 import { createConversation } from "../../../store/slices/chat.slice";
+import CreateStaffAccountPopup from "./CreateStaffAccountPopup/CreateStaffAccountPopup";
 
 const AccountList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const myProfile = useSelector(selectUserProfile);
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(getAllAccounts());
-  }, []);
 
   const users = useSelector(selectAllUserAccounts);
-  console.log("users: ", users);
 
   const [searchingKeyword, setSearchingKeyword] = useState("");
   const [activationFiltered, setActivationFiltered] = useState("");
@@ -37,19 +32,31 @@ const AccountList = () => {
   const usersToDisplay = useMemo(() => {
     let accountsByBlockStt = users.filter((user) => user.id !== myProfile.id);
     if (activationFiltered === "Active") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked === false && user.id !== myProfile.id);
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.isBlocked === false && user.id !== myProfile.id
+      );
     } else if (activationFiltered === "Inactive") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.isBlocked && user.id !== myProfile.id);
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.isBlocked && user.id !== myProfile.id
+      );
     }
 
     if (roleFiltered === "Renter") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "RENTER");
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.roles[0] === "RENTER"
+      );
     } else if (roleFiltered === "Landlord") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "LANDLORD");
-    }else if (roleFiltered === "Moderator") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "MODERATOR");
-    }else if (roleFiltered === "Admin") {
-      accountsByBlockStt = accountsByBlockStt.filter((user) => user.roles[0] === "ADMIN");
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.roles[0] === "LANDLORD"
+      );
+    } else if (roleFiltered === "Moderator") {
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.roles[0] === "MODERATOR"
+      );
+    } else if (roleFiltered === "Admin") {
+      accountsByBlockStt = accountsByBlockStt.filter(
+        (user) => user.roles[0] === "ADMIN"
+      );
     }
 
     if (searchingKeyword.trim() !== "") {
@@ -76,8 +83,14 @@ const AccountList = () => {
     navigate("/conversations");
   };
 
+  const [isOpenCreateAccountPopup, setOpenCreateAccountPopup] = useState(false);
+  const toggleCreateAccountPopup = () => {
+    setOpenCreateAccountPopup(!isOpenCreateAccountPopup);
+  };
+
   return (
     <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
+      {isOpenCreateAccountPopup && <CreateStaffAccountPopup togglePopup={toggleCreateAccountPopup} />}
       <div className="text-[24px] font-semibold">Account Management</div>
       <div className="flex flex-wrap justify-between items-center max-sm:flex-col gap-3 max-sm:items-start">
         <SearchBar
@@ -89,14 +102,20 @@ const AccountList = () => {
         />
         <div className="flex gap-4 flex-wrap">
           <div className="flex gap-2 items-center">
-              <div>Role:</div>
-              <div>
-                <Dropdown
-                  dropdownValues={["All", "Renter", "Landlord", "Moderator", "Admin"]}
-                  chooseValue={setRoleFiltered}
-                />
-              </div>
+            <div>Role:</div>
+            <div>
+              <Dropdown
+                dropdownValues={[
+                  "All",
+                  "Renter",
+                  "Landlord",
+                  "Moderator",
+                  "Admin",
+                ]}
+                chooseValue={setRoleFiltered}
+              />
             </div>
+          </div>
           <div className="flex gap-2 items-center">
             <div>Activation:</div>
             <div>
@@ -106,6 +125,11 @@ const AccountList = () => {
               />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="w-full flex justify-end">
+        <div onClick={toggleCreateAccountPopup} className="bg-yellow-600 hover:bg-yellow-500 px-3 py-2 rounded-sm select-none cursor-pointer">
+          Create Staff Account
         </div>
       </div>
       <div className="text-red-600 font-semibold hidden max-[550px]:block">
@@ -168,9 +192,7 @@ const AccountList = () => {
                     className="px-2 py-4 max-w-[150px] overflow-hidden truncate border border-gray-700 flex justify-center"
                   >
                     <div
-                      onClick={(e) =>
-                        handleGoToChat(user.id)
-                      }
+                      onClick={(e) => handleGoToChat(user.id)}
                       className="p-2 border-2 rounded-md border-gray-500 cursor-pointer w-fit bg-darkInput text-white"
                     >
                       <MessageIcon className="w-4" />

@@ -7,6 +7,7 @@ import { IUser } from "../../interfaces/userProfile.interface";
 import { RootState } from "..";
 import { IPackage } from "../../interfaces/ads.interface";
 import { ITransaction } from "../../interfaces/transaction";
+import { IRegister } from "../../interfaces";
 
 interface IAdminState {
   allPackages: IPackage[];
@@ -107,6 +108,22 @@ export const fetchAllTransactions = createAsyncThunk(
       return res.data.data;
     } catch (err) {
       console.log("err: ", err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const createStaffAccount = createAsyncThunk(
+  "admin/createStaffAccount",
+  async (data: IRegister, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.ADMIN.CREATE_STAFF_ACCOUNT;
+      const response = await axiosInstance.post(url, data);
+      toast.success(response.data.message);
+      return response.data.createStaff;
+    } catch (err: any) {
+      console.log(err);
       checkErr(err);
       return rejectWithValue(err);
     }
@@ -230,6 +247,9 @@ export const adminSlice = createSlice({
     });
     builder.addCase(fetchAllTransactions.rejected, (state) => {
       state.fetchTransactionLoading = "fail";
+    });
+    builder.addCase(createStaffAccount.fulfilled, (state, action) => {
+      state.allAccounts = [action.payload, ...state.allAccounts];
     });
   },
 });
