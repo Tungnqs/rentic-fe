@@ -351,12 +351,14 @@ export const unVerifyPost = createAsyncThunk(
 
 export const savePostById = createAsyncThunk(
   "renter/savePostById",
-  async (postId: string, { rejectWithValue }) => {
+  async (postId: string, { rejectWithValue, dispatch }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.POST.SAVE_POST_BY_ID;
       const response = await axiosInstance.post(url, {postId: postId});
       toast.success(response.data.message);
-      console.log('response.data.savedPost: ', response.data.savedPost);
+      if(response.data){
+        dispatch(getAllPublishPosts());
+      }
       return response.data.savedPost;
     } catch (err: any) {
       console.log(err);
@@ -368,11 +370,14 @@ export const savePostById = createAsyncThunk(
 
 export const unSavePostById = createAsyncThunk(
   "renter/unSavePostById",
-  async (postId: string, { rejectWithValue }) => {
+  async (postId: string, { rejectWithValue, dispatch }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.POST.UNSAVED_POST_BY_ID;
       const response = await axiosInstance.post(url, {postId: postId});
       toast.success(response.data.message);
+      if(response.data){
+        dispatch(getAllPublishPosts());
+      }
       return postId;
     } catch (err: any) {
       console.log(err);

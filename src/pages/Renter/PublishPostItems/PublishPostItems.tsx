@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {
   BathIcon,
   BedIcon,
+  HeartFillIcon,
+  HeartIcon,
   LocationIcon,
   MessageIcon,
   ReportIcon,
@@ -11,7 +13,7 @@ import {
 import { IPost } from "../../../interfaces/post.interface";
 import demoProperty from "../../../assets/images/demo-property.jpg";
 import ReportPopup from "../ReportPopup/ReportPopup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import {
   IReportPostBody,
@@ -20,7 +22,8 @@ import {
 import { useNavigate } from "react-router";
 import { formatMoney } from "../../../store/slices/app.slice";
 import { createConversation } from "../../../store/slices/chat.slice";
-import { savePostById } from "../../../store/slices/post.slice";
+import { savePostById, unSavePostById } from "../../../store/slices/post.slice";
+import { selectUserProfile } from "../../../store/slices/auth.slice";
 
 interface IPublishPostItemsProps {
   post: IPost;
@@ -30,6 +33,8 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [reasonInput, setReasonInput] = useState("");
   const dispatch = useDispatch<AppDispatch>();
+
+  const myProfile = useSelector(selectUserProfile);
 
   const navigate = useNavigate();
 
@@ -64,6 +69,11 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
     dispatch(savePostById(post.id));
   }
 
+  const handleUnSavePost = (e: React.MouseEvent)=>{
+    e.stopPropagation();
+    dispatch(unSavePostById(post.id));
+  }
+
   return (
     <>
       {showReportPopup && (
@@ -94,9 +104,16 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
         >
           <ReportIcon className="w-4 text-red-500" />
         </div>
-        <div onClick={(e)=>handleSavePost(e)} className="absolute top-4 right-[60px] w-fit bg-white rounded-lg border p-[6px] cursor-pointer shadow-md hover:text-yellow-700">
-          <SaveIcon className="w-4" />
+        {post.savedPosts && post.savedPosts.some(item => item.userId === myProfile.id) ? 
+        
+        <div onClick={(e)=>handleUnSavePost(e)} className="absolute top-4 right-[60px] w-fit bg-white rounded-lg border p-[2px] cursor-pointer shadow-md text-yellow-600">
+          <HeartFillIcon className="w-6" />
         </div>
+        : 
+        <div onClick={(e)=>handleSavePost(e)} className="absolute top-4 right-[60px] w-fit bg-white rounded-lg border p-[2px] cursor-pointer shadow-md text-yellow-600">
+          <HeartIcon className="w-6" />
+        </div>}
+        
         <div>
           <img
             className="h-48 w-full object-cover rounded-t-lg"
@@ -120,7 +137,7 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
           <div className="text-sm font-semibold text-gray-700  uppercase">
             {post.property}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap">
             <div className="flex gap-3">
               <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
                 <BedIcon className="w-4 h-4 text-gray-600" />
@@ -133,6 +150,10 @@ const PublishPostItems = ({ post }: IPublishPostItemsProps) => {
               <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
                 <ResizeIcon className="w-4 h-4 text-gray-600" />
                 <span className="text-sm">{post.size}m²</span>
+              </div>
+              <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
+                <HeartFillIcon className="w-4 h-4 text-gray-600" />
+                <span className="text-sm">{post.savedPosts?.length}</span>
               </div>
             </div>
             <button

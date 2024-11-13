@@ -21,6 +21,7 @@ export interface IPost {
   type: string;
   city: string;
   property: string;
+  savedPosts?: ISavedPost[];
   user: {
     id: string;
     firstName: string;
@@ -32,4 +33,11 @@ export interface IPost {
   };
   isReported?: boolean;
   isVerified?: boolean
+}
+
+export interface ISavedPost {
+  createdAt: string;
+  id: string;
+  postId: string;
+  userId: string
 }
