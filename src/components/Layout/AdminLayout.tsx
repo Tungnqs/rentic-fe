@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router";
 import LeftNavBar from "../LeftNavBar/LeftNavBar";
 import { AccountIcon, ChartIcon, MessageIcon, PackageIcon, TransactionIcon } from "../../assets/icon/icon";
 import { INavbarItems } from "../Navbar/Navbar";
 import ChatBotWidget from "../ChatBotWidget/ChatBotWidget";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { fetchAllTransactions, getAllAccounts } from "../../store/slices/admin.slice";
 
 export default function AdminLayout() {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getAllAccounts());
+    dispatch(fetchAllTransactions());
+  }, []);
+
   const navbarItems: INavbarItems[] = [
-    // {
-    //   title: "Statistics",
-    //   path: "/statistic",
-    //   icon: <ChartIcon />,
-    // },
     {
       title: "Account Management",
       path: "/accounts",
@@ -26,6 +30,11 @@ export default function AdminLayout() {
       path: "/transactions",
       title: "User Transactions",
       icon: <TransactionIcon className="w-full"/>
+    },
+    {
+      title: "Statistics",
+      path: "/statistics",
+      icon: <ChartIcon />,
     },
     {
       path: "/conversations",

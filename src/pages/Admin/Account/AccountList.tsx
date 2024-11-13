@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { IUser } from "../../../interfaces/userProfile.interface";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import { MessageIcon, SearchIcon } from "../../../assets/icon/icon";
@@ -7,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import {
   blockUserById,
-  getAllAccounts,
   selectAdminLoadingStatus,
   selectAllUserAccounts,
   unBlockUserById,
@@ -24,12 +22,8 @@ const AccountList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const myProfile = useSelector(selectUserProfile);
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(getAllAccounts());
-  }, []);
 
   const users = useSelector(selectAllUserAccounts);
-  console.log("users: ", users);
 
   const [searchingKeyword, setSearchingKeyword] = useState("");
   const [activationFiltered, setActivationFiltered] = useState("");

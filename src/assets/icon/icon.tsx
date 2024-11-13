@@ -1447,7 +1447,13 @@ export function BellIcon(props: React.HTMLAttributes<SVGElement>) {
 }
 export function CloseIcon(props: React.HTMLAttributes<SVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      {...props}
+    >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -1460,6 +1466,64 @@ export function CloseIcon(props: React.HTMLAttributes<SVGElement>) {
           d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
           fill="currentColor"
         ></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function PendingIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 1024 1024"
+      className="icon"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M511.9 183c-181.8 0-329.1 147.4-329.1 329.1s147.4 329.1 329.1 329.1c181.8 0 329.1-147.4 329.1-329.1S693.6 183 511.9 183z m0 585.2c-141.2 0-256-114.8-256-256s114.8-256 256-256 256 114.8 256 256-114.9 256-256 256z"
+          fill="currentColor"
+        ></path>
+        <path
+          d="M548.6 365.7h-73.2v161.4l120.5 120.5 51.7-51.7-99-99z"
+          fill="currentColor"
+        ></path>
+      </g>
+    </svg>
+  );
+}
+
+export function LandLordIcon(props: React.HTMLAttributes<SVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 256 240"
+      enableBackground="new 0 0 256 240"
+      xmlSpace="preserve"
+      className=""
+      {...props}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path d="M84.635,20.256c18.383,0,33.286,14.903,33.286,33.286s-14.903,33.286-33.286,33.286S51.349,71.925,51.349,53.542 S66.251,20.256,84.635,20.256z M31.002,145.011c0-2.499,1.606-4.194,4.194-4.194s4.194,1.606,4.194,4.194v92.986h91.469v-92.986 c0-2.499,1.606-4.194,4.194-4.194c2.499,0,4.194,1.606,4.194,4.194v92.986h29.092V136.623c0-22.934-18.74-41.585-41.585-41.585 h-8.388l-24.451,38.015l-2.945-28.467l4.016-9.638H76.96l4.016,9.638l-3.123,28.645L53.401,95.038h-9.816 C20.651,95.038,2,113.778,2,136.623v101.375h29.092v-92.986H31.002z M254,48.949c0,2.964-2.404,5.448-5.448,5.448 c-1.602,0-3.125-0.721-4.086-1.843l-6.409-5.929V97.5H215.12l-19.747,0H172.12V46.225l-7.371,6.65 c-0.961,0.961-2.323,1.522-3.766,1.522c-2.964,0-5.448-2.404-5.448-5.448c0-1.682,0.801-3.285,2.003-4.246L205.289,2l14.341,13.059 V4.003h12.258v22.273l20.75,18.988C253.519,46.225,254,47.507,254,48.949z"></path>{" "}
       </g>
     </svg>
   );
