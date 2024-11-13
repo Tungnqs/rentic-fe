@@ -41,6 +41,7 @@ export const API_PATH_URL = {
     BLOCK_ACCOUNT_BY_ID: "/api/admin/block/",
     UNBLOCK_ACCOUNT_BY_ID: "/api/admin/unblock/",
     MODIFY_PACKAGE: "/api/package/",
+    CREATE_STAFF_ACCOUNT: "/api/auth/register-staff/"
   },
   APPOINTMENT: {
     GET_RENTER_APPOINTMENT: "/api/appointment/user/appointments/",

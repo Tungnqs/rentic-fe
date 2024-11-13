@@ -135,11 +135,14 @@ export const createNewAds = createAsyncThunk(
 
 export const deleteAdsById = createAsyncThunk(
   "landlord/deleteAdsById",
-  async (adsId: string, { rejectWithValue }) => {
+  async (adsId: string, { rejectWithValue, dispatch }) => {
     try {
       const url = API_BASE_URL + API_PATH_URL.ADVERTISEMENT.ADS_MODIFY + adsId;
       const response = await axiosInstance.delete(url);
       toast.success(response.data.message);
+      if (response.data.message) {
+        dispatch(getUserProfile());
+      }
       return adsId;
     } catch (err: any) {
       console.log(err);
