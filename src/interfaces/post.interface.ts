@@ -31,6 +31,7 @@ export interface IPost {
     phonenumber: string;
     avatar: string;
   };
+  userId?: string
   isReported?: boolean;
   isVerified?: boolean
 }

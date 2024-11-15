@@ -59,7 +59,7 @@ const CollapseSidebar = ({
         <div className="py-4 overflow-y-auto">
           <div className="p-2"><span className="font-semibold">User:</span> {userProfile.username}</div>
           {isLandLord && <div className="p-2 pb-4 border-b-2 border-thirdYellow"><span className="font-semibold">Balance:</span> {formatMoney(userProfile.balance as number)} VND</div>}
-          {isLandLord && <Link onClick={toggleSidebar} to={"/deposit"} className="p-2 pt-4 flex gap-3"><BankIcon className="w-[24px] text-secondaryYellow"/><div>Deposit</div></Link>}
+          {isLandLord && <Link onClick={toggleSidebar} to={"/deposit"} className="p-2 mt-4 flex gap-3 rounded-lg hover:bg-gray-100"><BankIcon className="w-[24px] text-secondaryYellow"/><div>Deposit</div></Link>}
           <ul className="space-y-2 font-medium">
             {menuItems &&
               menuItems.map((item, index) => (
@@ -75,7 +75,7 @@ const CollapseSidebar = ({
                 </li>
               ))}
             <li>
-              <div onClick={handleLogout} className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer text-red-500">
+              <div onClick={handleLogout} className="flex items-center p-2 rounded-lg hover:bg-gray-100 group cursor-pointer text-red-500">
                 <LeaveIcon className="w-[24px]" />
                 <span className="ml-3 whitespace-nowrap">Logout</span>
               </div>

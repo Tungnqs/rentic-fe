@@ -107,7 +107,9 @@ export const createConversation = createAsyncThunk(
     try {
       const url = API_BASE_URL + API_PATH_URL.CHAT.CREATE_CHAT;
       const response = await axiosInstance.post(url, { userIds: userId });
-      toast.success(response.data.message);
+      if(response.data.message !== "Chat already exists"){
+        toast.success(response.data.message);
+      }
       return response.data;
     } catch (err: any) {
       console.log("err: ", err);
@@ -122,21 +124,6 @@ export interface ISendMessageReq {
   text: string;
   userId: string;
 }
-
-// export const sendMessage = createAsyncThunk(
-//   "chat/createConversation",
-//   async (data: ISendMessageReq, { rejectWithValue, dispatch }) => {
-//     try {
-//       const url = API_BASE_URL + API_PATH_URL.CHAT.SEND_MESSAGE;
-//       const response = await axiosInstance.post(url, data);
-//       return response.data.message;
-//     } catch (err: any) {
-//       console.log("err: ", err);
-//       checkErr(err);
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
 
 export const getAllConversations = createAsyncThunk(
   "chat/getAllConversations",

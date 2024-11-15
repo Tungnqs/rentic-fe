@@ -3,11 +3,10 @@ import { Outlet, useNavigate } from "react-router";
 import Navbar, { INavbarItems } from "../Navbar/Navbar";
 import {
   AppointmentIcon,
-  FindRoommateIcon,
   MessageIcon,
   ProfileIcon,
   PropertyIcon,
-  RoommateIcon,
+  SaveIcon,
   TransactionIcon,
 } from "../../assets/icon/icon";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +42,11 @@ export default function RenterLayout() {
       path: "/my-transactions",
       title: "My Transactions",
       icon: <TransactionIcon className="w-full"/>
+    },
+    {
+      path: "/saved-posts",
+      title: "Saved Posts",
+      icon: <SaveIcon className="w-full"/>
     },
   ];
 

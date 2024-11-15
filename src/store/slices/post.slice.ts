@@ -11,11 +11,13 @@ import { getUserProfile } from "./auth.slice";
 interface IPostData {
   ads: IAds[];
   post: IPost[];
+  savedPosts: IPost[]
   postDetail: IPost;
   tenLatestPosts: IPost[];
   latestPostsLoading: "loading" | "loaded" | "fail";
   isLoading: "loading" | "loaded" | "fail";
   adsLoading: "loading" | "loaded" | "fail";
+  savedPostsLoading: "not loaded" | "loading" | "loaded" | "fail";
 }
 
 const initialState: IPostData = {
@@ -25,6 +27,8 @@ const initialState: IPostData = {
   latestPostsLoading: "loading",
   tenLatestPosts: [],
   post: [],
+  savedPostsLoading: "not loaded",
+  savedPosts: [],
   postDetail: {
     desc: "",
     bathroom: 0,
@@ -182,6 +186,22 @@ export const getAllMyPosts = createAsyncThunk(
     }
   }
 );
+
+export const getAllMySavedPosts = createAsyncThunk(
+  "renter/getAllMySavedPosts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const url = API_BASE_URL + API_PATH_URL.POST.GET_MY_SAVED_POSTS;
+      const response = await axiosInstance.get(url);
+      return response.data.savedPosts;
+    } catch (err: any) {
+      console.log(err);
+      checkErr(err);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 
 export const getAllUserPosts = createAsyncThunk(
   "moderator/getAllUserPosts",
@@ -525,6 +545,22 @@ export const postSlice = createSlice({
       }
     });
 
+    //renter - get my saved posts
+    builder.addCase(getAllMySavedPosts.pending, (state) => {
+      state.savedPostsLoading = "loading";
+    });
+    builder.addCase(getAllMySavedPosts.fulfilled, (state, action) => {
+      state.savedPosts = action.payload;
+      state.savedPostsLoading = "loaded";
+    });
+    builder.addCase(getAllMySavedPosts.rejected, (state) => {
+      state.savedPostsLoading = "fail";
+    });
+
+    builder.addCase(unSavePostById.fulfilled, (state, action) => {
+      const newArray = state.savedPosts.filter((post) => post.id !== action.payload);
+      state.savedPosts = newArray;
+    });
   },
 });
 
@@ -537,5 +573,7 @@ export const selectAdsLoadingStatus = (state: RootState) =>
   state.postState.adsLoading;
 export const selectFetchedAds = (state: RootState) => state.postState.ads;
 export const selectLatestPosts = (state: RootState) => state.postState.tenLatestPosts;
+export const selectAllMySavedPosts = (state:RootState) => state.postState.savedPosts;
+export const selectSavedPostLoading = (state: RootState) => state.postState.savedPostsLoading;
 
 export default postSlice.reducer;

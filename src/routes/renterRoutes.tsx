@@ -10,6 +10,7 @@ import Conversation from "../pages/Conversation/Conversation";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import MyTransactions from "../pages/MyTransactions/MyTransactions";
+import SavedPosts from "../pages/Renter/SavedPosts/SavedPosts";
 
 export const renterRoutes: IRoute[] = [
   {
@@ -55,5 +56,9 @@ export const renterRoutes: IRoute[] = [
   {
     path: "/my-transactions",
     component: <MyTransactions />
+  },
+  {
+    path: "/saved-posts",
+    component: <SavedPosts />
   }
 ];
