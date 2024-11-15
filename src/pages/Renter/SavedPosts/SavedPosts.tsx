@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  BackIcon,
   BathIcon,
   BedIcon,
   HeartFillIcon,
@@ -30,7 +31,7 @@ const SavedPosts = () => {
   const [searchingKeyword, setSearchingKeyword] = useState("");
   const [filteredPurpose, setFilteredPurpose] = useState("");
   const [filteredProperty, setFilteredProperty] = useState("");
-
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getAllMySavedPosts());
@@ -69,49 +70,59 @@ const SavedPosts = () => {
     return defaultPosts;
   }, [filteredProperty, filteredPurpose, mySavedPosts, searchingKeyword]);
 
-
   return (
     <div className="flex justify-center">
       <div
         className={`w-[80%] max-xl:w-[90%] max-lg:w-[95%] p-7 max-lg:px-0 flex flex-col gap-10 relative max-w-[${BreakPoint.xl}]`}
       >
-        <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
-          <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:w-2/3 max-sm:w-full max-md:min-w-[230px] justify-between">
-            <div className="w-fit">
-              <LocationIcon className="text-secondaryYellow w-8" />
+        <div className="flex flex-col gap-3">
+          <div
+            onClick={() => navigate(-1)}
+            className="flex gap-2 items-center cursor-pointer group"
+          >
+            <div className="w-[24px] text-secondaryYellow">
+              <BackIcon className="w-full" />
             </div>
-            <input
-              className="flex-1"
-              value={searchingKeyword}
-              onChange={(e) => setSearchingKeyword(e.target.value)}
-              type="text"
-              placeholder="Search properties by their names"
-            />
+            <div className="group-hover:underline text-[24px]">Return</div>
           </div>
-          <div className="w-1/3 max-md:w-[60%] max-[500px]:w-full">
-            <div className="flex gap-3">
-              <div className="flex-1">
-                <div className="text-[14px] font-semibold mb-2">Purpose</div>
-                <div>
-                  <Dropdown
-                    chooseValue={setFilteredPurpose}
-                    dropdownValues={["All", "For buying", "For renting"]}
-                  />
-                </div>
+          <div className="flex justify-between items-center max-md:flex-col max-md:gap-3">
+            <div className="flex items-center gap-4 border rounded-3xl py-2 px-4 h-[60px] w-[50%] max-md:w-2/3 max-sm:w-full max-md:min-w-[230px] justify-between">
+              <div className="w-fit">
+                <LocationIcon className="text-secondaryYellow w-8" />
               </div>
-              <div className="flex-1">
-                <div className="text-[14px] font-semibold mb-2">Property</div>
-                <div>
-                  <Dropdown
-                    chooseValue={setFilteredProperty}
-                    dropdownValues={[
-                      "All",
-                      "Apartment",
-                      "Land",
-                      "Condo",
-                      "House",
-                    ]}
-                  />
+              <input
+                className="flex-1"
+                value={searchingKeyword}
+                onChange={(e) => setSearchingKeyword(e.target.value)}
+                type="text"
+                placeholder="Search properties by their names"
+              />
+            </div>
+            <div className="w-1/3 max-md:w-[60%] max-[500px]:w-full">
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <div className="text-[14px] font-semibold mb-2">Purpose</div>
+                  <div>
+                    <Dropdown
+                      chooseValue={setFilteredPurpose}
+                      dropdownValues={["All", "For buying", "For renting"]}
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-[14px] font-semibold mb-2">Property</div>
+                  <div>
+                    <Dropdown
+                      chooseValue={setFilteredProperty}
+                      dropdownValues={[
+                        "All",
+                        "Apartment",
+                        "Land",
+                        "Condo",
+                        "House",
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -141,10 +152,10 @@ const PostItems = ({ postToDisplay }: IPostItemsProps) => {
     navigate("/conversations");
   };
 
-  const handleUnSavePost = (e: React.MouseEvent, post: IPost)=>{
+  const handleUnSavePost = (e: React.MouseEvent, post: IPost) => {
     e.stopPropagation();
     dispatch(unSavePostById(post.id));
-  }
+  };
 
   return (
     <>
@@ -154,7 +165,7 @@ const PostItems = ({ postToDisplay }: IPostItemsProps) => {
         <div className="flex w-full gap-[1%] flex-wrap gap-y-4">
           {postToDisplay.map((item) => (
             <div
-              onClick={() => navigate("/publish-posts/"+item.id)}
+              onClick={() => navigate("/publish-posts/" + item.id)}
               key={item.id}
               className="cursor-pointer w-[24%] max-lg:w-[32%] max-md:w-[49%] max-[550px]:w-full relative border-2 rounded-2xl hover:-translate-y-1 hover:shadow-xl hover:bg-grayLight1 duration-100"
             >
