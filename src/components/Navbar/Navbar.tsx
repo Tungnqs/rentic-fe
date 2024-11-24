@@ -34,7 +34,7 @@ const Navbar = ({ navbarItems, isLandLord }: INavbarItemsProps) => {
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch<AppDispatch>();
   const { socket } = useContext(SocketContext);
-
+  const  myProfile = useSelector(selectUserProfile);
   useEffect(()=>{
     if(isLogin){
       dispatch(getAllNotifications())
@@ -44,14 +44,16 @@ const Navbar = ({ navbarItems, isLandLord }: INavbarItemsProps) => {
   useEffect(()=>{
     if(socket && isLogin){
       socket.on("notification", (notification: INotificationItem) =>{
-        dispatch(pushNewNotification(notification));
+        if(myProfile.id === notification.userId){
+          dispatch(pushNewNotification(notification));
+        }
       })
       return () => {
         socket.off("notification");
       };
     }
 
-  }, [isLogin, socket])
+  }, [isLogin, myProfile.id, socket])
 
   const notifications = useSelector(selectAllNotification);
   const notificationLoading = useSelector(selectNotificationLoading);

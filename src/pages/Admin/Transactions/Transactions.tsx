@@ -39,7 +39,7 @@ const Transactions = () => {
 
   return (
     <div className="p-8 pb-[65px] max-sm:p-2 bg-bgDarkPrimary text-grayLight2 min-h-screen flex flex-col gap-5">
-      <div className="text-[24px] font-semibold">Account Management</div>
+      <div className="text-[24px] font-semibold">Transaction Management</div>
       <div className="flex justify-between items-center max-sm:flex-col max-sm:gap-3 max-sm:items-start">
         <SearchBar
           icon={<SearchIcon className="text-primaryYellow w-8" />}

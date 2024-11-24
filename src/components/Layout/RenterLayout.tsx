@@ -39,11 +39,6 @@ export default function RenterLayout() {
       icon: <MessageIcon className="w-full"/>
     },
     {
-      path: "/my-transactions",
-      title: "My Transactions",
-      icon: <TransactionIcon className="w-full"/>
-    },
-    {
       path: "/saved-posts",
       title: "Saved Posts",
       icon: <SaveIcon className="w-full"/>
