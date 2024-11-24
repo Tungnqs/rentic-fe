@@ -77,9 +77,6 @@ const Advertisements = ({isModerator}: IAdvertisementsProps) => {
                       Post title
                     </th>
                     <th scope="col" className="px-2 py-3">
-                      Price
-                    </th>
-                    <th scope="col" className="px-2 py-3">
                       Start Date
                     </th>
                     <th scope="col" className="px-2 py-3">
@@ -112,9 +109,6 @@ const Advertisements = ({isModerator}: IAdvertisementsProps) => {
                     <td className="px-2 py-4 text-green-600 font-bold">{formatMoney(ad.totalCost)}₫</td>
                     <td className={`px-2 py-4 ${isModerator ? "text-white" : "text-black"} font-semibold`}>
                       {ad.post.title}
-                    </td>
-                    <td className="px-2 py-4 text-green-600 font-bold">
-                      {formatMoney(ad.post.price)}₫
                     </td>
                     <td className="px-2 py-4">{formatDate(ad.startDate)}</td>
                     <td className="px-2 py-4">{formatDate(ad.endDate)}</td>
