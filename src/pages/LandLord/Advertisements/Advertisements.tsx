@@ -96,8 +96,8 @@ const Advertisements = ({isModerator}: IAdvertisementsProps) => {
                     key={index}
                     className={`${
                       index % 2 === 0
-                      ? `${isModerator ? "dark:bg-gray-900" : "bg-white"}`
-                      : `${isModerator ? "dark:bg-gray-800" : "bg-gray-200"}`
+                      ? `${isModerator ? "bg-gray-900" : "bg-white"}`
+                      : `${isModerator ? "bg-gray-800" : "bg-gray-200"}`
                     } border-b ${isModerator ? "border-gray-700" : ""}`}
                   >
                     <th
