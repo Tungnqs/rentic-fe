@@ -42,7 +42,7 @@ const PaymentConfirmation = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[40%] max-lg:w-[65%] max-sm:w-[80%] flex flex-col gap-3 pt-7">
+      <div className="w-[40%] max-lg:w-[65%] max-sm:w-[80%] max-[500px]:w-[98%] flex flex-col gap-3 pt-7">
         <div className="text-[30px] font-medium text-center">
           Payment Summary
         </div>
@@ -60,10 +60,10 @@ const PaymentConfirmation = () => {
               <table className="border-collapse text-center border text-[20px]">
                 <tbody>
                   <tr>
-                    <td className="border-2 border-secondaryYellow w-1/2 p-3 font-semibold rounded-tl-lg">
+                    <td className="border-2 border-secondaryYellow p-3 font-semibold rounded-tl-lg">
                       Username
                     </td>
-                    <td className="border-2 border-secondaryYellow w-1/2 p-3">
+                    <td className="border-2 border-secondaryYellow p-3">
                       {currentPayment.userData.username}
                     </td>
                   </tr>
@@ -87,7 +87,7 @@ const PaymentConfirmation = () => {
                     <td className="border-2 border-secondaryYellow p-3 font-semibold">
                       Email
                     </td>
-                    <td className="border-2 border-secondaryYellow p-3">
+                    <td className="border-2 border-secondaryYellow break-all p-3 ">
                       {currentPayment.userData.email}
                     </td>
                   </tr>

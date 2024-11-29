@@ -12,6 +12,7 @@ import { handleUploadFile } from "../../store/slices/app.slice";
 import { IUploadedImage } from "../../interfaces/uploadedImage.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const userProfile = useSelector(selectUserProfile);
@@ -72,6 +73,10 @@ const EditProfile = () => {
   };
 
   const handleEditUserProfile = async () => {
+    if(!firstNameField || !lastNameField || !usernameField){
+      toast.warning("You must enter all required fields")
+      return;
+    }
     const dataForUpdate: IEditProfileReq = {
       avatar: avatarField as string,
       firstName: firstNameField,
@@ -83,9 +88,9 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex justify-center bg-grayLight1">
+    <div className="flex justify-center bg-grayLight1 min-h-screen">
       <div
-        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] bg-white"
+        className="w-[35%] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-5 max-lg:w-[65%] max-sm:w-[80%] bg-white max-h-fit"
         style={{
           boxShadow:
             "rgba(125, 125, 125, 0.25) 0px 14px 28px, rgba(125, 125, 125, 0.25) 0px 10px 10px",

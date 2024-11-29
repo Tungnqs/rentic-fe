@@ -102,8 +102,8 @@ const Transactions = () => {
                   key={index}
                   className={`${
                     index % 2 === 0
-                      ? "bg-white dark:bg-gray-900"
-                      : "bg-gray-50 dark:bg-gray-800"
+                      ? "bg-gray-900"
+                      : "bg-gray-800"
                   } border border-gray-700`}
                 >
                   <th

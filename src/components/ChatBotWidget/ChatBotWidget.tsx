@@ -51,13 +51,13 @@ const ChatBotWidget: React.FC = () => {
         <button 
           onClick={handleOpenChat} 
           disabled={isLoading}
-          className="flex items-center justify-center w-14 h-14 bg-primaryYellow hover:bg-lightYellow text-black rounded-full shadow-lg transition-all duration-200 hover:scale-105"
+          className="flex items-center justify-center w-14 h-14 max-sm:w-10 max-sm:h-10 bg-primaryYellow hover:bg-lightYellow text-black rounded-full shadow-lg transition-all duration-200 hover:scale-105"
           aria-label="Open chat"
         >
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            <AIIcon className="w-8 h-8" />
+            <AIIcon className="w-8 h-8 max-sm:w-4 max-sm:h-4" />
           )}
         </button>
       ) : (

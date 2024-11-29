@@ -12,7 +12,8 @@ const LatestPostsBlock = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="block2 max-md:px-6 flex justify-center">
+    <>
+      {latestPosts.length > 0  && (<div className="block2 max-md:px-6 flex justify-center">
       <div className={`w-[85%] max-md:w-full flex flex-col gap-5 max-w-[${BreakPoint.xl}]`}>
         <div className="text-[24px] font-bold">Latest Properties</div>
         <div className="p-3">
@@ -52,7 +53,8 @@ const LatestPostsBlock = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 };
 

@@ -42,8 +42,8 @@ const ReportList = () => {
       <div className="text-[24px] font-semibold">Report Management</div>
       <div className="text-red-600 font-semibold hidden max-[550px]:block">*Recommend to use application in landscape view</div>
       <div style={{ transform: 'rotateX(180deg)' }} className="relative overflow-x-auto shadow-md darkScrollBar sm:rounded-lg">
-        <table style={{ transform: 'rotateX(180deg)' }} className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table style={{ transform: 'rotateX(180deg)' }} className="w-full text-sm text-left rtl:text-right text-gray-400">
+          <thead className="text-xs uppercase bg-gray-700 text-gray-400">
             <tr>
               <th scope="col" className="px-2 py-3">
                 Report Date
@@ -74,13 +74,13 @@ const ReportList = () => {
                 key={index}
                 className={`${
                   index % 2 === 0
-                    ? "bg-white dark:bg-gray-900"
-                    : "bg-gray-50 dark:bg-gray-800"
-                } border-b dark:border-gray-700`}
+                    ? "bg-gray-900"
+                    : "bg-gray-800"
+                } border-b border-gray-700`}
               >
                 <th
                   scope="row"
-                  className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-1/6  overflow-hidden"
+                  className="px-2 py-4 font-medium text-white w-1/6  overflow-hidden"
                 >
                   {formatDate(report.createdAt as string)}
                 </th>
