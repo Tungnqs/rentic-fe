@@ -12,6 +12,7 @@ import { handleUploadFile } from "../../store/slices/app.slice";
 import { IUploadedImage } from "../../interfaces/uploadedImage.interface";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const DarkEditProfile = () => {
   const userProfile = useSelector(selectUserProfile);
@@ -72,6 +73,10 @@ const DarkEditProfile = () => {
   };
 
   const handleEditUserProfile = async () => {
+    if(!firstNameField || !lastNameField || !usernameField){
+      toast.warning("You must enter all required fields")
+      return;
+    }
     const dataForUpdate: IEditProfileReq = {
       avatar: avatarField as string,
       firstName: firstNameField,
