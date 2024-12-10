@@ -8,6 +8,7 @@ import { createNewAds, IAdsRequest, selectAllFetchedPosts } from "../../../../st
 import { IPost } from "../../../../interfaces/post.interface";
 import DropdownWithId, { IDropdownWithItems } from "../../../../components/DropdownWithId/DropdownWithId";
 import { AppDispatch } from "../../../../store";
+import { toast } from "react-toastify";
 
 interface ICreateAdsPopupProps {
   togglePopup: () => void;
@@ -24,7 +25,10 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
     const postDropDownValues = useMemo(()=>{
         const dropDownValues: IDropdownWithItems[] = [];
         if(allMyPosts.length > 0){
-            allMyPosts.map((post) => {
+            const validPosts = allMyPosts.filter((post)=>{
+              return !post.isReported && post.isVerified;
+            })
+            validPosts.map((post) => {
                 const newValue: IDropdownWithItems = {
                     id: post.id,
                     title: post.title,
@@ -36,6 +40,7 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
     }, [allMyPosts])
     
     const [chosenPost, setChosenPost] = useState(postDropDownValues[0]);
+    console.log('chosenPost: ', chosenPost);
 
     const dateStatus = useMemo(() => {
         const dateNow = new Date();
@@ -52,16 +57,20 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
     }, [endDate, startDate]);
 
     const handleAddNewAds = async()=>{
-        if(dateStatus === ""){
-          const request: IAdsRequest = {
-              adPackageId: chosenPackage.id,
-              postId: chosenPost.id as string,
-              endDate: endDate,
-              startDate: startDate
-          }
-          dispatch(createNewAds(request));
-          togglePopup();
+      if(!chosenPost){
+        toast.warning("Require published post to subscribe ads!");
+        return;
+      }
+      if(dateStatus === ""){
+        const request: IAdsRequest = {
+            adPackageId: chosenPackage.id,
+            postId: chosenPost.id as string,
+            endDate: endDate,
+            startDate: startDate
         }
+        dispatch(createNewAds(request));
+        togglePopup();
+      }
     }
 
   return (
@@ -82,7 +91,9 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
             </div>
             <div className="flex flex-col gap-2">
                 <div>Choose Post to be advertised:</div>
-                <DropdownWithId dropdownValues={postDropDownValues} chooseValue={setChosenPost} />
+                {postDropDownValues.length > 0 ? 
+                  <DropdownWithId dropdownValues={postDropDownValues} chooseValue={setChosenPost} /> 
+                : <div className="cursor-not-allowed w-full text-black bg-gray1 border-2 border-black font-medium rounded-lg text-sm px-5 py-2.5">There is no valid post to subscribe</div>}
             </div>
             <div className="flex justify-between">
                 <div className="w-[48%]">

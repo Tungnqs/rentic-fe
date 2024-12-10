@@ -99,9 +99,9 @@ const PropertyDetail = () => {
             <Loader />
           ) : (
             <div className="flex flex-col gap-4  pb-1">
-              <div className="flex justify-between text-[26px] text-thirdYellow font-semibold border-b">
+              <div className="flex justify-between gap-2 text-[26px] text-thirdYellow font-semibold border-b">
                 <div>Property: {currentPostData.title}</div>
-                <div>{formatMoney(currentPostData.price)} $</div>
+                <div>{formatMoney(currentPostData.price)}₫</div>
               </div>
               <div className="border-b">
                 <div className="flex gap-[2px]">

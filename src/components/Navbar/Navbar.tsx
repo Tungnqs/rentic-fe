@@ -39,7 +39,7 @@ const Navbar = ({ navbarItems, isLandLord }: INavbarItemsProps) => {
     if(isLogin){
       dispatch(getAllNotifications())
     }
-  }, [])
+  }, [isLogin, myProfile])
 
   useEffect(()=>{
     if(socket && isLogin){

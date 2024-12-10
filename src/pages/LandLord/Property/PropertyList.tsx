@@ -88,7 +88,7 @@ const PropertyItems = ({ postToDisplay }: IPropertyItemsProps) => {
               <div className={`absolute top-4 right-4 ${item.type === "buy" ? "bg-primaryYellow" : "bg-green-500 text-white" }  text-[14px] font-medium rounded-2xl px-2 py-[2px]`}>{item.type === "buy" ? "For Sale" : "For Rent"}</div>
               <img src={item.images.length > 0 ? item.images[0].path : DemoProperty} className="xl:h-48 object-cover rounded-t-2xl max-xl:max-w-none w-full aspectPostImg" alt="" />
               <div className="p-4 flex flex-col gap-2 w-full">
-                <div className="text-[20px] font-bold">{item.title}</div>
+                <div className="text-[20px] font-bold truncate">{item.title}</div>
                 <div className="text-secondaryYellow text-[24px] font-bold">{formatMoney(item.price)}₫</div>
                 <div className="flex justify-between">
                   <div className="text-darkGray truncate font-semibold text-[12px]">{item.city}</div>

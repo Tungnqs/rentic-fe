@@ -23,7 +23,7 @@ const LatestPostsBlock = () => {
                 <div className={`absolute top-4 right-4 ${item.type === "buy" ? "bg-primaryYellow" : "bg-green-500 text-white" }  text-[14px] font-medium rounded-2xl px-2 py-[2px]`}>{item.type === "buy" ? "For Sale" : "For Rent"}</div>
                 <img src={item.images.length > 0 ? item.images[0].path : DemoProperty} className="xl:h-48 object-cover rounded-t-2xl max-xl:max-w-none w-full max-xl:w-[280px] aspectPostImg" alt="" />
                 <div className="p-4 flex flex-col gap-3 w-full">
-                  <div className="text-[20px] font-bold">{item.title}</div>
+                  <div className="text-[20px] font-bold truncate">{item.title}</div>
                   <div className="text-darkGray truncate">{item.commune}, {item.district}, {item.city}</div>
                   <div className="flex gap-3 flex-wrap">
                     <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded">
