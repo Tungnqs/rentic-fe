@@ -193,7 +193,7 @@ const PostItems = ({ postToDisplay }: IPostItemsProps) => {
                 alt=""
               />
               <div className="p-4 flex flex-col gap-2 w-full">
-                <div className="text-[20px] font-bold">{item.title}</div>
+                <div className="text-[20px] font-bold truncate">{item.title}</div>
                 <div className="text-secondaryYellow text-[24px] font-bold">
                   {formatMoney(item.price)}₫
                 </div>

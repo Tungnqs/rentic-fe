@@ -13,13 +13,13 @@ interface IMapBlockProps {
 }
 
 const MapBlock = ({ allPublishPosts }: IMapBlockProps) => {
-  const position: [number, number] = [19.022782, 105.486331];
+  const position: [number, number] = [16.702463, 105.739324];
   return (
     <div className="lg:flex-1 z-10  h-[calc(100vh-116px)] min-h-[500px] max-lg:h-[300px] lg:sticky lg:top-[90px]">
       <div className="w-full h-full p-3 bg-white rounded-md">
         <MapContainer
           center={position}
-          zoom={7}
+          zoom={5}
           scrollWheelZoom={true}
           className="w-full h-full "
         >

@@ -68,12 +68,13 @@ const ResetPassword = () => {
       <div className={`min-h-screen`}>
         <div className="flex justify-center">
           <div
-            className={`w-[500px] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-7 max-lg:w-[65%] max-sm:w-[80%] mediumBoxShadow`}
+            className={`w-[500px] mt-7 mb-[90px] flex flex-col gap-5 rounded-md p-7 max-lg:w-[65%] max-sm:w-[90%] mediumBoxShadow`}
           >
             <div className="text-center flex flex-col gap-2">
               <div className="text-[24px] font-semibold">Reset Password</div>
               <div>Enter new password below to reset your password</div>
             </div>
+            <div className="break-all"><b>Current Account:</b> {email}</div>
             <div>
               <div className="font-semibold">New Password</div>
               <div className="relative">
