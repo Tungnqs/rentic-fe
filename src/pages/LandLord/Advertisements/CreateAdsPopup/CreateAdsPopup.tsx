@@ -1,32 +1,67 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { ArrowDownIcon } from "../../../../assets/icon/icon";
+import { ArrowDownIcon, PaymentIcon, WalletIcon } from "../../../../assets/icon/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllPackages } from "../../../../store/slices/admin.slice";
-import { IPackage } from "../../../../interfaces/ads.interface";
+import { IAds, IPackage } from "../../../../interfaces/ads.interface";
 import { formatMoney } from "../../../../store/slices/app.slice";
 import { createNewAds, IAdsRequest, selectAllFetchedPosts } from "../../../../store/slices/post.slice";
 import { IPost } from "../../../../interfaces/post.interface";
 import DropdownWithId, { IDropdownWithItems } from "../../../../components/DropdownWithId/DropdownWithId";
 import { AppDispatch } from "../../../../store";
 import { toast } from "react-toastify";
+import { selectUserProfile } from "../../../../store/slices/auth.slice";
 
 interface ICreateAdsPopupProps {
   togglePopup: () => void;
+  allAdvertisements: IAds[];
 }
 
-const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
+const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps) => {
     const allPackages = useSelector(selectAllPackages);
     const [chosenPackage, setChosenPackage] = useState<IPackage>(allPackages[0]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const allMyPosts = useSelector(selectAllFetchedPosts);
     const dispatch = useDispatch<AppDispatch>();
+    const myProfile = useSelector(selectUserProfile);
 
+    const totalAmount = useMemo(()=>{
+      if (!startDate || !endDate){
+        return 0
+      };
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return 0;
+
+      const subscribedTimeInMinutes = end.getTime() - start.getTime();
+      const subscribedDays = subscribedTimeInMinutes / (1000 * 60 * 60 * 24);
+      if (subscribedDays <= 0){ 
+        return 0;
+      }
+      return subscribedDays * chosenPackage.dailyRate;
+    }, [chosenPackage, endDate, startDate])
+
+    const newBalance = useMemo(()=>{
+      return Number(myProfile.balance) - totalAmount
+    }, [myProfile.balance, totalAmount])
+
+    const checkValidNewBalance = useMemo(()=>{
+      const myWallet = Number(myProfile.balance) || 0;
+      if (!startDate || !endDate){
+        return "not choose date"
+      };
+      if(myWallet - totalAmount < 0){
+        return "negative";
+      }
+      return "positive";
+    }, [endDate, myProfile.balance, startDate, totalAmount])
+    
     const postDropDownValues = useMemo(()=>{
         const dropDownValues: IDropdownWithItems[] = [];
+        const subscribedPostIds = allAdvertisements.map((item)=>item.post.id);
         if(allMyPosts.length > 0){
             const validPosts = allMyPosts.filter((post)=>{
-              return !post.isReported && post.isVerified;
+              return !post.isReported && post.isVerified && !subscribedPostIds.includes(post.id);
             })
             validPosts.map((post) => {
                 const newValue: IDropdownWithItems = {
@@ -37,10 +72,9 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
             })
         }
         return dropDownValues;
-    }, [allMyPosts])
+    }, [allAdvertisements, allMyPosts])
     
     const [chosenPost, setChosenPost] = useState(postDropDownValues[0]);
-    console.log('chosenPost: ', chosenPost);
 
     const dateStatus = useMemo(() => {
         const dateNow = new Date();
@@ -61,6 +95,15 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
         toast.warning("Require published post to subscribe ads!");
         return;
       }
+      if(!startDate || !endDate){
+        toast.warning("Please choose both start date and end date for ads subscription!");
+        return;
+      }
+      if(checkValidNewBalance === "negative"){
+        toast.warning("Your balance is not enough for this subscription!");
+        return;
+      }
+
       if(dateStatus === ""){
         const request: IAdsRequest = {
             adPackageId: chosenPackage.id,
@@ -86,11 +129,11 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
           </div>
           <div className="px-4 flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-                <div>Choose advertisement package:</div>
+                <div>Choose advertisement package ({allPackages.length > 0 ? allPackages.length : 0}):</div>
                 {allPackages.length > 0 && <PackageDropdown chooseValue={setChosenPackage} dropdownValues={allPackages}/>}
             </div>
             <div className="flex flex-col gap-2">
-                <div>Choose Post to be advertised:</div>
+                <div>Choose Post to be advertised ({postDropDownValues.length > 0 ? postDropDownValues.length : 0}):</div>
                 {postDropDownValues.length > 0 ? 
                   <DropdownWithId dropdownValues={postDropDownValues} chooseValue={setChosenPost} /> 
                 : <div className="cursor-not-allowed w-full text-black bg-gray1 border-2 border-black font-medium rounded-lg text-sm px-5 py-2.5">There is no valid post to subscribe</div>}
@@ -107,6 +150,18 @@ const CreateAdsPopup = ({ togglePopup }: ICreateAdsPopupProps) => {
             </div>
             {dateStatus === "in the past" && (<div className='text-red-600 text-[14px] font-semibold'>*Advertisements date must be in the future</div>)}
             {dateStatus === "invalid end date" && (<div className='text-red-600 text-[14px] font-semibold'>*Invalid end date</div>)}
+              <div className="flex flex-col gap-2 p-2 border-2 rounded-md">
+                <div>
+                  <div className="font-semibold">Wallet:</div>
+                  <div className="flex gap-2 items-center text-xl"><WalletIcon className="w-6 text-secondaryYellow" /> <div>{formatMoney(myProfile.balance as number)}₫</div></div>
+                </div>
+                <div>
+                  <div className="font-semibold">Total:</div>
+                  <div className="flex gap-2 items-center text-xl"><PaymentIcon className="w-6 text-green-700" /> <div>{formatMoney(totalAmount)}₫</div></div>
+                </div>
+                {checkValidNewBalance === "negative" &&<div className="text-red-600 text-sm font-semibold">Your balance is not enough for this subscription!</div>}
+                {checkValidNewBalance === "positive" &&<div className="text-green-600 text-sm font-semibold">You can subscribe this advertisement, new balance: {formatMoney(newBalance)}₫</div>}
+              </div>
           </div>
         </div>
         <div className="flex justify-between bg-gray1 p-4 items-center rounded-b-md">

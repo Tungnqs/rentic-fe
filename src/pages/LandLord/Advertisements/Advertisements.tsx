@@ -35,7 +35,7 @@ const Advertisements = ({isModerator}: IAdvertisementsProps) => {
     
   return (
     <div className={`min-h-screen flex justify-center py-10 ${isModerator ? "bg-bgDarkPrimary text-grayLight2" : ""}`}>
-        {isShowAddPopup && <CreateAdsPopup togglePopup={()=>setShowAddPopup(!isShowAddPopup)} />}
+        {isShowAddPopup && <CreateAdsPopup allAdvertisements={allAdvertisements} togglePopup={()=>setShowAddPopup(!isShowAddPopup)} />}
       <div className="w-[90%] flex flex-col gap-5">
         <div className="flex justify-between">
           <div
