@@ -24,37 +24,6 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
     const allMyPosts = useSelector(selectAllFetchedPosts);
     const dispatch = useDispatch<AppDispatch>();
     const myProfile = useSelector(selectUserProfile);
-
-    const totalAmount = useMemo(()=>{
-      if (!startDate || !endDate){
-        return 0
-      };
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      if (isNaN(start.getTime()) || isNaN(end.getTime())) return 0;
-
-      const subscribedTimeInMinutes = end.getTime() - start.getTime();
-      const subscribedDays = subscribedTimeInMinutes / (1000 * 60 * 60 * 24);
-      if (subscribedDays <= 0){ 
-        return 0;
-      }
-      return subscribedDays * chosenPackage.dailyRate;
-    }, [chosenPackage, endDate, startDate])
-
-    const newBalance = useMemo(()=>{
-      return Number(myProfile.balance) - totalAmount
-    }, [myProfile.balance, totalAmount])
-
-    const checkValidNewBalance = useMemo(()=>{
-      const myWallet = Number(myProfile.balance) || 0;
-      if (!startDate || !endDate){
-        return "not choose date"
-      };
-      if(myWallet - totalAmount < 0){
-        return "negative";
-      }
-      return "positive";
-    }, [endDate, myProfile.balance, startDate, totalAmount])
     
     const postDropDownValues = useMemo(()=>{
         const dropDownValues: IDropdownWithItems[] = [];
@@ -76,6 +45,7 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
     
     const [chosenPost, setChosenPost] = useState(postDropDownValues[0]);
 
+
     const dateStatus = useMemo(() => {
         const dateNow = new Date();
         if (!startDate && !endDate) return "";
@@ -89,6 +59,44 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
         }
         return "";
     }, [endDate, startDate]);
+
+
+    const totalAmount = useMemo(()=>{
+      if(!chosenPost){
+        return 0;
+      }
+      if (!startDate || !endDate || dateStatus){
+        return 0
+      };
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return 0;
+
+      const subscribedTimeInMinutes = end.getTime() - start.getTime();
+      const subscribedDays = subscribedTimeInMinutes / (1000 * 60 * 60 * 24);
+      if (subscribedDays <= 0){ 
+        return 0;
+      }
+      return subscribedDays * chosenPackage.dailyRate;
+    }, [chosenPackage, chosenPost, dateStatus, endDate, startDate])
+
+    const newBalance = useMemo(()=>{
+      return Number(myProfile.balance) - totalAmount;
+    }, [myProfile.balance, totalAmount])
+
+
+    const checkValidNewBalance = useMemo(()=>{
+      const myWallet = Number(myProfile.balance) || 0;
+      if (!startDate || !endDate){
+        return "not choose date"
+      };
+      if(myWallet - totalAmount < 0){
+        return "negative";
+      }
+      return "positive";
+    }, [endDate, myProfile.balance, startDate, totalAmount])
+
+
 
     const handleAddNewAds = async()=>{
       if(!chosenPost){
@@ -160,7 +168,7 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
                   <div className="flex gap-2 items-center text-xl"><PaymentIcon className="w-6 text-green-700" /> <div>{formatMoney(totalAmount)}₫</div></div>
                 </div>
                 {checkValidNewBalance === "negative" &&<div className="text-red-600 text-sm font-semibold">Your balance is not enough for this subscription!</div>}
-                {checkValidNewBalance === "positive" &&<div className="text-green-600 text-sm font-semibold">You can subscribe this advertisement, new balance: {formatMoney(newBalance)}₫</div>}
+                {checkValidNewBalance === "positive" && dateStatus !== "in the past" && dateStatus !== "invalid end date" && chosenPost && <div className="text-green-600 text-sm font-semibold">You can subscribe this advertisement, new balance: {formatMoney(newBalance)}₫</div>}
               </div>
           </div>
         </div>
