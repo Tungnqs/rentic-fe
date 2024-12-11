@@ -128,6 +128,7 @@ export const createNewAds = createAsyncThunk(
         dispatch(getAllMyAds());
         dispatch(getUserProfile());
       }
+      toast.success(response.data.message)
       return response.data.data;
     } catch (err: any) {
       console.log(err);
