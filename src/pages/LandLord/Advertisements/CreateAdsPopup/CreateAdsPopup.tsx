@@ -48,9 +48,12 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
 
     const dateStatus = useMemo(() => {
         const dateNow = new Date();
-        if (!startDate && !endDate) return "";
+        if (!startDate && !endDate) return "empty date";
         const selectedStartDate = new Date(startDate);
         const selectedEndDate = new Date(endDate);
+        if(startDate === endDate){
+          return "equal date";
+        }
         if (selectedStartDate < dateNow || selectedEndDate < dateNow) {
             return "in the past";
         }
@@ -107,6 +110,12 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
         toast.warning("Please choose both start date and end date for ads subscription!");
         return;
       }
+
+      if(dateStatus === "equal date"){
+        toast.warning("Can not subscribe ads with the same start date and end date!");
+        return;
+      }
+
       if(checkValidNewBalance === "negative"){
         toast.warning("Your balance is not enough for this subscription!");
         return;
@@ -168,7 +177,7 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
                   <div className="flex gap-2 items-center text-xl"><PaymentIcon className="w-6 text-green-700" /> <div>{formatMoney(totalAmount)}₫</div></div>
                 </div>
                 {checkValidNewBalance === "negative" &&<div className="text-red-600 text-sm font-semibold">Your balance is not enough for this subscription!</div>}
-                {checkValidNewBalance === "positive" && dateStatus !== "in the past" && dateStatus !== "invalid end date" && chosenPost && <div className="text-green-600 text-sm font-semibold">You can subscribe this advertisement, new balance: {formatMoney(newBalance)}₫</div>}
+                {checkValidNewBalance === "positive" && dateStatus === "" && chosenPost && <div className="text-green-600 text-sm font-semibold">You can subscribe this advertisement, new balance: {formatMoney(newBalance)}₫</div>}
               </div>
           </div>
         </div>
