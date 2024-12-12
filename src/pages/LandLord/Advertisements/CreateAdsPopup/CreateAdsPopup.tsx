@@ -80,7 +80,7 @@ const CreateAdsPopup = ({ togglePopup, allAdvertisements }: ICreateAdsPopupProps
       if (subscribedDays <= 0){ 
         return 0;
       }
-      return subscribedDays * chosenPackage.dailyRate;
+      return (subscribedDays + 1) * chosenPackage.dailyRate;
     }, [chosenPackage, chosenPost, dateStatus, endDate, startDate])
 
     const newBalance = useMemo(()=>{
